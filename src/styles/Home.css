@@ -1,0 +1,42 @@
+.hero-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  z-index: 0; /* Відео повинно бути на фоні */
+  opacity: 1;
+}
+
+.overlay-content {
+  position: absolute;
+  top: 50%; /* Центруємо текст по вертикалі */
+  left: 50%; /* Центруємо текст по горизонталі */
+  transform: translate(-50%, -50%); /* Коригуємо точку відліку для точного центрування */
+  z-index: 1; /* Текст поверх відео */
+  width: 100%; /* Робимо ширину блоку тексту на всю ширину */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.overlay-content h1 {
+  background-color: rgba(23, 37, 60, 0.85); /* Напівпрозорий чорний фон для кращої видимості */
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 20px 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  max-width: 70%; /* Зменшуємо ширину текстового блоку */
+  word-wrap: break-word; /* Автоматичний перенос слів */
+}
