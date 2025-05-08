@@ -5,11 +5,11 @@ const Layout = ({ children }) => {
   const isHome = location.pathname === '/';
 
   if (isHome) {
-    // Головна сторінка — без контейнера
+    // Главная страница без контейнера
     return <>{children}</>;
   }
 
-  // Всі інші сторінки — з контейнером
+  // Другие страницы с контейнером
   return (
     <div className="max-w-6xl mx-auto px-4">
       {children}

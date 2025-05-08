@@ -3,7 +3,7 @@ import teamImage from '../assets/team.jpg';
 function About() {
   return (
     <div className="max-w-4xl mx-auto space-y-8 px-4 py-8 pt-20">
-      {/* Хедер с відступом */}
+      {/* Хедер с отступом */}
       <h1 className="text-4xl font-bold mb-4">О нас</h1>
 
       <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
