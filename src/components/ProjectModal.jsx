@@ -79,19 +79,17 @@ const ProjectModal = ({ project, onClose }) => {
   ))}
 </ul>
 
-{/* Блок комплектаций, если есть */}
-{project.packages && project.packages.length > 0 && (
-  <div className="mt-4">
-    <h3 className="font-semibold text-md mb-1">Комплектации:</h3>
-    <ul className="list-disc pl-5 space-y-1">
-      {project.packages.map((line, idx) => (
-        <li key={idx} className="text-gray-800">{line}</li>
-      ))}
-    </ul>
-  </div>
-)}
-
-
+          {/* Блок комплектаций, если есть */}
+          {project.packages && project.packages.length > 0 && (
+            <div className="mt-4">
+              <h3 className="font-semibold text-md mb-1">Комплектации:</h3>
+              <ul className="list-disc pl-5 space-y-1">
+                {project.packages.map((line, idx) => (
+                  <li key={idx} className="text-gray-800">{line}</li>
+                ))}
+              </ul>
+            </div>
+          )}
             <p className="mt-4 font-semibold text-lg text-orange-600">
               Цена: {project.price}
             </p>

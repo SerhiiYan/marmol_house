@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import herovideo from '../assets/herovideo.mp4';
 import ModalForm from '../components/ModalForm';
+import HowWeWork from '../components/HowWeWork';
+import WhyChooseFrameHouse from '../components/WhyChooseFrameHouse';
+
+
 function Home() {
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({ name: '', phone: '', comment: '' });
@@ -82,22 +86,9 @@ function Home() {
       </div>
 
       {/* Как мы работаем */}
-      <div className="relative bg-white py-16 px-4 md:px-10">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
-          Как мы работаем
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-6 text-center">
-          {['Заявка и консультация', 'Подбор проекта', 'Смета и договор', 'Строительство', 'Сдача объекта "под ключ"'].map((step, index) => (
-            <div className="flex flex-col items-center" key={index}>
-              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-yellow-400 text-black font-bold text-lg mb-2">
-                {index + 1}
-              </div>
-              <p className="font-semibold text-gray-800">{step}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
+      <WhyChooseFrameHouse/>
+      <HowWeWork />
+      
       {/* Модальное окно */}
       <ModalForm show={showModal} onClose={() => setShowModal(false)} />
     </div>
