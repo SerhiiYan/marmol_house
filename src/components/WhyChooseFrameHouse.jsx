@@ -1,26 +1,27 @@
 import { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import HouseImage from '../assets/blueprint.png';
+import HouseImage from '../assets/blueprint5.png';
 
 const reasons = [
   {
-    title: 'Доступная цена и скорость',
-    text: 'Каркасный дом обходится дешевле кирпичного и строится в разы быстрее — небольшой дом можно возвести всего за 60 дней.',
+    title: 'Высокая энергоэффективность',
+    text: 'Каркасные стены отлично сохраняют тепло зимой и прохладу летом, снижая расходы на отопление.',
   },
   {
-    title: 'Индивидуальный подход',
-    text: 'Вы можете участвовать в проектировании: выбирать планировку, размеры помещений, расположение окон и многое другое.',
+    title: 'Быстрое строительство',
+    text: 'Полный цикл строительства — от фундамента до отделки — занимает от 2 до 4 месяцев.',
   },
   {
-    title: 'Профессиональный подход',
-    text: 'С вами работает команда архитекторов и дизайнеров, чтобы ваш дом был удобным, стильным и уникальным.',
+    title: 'Низкая нагрузка на фундамент',
+    text: 'Легкая конструкция позволяет экономить на фундаменте и строить даже на слабых грунтах.',
   },
   {
-    title: 'Доступность по всей Беларуси',
-    text: 'Мы строим дома под ключ в Минске, Гродно, Бресте и других городах страны.',
+    title: 'Гибкость планировок',
+    text: 'Несущие элементы в стенах позволяют свободно менять внутреннюю планировку без сложных перепланировок.',
   },
 ];
+
 
 export default function WhyChooseFrameHouse() {
   useEffect(() => {
@@ -28,11 +29,11 @@ export default function WhyChooseFrameHouse() {
   }, []);
 
   return (
-    <section className="bg-gray-50 py-16 px-4 md:px-10">
+    <section className="py-16 px-4 md:px-10">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
         
-        {/* Зображення */}
-        <div data-aos="fade-right" className="flex justify-center">
+        {/* image */}
+        <div data-aos="fade-right" className="mt-10 flex justify-center">
           <img
             src={HouseImage}
             alt="Каркасный дом"
@@ -40,12 +41,11 @@ export default function WhyChooseFrameHouse() {
           />
         </div>
 
-        {/* Блок з текстами */}
+        {/* text blocks */}
         <div>
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6" data-aos="fade-up">
-            Почему выбирают каркасный дом?
+            Преимущества каркасных домов
           </h2>
-
           <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-6">
             {reasons.map((item, index) => (
               <div

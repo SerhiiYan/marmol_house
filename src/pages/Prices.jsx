@@ -1,4 +1,3 @@
-
 export default function Equipment() {
     const categories = [
       {

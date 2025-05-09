@@ -3,6 +3,9 @@ import herovideo from '../assets/herovideo.mp4';
 import ModalForm from '../components/ModalForm';
 import HowWeWork from '../components/HowWeWork';
 import WhyChooseFrameHouse from '../components/WhyChooseFrameHouse';
+import BlockHouseFeatureCircle from '../components/BlockHouseFeatureCircle';
+import HousePackages from '../components/HousePackages';
+import Footer from '../components/Footer';
 
 
 function Home() {
@@ -60,19 +63,18 @@ function Home() {
           >
             ЗАКАЗАТЬ КОНСУЛЬТАЦИЮ
           </button>
-
           {/* Три блока */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl text-white text-sm md:text-base mt-20">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-5xl text-white text-sm md:text-base mt-20">
             <div className="flex flex-col h-full">
-              <p className="font-bold text-yellow-400 mb-4 uppercase">Проектирование</p>
+              <p className="font-bold text-yellow-400 mb-4 uppercase">Работаем по 240 указу!</p>
               <p className="text-justify">
-                Разрабатываем проекты удобных и красивых загородных домов. Учитываем стиль, бюджет и пожелания клиента.
+                По 240 указу многодетные семьи могут бесплатно получить участок и частично оплатить строительство дома за счёт бюджета.
               </p>
             </div>
             <div className="flex flex-col h-full">
-              <p className="font-bold text-yellow-400 mb-4 uppercase">Качественные материалы</p>
+              <p className="font-bold text-yellow-400 mb-4 uppercase">Проект в подарок</p>
               <p className="text-justify">
-                Для строительства используем только сухую строганную доску, проверенные утеплители и фурнитуру.
+                При заказе строительства — проект дома разрабатываем бесплатно с учётом ваших пожеланий и участка.
               </p>
             </div>
             <div className="flex flex-col h-full">
@@ -82,13 +84,16 @@ function Home() {
               </p>
             </div>
           </div>
+ 
         </div>
       </div>
 
       {/* Как мы работаем */}
-      <WhyChooseFrameHouse/>
+      <WhyChooseFrameHouse />
+      <BlockHouseFeatureCircle />
+      <HousePackages />
       <HowWeWork />
-      
+      <Footer />
       {/* Модальное окно */}
       <ModalForm show={showModal} onClose={() => setShowModal(false)} />
     </div>
