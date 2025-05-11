@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import HouseImage from '../assets/blueprint5.png';
+import HouseImage from '../assets/blueprint6.png';
 
 const reasons = [
   {
