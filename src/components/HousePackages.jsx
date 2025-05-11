@@ -50,7 +50,7 @@ export default function HousePackages() {
   return (
     <section className="py-16 px-4 md:px-10 bg-gray-100">
       <div className="max-w-7xl mx-auto text-center mb-12" data-aos="fade-up">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Выберите свою комплектацию дома</h2>
+        <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 mb-4">Выберите свою комплектацию дома</h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
           Подбираем комплектацию под ваши задачи — от дачи выходного дня до дома для круглогодичного проживания.
         </p>
@@ -73,8 +73,8 @@ export default function HousePackages() {
                 </li>
               ))}
             </ul>
-            <Link to="/Equipment" className="inline-block mt-auto bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-4 rounded-xl transition">
-              Подробнее
+            <Link to="/Equipment" className="inline-block mt-auto bg-yellow-300 hover:bg-yellow-400 text-white font-medium py-2 px-4 rounded-xl transition">
+              <span className='text-gray-600'>Подробнее</span>
             </Link>
           </div>
         ))}

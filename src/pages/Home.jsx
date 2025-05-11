@@ -6,6 +6,8 @@ import WhyChooseFrameHouse from '../components/WhyChooseFrameHouse';
 import BlockHouseFeatureCircle from '../components/BlockHouseFeatureCircle';
 import HousePackages from '../components/HousePackages';
 import Footer from '../components/Footer';
+import WhyChooseUs from '../components/WhyChooseUs';
+import TestimonialsSlider from '../components/TestimonialsSlider';
 
 
 function Home() {
@@ -84,17 +86,18 @@ function Home() {
               </p>
             </div>
           </div>
- 
         </div>
       </div>
 
-      {/* Как мы работаем */}
       <WhyChooseFrameHouse />
       <BlockHouseFeatureCircle />
       <HousePackages />
+      <WhyChooseUs />
       <HowWeWork />
+      <TestimonialsSlider />
       <Footer />
       {/* Модальное окно */}
+      {/* Кнопка заказать консультацию */}
       <ModalForm show={showModal} onClose={() => setShowModal(false)} />
     </div>
   );

@@ -12,17 +12,17 @@
   height: 100%;
   width: 100%;
   object-fit: cover;
-  z-index: 0; /* Відео повинно бути на фоні */
+  z-index: 0; 
   opacity: 1;
 }
 
 .overlay-content {
   position: absolute;
-  top: 50%; /* Центруємо текст по вертикалі */
-  left: 50%; /* Центруємо текст по горизонталі */
-  transform: translate(-50%, -50%); /* Коригуємо точку відліку для точного центрування */
-  z-index: 1; /* Текст поверх відео */
-  width: 100%; /* Робимо ширину блоку тексту на всю ширину */
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  z-index: 1; 
+  width: 100%; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,13 +30,13 @@
 }
 
 .overlay-content h1 {
-  background-color: rgba(23, 37, 60, 0.85); /* Напівпрозорий чорний фон для кращої видимості */
+  background-color: rgba(23, 37, 60, 0.85); 
   color: white;
   font-size: 2rem;
   font-weight: bold;
   padding: 20px 40px;
   border-radius: 12px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-  max-width: 70%; /* Зменшуємо ширину текстового блоку */
-  word-wrap: break-word; /* Автоматичний перенос слів */
+  max-width: 70%; 
+  word-wrap: break-word; 
 }

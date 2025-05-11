@@ -38,7 +38,7 @@ export default function BlockHouseFeatureCircle() {
 
   return (
     <section className="bg-white py-20 px-4 md:px-10 relative overflow-hidden">
-      <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16" data-aos="fade-up">
+      <h2 className="text-3xl md:text-4xl font-semibold text-center text-gray-900 mb-16" data-aos="fade-up">
         Преимущества домов из газосиликатных блоков
       </h2>
 
@@ -59,7 +59,7 @@ export default function BlockHouseFeatureCircle() {
             data-aos="fade-up"
             data-aos-delay={adv.delay}
           >
-            <h3 className="text-lg md:text-xl text-yellow-500 font-semibold mb-2">{adv.title}</h3>
+            <h3 className="text-lg md:text-xl text-yellow-600 font-semibold mb-2">{adv.title}</h3>
             <p className="text-base text-gray-700">{adv.text}</p>
           </div>
         ))}
