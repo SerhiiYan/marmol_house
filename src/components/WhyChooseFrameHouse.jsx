@@ -43,7 +43,7 @@ export default function WhyChooseFrameHouse() {
 
         {/* text blocks */}
         <div>
-          <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 mb-6" data-aos="fade-up">
+          <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 mb-12" data-aos="fade-up">
             Преимущества каркасных домов
           </h2>
           <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-6">
@@ -54,8 +54,8 @@ export default function WhyChooseFrameHouse() {
                 data-aos="fade-up"
                 data-aos-delay={index * 100}
               >
-                <h3 className="text-md font-semibold text-yellow-600 mb-2">{item.title}</h3>
-                <p className="text-gray-700 text-sm">{item.text}</p>
+                <h3 className="text-md font-semibold text-xl text-yellow-600 mb-2">{item.title}</h3>
+                <p className="text-gray-700 text-base">{item.text}</p>
               </div>
             ))}
           </div>

@@ -1,9 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function ModalForm({ show, onClose }) {
+export default function ModalForm({ show, onClose, defaultComment = '' }) {
   const [formData, setFormData] = useState({ name: '', phone: '', comment: '' });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+
+  // 🆕 Оновлюємо comment при зміні defaultComment
+  useEffect(() => {
+    setFormData((prev) => ({ ...prev, comment: defaultComment }));
+  }, [defaultComment]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

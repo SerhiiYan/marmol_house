@@ -2,12 +2,9 @@ import { useState } from 'react'
 import projects from '../data/projects'
 import GalleryFilter from '../components/GalleryFilter'
 import ProjectCard from '../components/ProjectCard'
-import ProjectModal from '../components/ProjectModal'
 
 const Gallery = () => {
   const [selectedCategory, setSelectedCategory] = useState('Все')
-  const [modalProject, setModalProject] = useState(null)
-
 
   const filtered = selectedCategory === 'Все'
     ? projects
@@ -19,10 +16,9 @@ const Gallery = () => {
       <GalleryFilter selected={selectedCategory} onSelect={setSelectedCategory} />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
         {filtered.map(project => (
-          <ProjectCard key={project.id} project={project} onClick={setModalProject} />
+          <ProjectCard key={project.id} project={project} />
         ))}
       </div>
-      <ProjectModal project={modalProject} onClose={() => setModalProject(null)} />
     </section>
   )
 }

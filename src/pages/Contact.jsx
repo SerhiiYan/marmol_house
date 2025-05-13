@@ -2,8 +2,8 @@ import React from 'react';
 
 const Contact = () => {
   return (
-    <section className="max-w-4xl mx-auto p-6 pt-20">
-      <h1 className="text-3xl font-bold text-center mb-6">Контакти</h1>
+    <section className="max-w-4xl mx-auto p-6 pt-28">
+      <h1 className="text-3xl font-bold text-center mb-6">Контакты</h1>
       <div className="space-y-4">
         <div>
           <h2 className="text-xl font-semibold">Телефон</h2>
@@ -16,7 +16,7 @@ const Contact = () => {
         </div>
 
         <div>
-          <h2 className="text-xl font-semibold">Адреса</h2>
+          <h2 className="text-xl font-semibold">Адрес</h2>
           <p className="text-gray-700">123 Main Street, City, Country</p>
         </div>
       </div>
