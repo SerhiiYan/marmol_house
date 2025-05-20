@@ -8,6 +8,7 @@ import HousePackages from '../components/HousePackages';
 import Footer from '../components/Footer';
 import WhyChooseUs from '../components/WhyChooseUs';
 import TestimonialsSlider from '../components/TestimonialsSlider';
+import ProjectPlan from '../components/ProjectPlan'
 
 
 function Home() {
@@ -54,7 +55,7 @@ function Home() {
         </video>
         <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-60 z-10" />
         <div className="relative z-20 h-full flex flex-col justify-center items-center text-center px-4">
-          <h1 className="text-3xl md:text-5xl font-bold text-white leading-tight mb-4">
+          <h1 className="text-3xl md:text-5xl pt-36 md:pt-24 font-bold text-white leading-tight mb-4">
             СТРОИМ КАРКАСНЫЕ ДОМА <br />
             <span className="text-yellow-400 text-5xl md:text-6xl">«ПОД КЛЮЧ»</span>
           </h1>

@@ -69,7 +69,7 @@ export default function TestimonialsSlider() {
         {testimonials.map((t, i) => (
           <motion.div
             key={i}
-            className="px-2"
+            className="px-2 py-4"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
