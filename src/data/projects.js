@@ -706,7 +706,7 @@ const projects = [
         'https://via.placeholder.com/400x300'
       ],
       description: 'Просторный гараж с хозблоком и автоматическими воротами.',
-      price: 'от 850 000 ₽',
+      price: 'от 160 425 BYN',
       materials: 'Металлопрофиль, бетон, кирпич',
     },
     {
