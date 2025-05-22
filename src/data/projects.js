@@ -699,7 +699,7 @@ const projects = [
     },
     {
       id: 28,
-      title: 'Гараж на 2 машины',
+      title: 'Гараж M5',
       type: 'Гаражи',
       images: [
         'https://via.placeholder.com/400x300',

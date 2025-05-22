@@ -4,16 +4,17 @@ import 'slick-carousel/slick/slick-theme.css';
 import { useParams } from 'react-router-dom';
 import projects from '../data/projects';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { useState, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useState, useRef, useEffect } from 'react';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 import ModalForm from './ModalForm';
 import ProjectCard from './ProjectCard';
+import ProjectEquipment from './ProjectEquipment';
 
 // Кастомные стрелки для слайдеров
 const PrevArrow = ({ onClick }) => (
   <button
     onClick={onClick}
-    className="absolute top-1/2 -translate-y-1/2 left-2 z-10 bg-white/80 hover:bg-white rounded-full ml-2 p-1 shadow-md"
+    className="absolute top-1/2 -translate-y-1/2 left-2 z-10 bg-white/80 hover:bg-white rounded-full p-1 ml-2 shadow-md"
   >
     <FaChevronLeft className="text-xl text-gray-800" />
   </button>
@@ -22,7 +23,7 @@ const PrevArrow = ({ onClick }) => (
 const NextArrow = ({ onClick }) => (
   <button
     onClick={onClick}
-    className="absolute top-1/2 -translate-y-1/2 right-2 z-10 bg-white/80 hover:bg-white rounded-full mr-2 p-1 shadow-md"
+    className="absolute top-1/2 -translate-y-1/2 right-2 z-10 bg-white/80 hover:bg-white rounded-full p-1 mr-2 shadow-md"
   >
     <FaChevronRight className="text-xl text-gray-800" />
   </button>
@@ -32,7 +33,7 @@ const NextArrow = ({ onClick }) => (
 const ModalPrevArrow = ({ onClick }) => (
   <button
     onClick={onClick}
-    className="absolute top-1/2 -translate-y-1/2 left-4 z-[100] bg-white/80 hover:bg-white rounded-full p-2 shadow-md"
+    className="hidden md:block absolute top-1/2 -translate-y-1/2 left-4 z-[100] bg-white/80 hover:bg-white rounded-full p-2 shadow-md"
   >
     <FaChevronLeft className="text-xl text-gray-800" />
   </button>
@@ -41,7 +42,7 @@ const ModalPrevArrow = ({ onClick }) => (
 const ModalNextArrow = ({ onClick }) => (
   <button
     onClick={onClick}
-    className="absolute top-1/2 -translate-y-1/2 right-4 z-[100] bg-white/80 hover:bg-white rounded-full p-2 shadow-md"
+    className="hidden md:block absolute top-1/2 -translate-y-1/2 right-4 z-[100] bg-white/80 hover:bg-white rounded-full p-2 shadow-md"
   >
     <FaChevronRight className="text-xl text-gray-800" />
   </button>
@@ -49,7 +50,10 @@ const ModalNextArrow = ({ onClick }) => (
 
 const ProjectDetail = () => {
   const [formInfo, setFormInfo] = useState({ show: false, comment: '' });
-  const [selectedImageIndex, setSelectedImageIndex] = useState(null); // Для модального окна изображения
+  const [selectedImageIndex, setSelectedImageIndex] = useState(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const touchStartX = useRef(null);
+  const touchEndX = useRef(null);
   const { id } = useParams();
   const project = projects.find((p) => p.id === parseInt(id));
 
@@ -57,7 +61,85 @@ const ProjectDetail = () => {
   const relatedProjectsRef = useRef(null);
   const isRelatedProjectsInView = useInView(relatedProjectsRef, { once: true, margin: '-50px' });
 
+  // Проверка мобильного устройства
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
+  // Сброс анимации при закрытии модального окна
+  useEffect(() => {
+    if (selectedImageIndex === null) {
+      setHasAnimated(false);
+    }
+  }, [selectedImageIndex]);
+
   if (!project) return <div>Проект не найден</div>;
+
+  // Данные комплектаций
+  const categories = [
+    {
+      title: "Фундамент",
+      items: [
+        "Свайно-ростверковый: сваи Ø300 мм, ростверк 250×400 мм, арматура Ø10 мм.",
+        "Свайно-ростверковый усиленный: ростверк 300 мм, до 700 мм, арматура Ø12 мм.",
+        "Монолитный ленточный, арматура Ø12 мм.",
+      ],
+    },
+    {
+      title: "Стены",
+      items: [
+        "Каркас 50×150 мм, утепление 150 мм, обшивка имитацией бруса.",
+        "Каркас 50×150 мм + утепление 50 мм, ветрозащита, обшивка брус/штукатурка.",
+        "<strong>Газосиликат 400 мм</strong> + утепление 50 мм, дерево/штукатурка.",
+      ],
+    },
+    {
+      title: "Перегородки",
+      items: [
+        "Брус 50×150 мм, звукоизоляция 100 мм.",
+        "Брус 50×150 мм, звукоизоляция 150 мм.",
+        "Газоблоки 100/200 мм, кирпич в санузлах.",
+      ],
+    },
+    {
+      title: "Потолок",
+      items: [
+        "Высота 2.6 м, утепление 150 мм, гипсокартон.",
+        "Высота 2.7 м, утепление 150 мм, гипсокартон 2 слоя.",
+        "Высота 2.7 м, утепление 150 мм, гипсокартон 2 слоя.",
+      ],
+    },
+    {
+      title: "Пол",
+      items: [
+        "Стяжка по песчаной подушке, бетон М250.",
+        "Утепление пенополистирол 50 мм + стяжка М250.",
+        "Утепление экструдированный пенополистирол + стяжка.",
+      ],
+    },
+    {
+      title: "Окна",
+      items: [
+        "Однокамерные стеклопакеты, трехкамерный профиль.",
+        "Двухкамерные стеклопакеты, пятикамерный профиль.",
+        "Двухкамерные стеклопакеты, пятикамерный профиль.",
+      ],
+    },
+    {
+      title: "Кровля",
+      items: [
+        'Металлочерепица "Монтеррей Norman".',
+        "Металлочерепица + водосточная система.",
+        "Металлочерепица + водосточная система.",
+      ],
+    },
+    {
+      title: "Инженерия",
+      items: [
+        "Без электрики и сантехники.",
+        "Электрика, сантехника, вентиляция.",
+        "Полный комплект: электрика, сантехника, вентиляция.",
+      ],
+    },
+  ];
 
   // Настройки основного слайдера
   const settings = {
@@ -114,19 +196,45 @@ const ProjectDetail = () => {
     setSelectedImageIndex((prev) =>
       prev === 0 ? project.images.length - 1 : prev - 1
     );
+    setHasAnimated(true); // Отключаем анимацию после смены изображения
   };
 
   const handleNextImage = () => {
     setSelectedImageIndex((prev) =>
       prev === project.images.length - 1 ? 0 : prev + 1
     );
+    setHasAnimated(true); // Отключаем анимацию после смены изображения
+  };
+
+  // Обработка свайпов для мобильных
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return;
+    const deltaX = touchEndX.current - touchStartX.current;
+    const minSwipeDistance = 50; // Минимальная дистанция свайпа
+
+    if (deltaX > minSwipeDistance) {
+      handlePrevImage(); // Свайп вправо → предыдущее изображение
+    } else if (deltaX < -minSwipeDistance) {
+      handleNextImage(); // Свайп влево → следующее изображение
+    }
+
+    touchStartX.current = null;
+    touchEndX.current = null;
   };
 
   return (
     <div className="max-w-6xl mx-auto px-4 pt-28 py-10">
       <h1 className="text-3xl font-bold mb-6 text-[#17253c]">{project.title}</h1>
 
-      <div className="flex flex-col lg:flex-row gap-8">
+      <div className="flex flex-col lg:flex-row gap-8 items-stretch">
         {/* Слайдер слева */}
         <div className="w-full lg:w-1/2 relative">
           <Slider {...settings}>
@@ -136,6 +244,7 @@ const ProjectDetail = () => {
                   src={img}
                   alt={`Изображение ${idx + 1}`}
                   className="h-[500px] w-full object-cover rounded cursor-pointer"
+                  loading="lazy"
                   onClick={() => setSelectedImageIndex(idx)}
                 />
               </div>
@@ -144,9 +253,9 @@ const ProjectDetail = () => {
         </div>
 
         {/* Текст справа */}
-        <div className="w-full lg:w-1/2 text-[#17253c]">
+        <div className="w-full lg:w-1/2 text-[#17253c] flex flex-col max-h-[500px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
           <h2 className="font-semibold text-md mb-1">Спецификация</h2>
-          <ul className="list-disc pl-5 space-y-1">
+          <ul className="list-disc pl-5 space-y-1 flex-1">
             {project.description.map((line, i) => (
               <li key={i} className="text-gray-800">{line}</li>
             ))}
@@ -173,14 +282,17 @@ const ProjectDetail = () => {
                 comment: `Добрый день, хочу консультацию по проекту "${project.title}"`,
               })
             }
-            className="mt-4 bg-yellow-400 text-black font-semibold py-2 px-4 rounded hover:bg-yellow-300"
+            className="mt-4 bg-yellow-400 text-black font-semibold py-2 px-4 rounded hover:bg-yellow-300 self-start"
           >
             Заказать консультацию
           </button>
         </div>
       </div>
 
-      {/* Слайдер других проектов снизу */}
+      {/* Блок комплектаций */}
+      <ProjectEquipment packages={project.packages} categories={categories} />
+
+      {/* Слайдер других проектов */}
       {relatedProjects.length > 0 && (
         <motion.div
           ref={relatedProjectsRef}
@@ -203,32 +315,62 @@ const ProjectDetail = () => {
       )}
 
       {/* Модальное окно для просмотра изображения */}
-      {selectedImageIndex !== null && (
-        <div
-          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
-          onClick={handleOverlayClick}
-        >
-          <div className="relative max-w-4xl w-full max-h-[80vh] flex items-center justify-center">
-            <img
-              src={project.images[selectedImageIndex]}
-              alt={`Изображение ${selectedImageIndex + 1}`}
-              className="w-full h-auto max-h-[80vh] max-w-[90vw] object-contain rounded"
-            />
-            <button
-              onClick={() => setSelectedImageIndex(null)}
-              className="absolute top-4 right-4 bg-white hover:bg-gray-100 rounded-full w-8 h-8 flex justify-center shadow-md z-[100]"
+      <AnimatePresence>
+        {selectedImageIndex !== null && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
+            onClick={handleOverlayClick}
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="relative max-w-4xl w-full max-h-[80vh] flex items-center justify-center"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
             >
-              <span className="text-xl text-gray-800 font-bold">×</span>
-            </button>
-            {project.images.length > 1 && (
-              <>
-                <ModalPrevArrow onClick={handlePrevImage} />
-                <ModalNextArrow onClick={handleNextImage} />
-              </>
-            )}
-          </div>
-        </div>
-      )}
+              <motion.img
+                key={selectedImageIndex}
+                src={project.images[selectedImageIndex]}
+                alt={`Изображение ${selectedImageIndex + 1}`}
+                className="w-full h-auto max-h-[80vh] max-w-[90vw] object-contain rounded"
+                loading="lazy"
+                initial={isMobile && !hasAnimated ? { x: 0 } : { opacity: 0 }}
+                animate={
+                  isMobile && !hasAnimated
+                    ? {
+                        x: [-10, 10, -10, 0],
+                        transition: {
+                          x: { repeat: 2, duration: 1.5, ease: 'easeInOut' },
+                        },
+                      }
+                    : { opacity: 1 }
+                }
+                exit={{ opacity: 0 }}
+                transition={{ opacity: { duration: 0.2 } }}
+              />
+              <button
+                onClick={() => setSelectedImageIndex(null)}
+                className="hidden md:block absolute top-4 right-4 bg-white hover:bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center shadow-md z-[100]"
+              >
+                <span className="text-xl text-gray-800 font-bold">×</span>
+              </button>
+              {project.images.length > 1 && (
+                <>
+                  <ModalPrevArrow onClick={handlePrevImage} />
+                  <ModalNextArrow onClick={handleNextImage} />
+                </>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <ModalForm
         show={formInfo.show}

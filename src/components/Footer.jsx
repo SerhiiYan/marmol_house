@@ -27,7 +27,7 @@ export default function Footer() {
               <FaEnvelope /> <span>yurymarmol.83@gmail.com</span>
             </li>
             <li className="flex items-center gap-2">
-              <FaMapMarkerAlt /> <span>г. Гродно, ул. Лелевеля, 12</span>
+              <FaMapMarkerAlt /> <span>г. Гродно, ул. Лелевеля, 12, к 6</span>
             </li>
           </ul>
         </div>
