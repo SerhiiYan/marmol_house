@@ -2,7 +2,6 @@ import { Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Home from './pages/Home'
 import Gallery from './pages/Gallery'
-import Prices from './pages/Prices'
 import Materials from './pages/Materials'
 import Contact from './pages/Contact'
 import About from './pages/About'
@@ -10,6 +9,7 @@ import Privacy from './pages/Privacy'
 import Layout from './components/Layout'
 import ProjectDetail from './components/ProjectDetail'
 import ProjectPlan from './components/ProjectPlan'
+import CompletedProjects from './pages/CompletedProjects'
 
 function App() {
   return (
@@ -22,7 +22,7 @@ function App() {
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/projects/:id" element={<ProjectDetail />} />
             <Route path="/project-plan/:id" element={<ProjectPlan />} />
-            <Route path="/equipment" element={<Prices />} />
+            <Route path="/completed" element={<CompletedProjects />} />
             <Route path="/materials" element={<Materials />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<About />} />
