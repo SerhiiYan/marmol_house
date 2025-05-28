@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Helmet } from "react-helmet";
 import { FaHardHat, FaBuilding, FaUsers, FaCheckCircle } from "react-icons/fa";
 import teamImage from "../assets/people.png";
+import { Link } from "react-router-dom";
 
 // Анимации
 const fadeInUp = {
@@ -88,14 +89,17 @@ function About() {
               Мы оптимизируем процессы, чтобы строительство было доступным без потери
               качества. Прозрачность и честность — основа нашей работы.
             </p>
-            <motion.a
-              href="/contact"
+            <Link 
+              to="/contact"
               className="inline-block bg-[#f9c615] text-[#17253c] px-6 py-3 rounded-full font-semibold text-base sm:text-lg hover:bg-[#e5b512] transition-colors duration-300"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
             >
-              Связаться с нами
-            </motion.a>
+              <motion.a
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                >
+                Связаться с нами
+              </motion.a>
+            </Link>
           </motion.div>
         </motion.div>
 
