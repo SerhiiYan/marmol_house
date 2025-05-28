@@ -67,7 +67,7 @@ export default function HousePackages() {
             data-aos="fade-up"
             data-aos-delay={idx * 100}
           >
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">{pack.title}</h3>
+            <h3 className="text-xl font-semibold text-yellow-600 mb-3">{pack.title}</h3>
             <p className="text-x text-gray-600 mb-4">{pack.description}</p>
             <ul className="text-gray-700 text-left space-y-1 mb-4">
               {pack.highlights.map((item, i) => (
@@ -77,12 +77,6 @@ export default function HousePackages() {
                 </li>
               ))}
             </ul>
-            <Link
-              to="/Equipment"
-              className="inline-block mt-4 bg-gray-500 hover:bg-yellow-500 text-white font-medium py-2 px-4 rounded-xl text-x transition"
-            >
-              Подробнее
-            </Link>
           </div>
         ))}
       </div>

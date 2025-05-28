@@ -30,22 +30,54 @@ const NextArrow = ({ onClick }) => (
 );
 
 // Кастомные стрелки для модального окна
-const ModalPrevArrow = ({ onClick }) => (
-  <button
+const ModalPrevArrow = ({ onClick, isMobile, hasAnimated }) => (
+  <motion.button
     onClick={onClick}
-    className="hidden md:block absolute top-1/2 -translate-y-1/2 left-4 z-[100] bg-white/80 hover:bg-white rounded-full p-2 shadow-md"
+    className="absolute top-1/2 -translate-y-1/2 left-4 z-[100] bg-black/50 hover:bg-black/70 text-white rounded-full p-2 shadow-md"
+    initial={isMobile && !hasAnimated ? { x: 0 } : { opacity: 1 }}
+    animate={
+      isMobile && !hasAnimated
+        ? {
+            x: [0, 30, -10, 0],
+            transition: {
+              x: {
+                times: [0, 0.4, 0.7, 1],
+                duration: 1.2,
+                ease: 'easeOut',
+                repeat: 1,
+              },
+            },
+          }
+        : { opacity: 1 }
+    }
   >
-    <FaChevronLeft className="text-xl text-gray-800" />
-  </button>
+    <FaChevronLeft className="text-xl" />
+  </motion.button>
 );
 
-const ModalNextArrow = ({ onClick }) => (
-  <button
+const ModalNextArrow = ({ onClick, isMobile, hasAnimated }) => (
+  <motion.button
     onClick={onClick}
-    className="hidden md:block absolute top-1/2 -translate-y-1/2 right-4 z-[100] bg-white/80 hover:bg-white rounded-full p-2 shadow-md"
+    className="absolute top-1/2 -translate-y-1/2 right-4 z-[100] bg-black/50 hover:bg-black/70 text-white rounded-full p-2 shadow-md"
+    initial={isMobile && !hasAnimated ? { x: 0 } : { opacity: 1 }}
+    animate={
+      isMobile && !hasAnimated
+        ? {
+            x: [0, 30, -10, 0],
+            transition: {
+              x: {
+                times: [0, 0.4, 0.7, 1],
+                duration: 1.2,
+                ease: 'easeOut',
+                repeat: 1,
+              },
+            },
+          }
+        : { opacity: 1 }
+    }
   >
-    <FaChevronRight className="text-xl text-gray-800" />
-  </button>
+    <FaChevronRight className="text-xl" />
+  </motion.button>
 );
 
 const ProjectDetail = () => {
@@ -71,7 +103,7 @@ const ProjectDetail = () => {
     }
   }, [selectedImageIndex]);
 
-  if (!project) return <div>Проект не найден</div>;
+  if (!project) return;
 
   // Данные комплектаций
   const categories = [
@@ -139,8 +171,7 @@ const ProjectDetail = () => {
         "Полный комплект: электрика, сантехника, вентиляция.",
       ],
     },
-  ];
-
+  ]
   // Настройки основного слайдера
   const settings = {
     dots: true,
@@ -335,38 +366,62 @@ const ProjectDetail = () => {
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
             >
-              <motion.img
-                key={selectedImageIndex}
-                src={project.images[selectedImageIndex]}
-                alt={`Изображение ${selectedImageIndex + 1}`}
-                className="w-full h-auto max-h-[80vh] max-w-[90vw] object-contain rounded"
-                loading="lazy"
-                initial={isMobile && !hasAnimated ? { x: 0 } : { opacity: 0 }}
-                animate={
-                  isMobile && !hasAnimated
-                    ? {
-                        x: [-10, 10, -10, 0],
-                        transition: {
-                          x: { repeat: 2, duration: 1.5, ease: 'easeInOut' },
-                        },
-                      }
-                    : { opacity: 1 }
-                }
-                exit={{ opacity: 0 }}
-                transition={{ opacity: { duration: 0.2 } }}
-              />
-              <button
-                onClick={() => setSelectedImageIndex(null)}
-                className="hidden md:block absolute top-4 right-4 bg-white hover:bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center shadow-md z-[100]"
-              >
-                <span className="text-xl text-gray-800 font-bold">×</span>
-              </button>
-              {project.images.length > 1 && (
-                <>
-                  <ModalPrevArrow onClick={handlePrevImage} />
-                  <ModalNextArrow onClick={handleNextImage} />
-                </>
-              )}
+              <div className="relative inline-block">
+                <motion.img
+                  key={selectedImageIndex}
+                  src={project.images[selectedImageIndex]}
+                  alt={`Изображение ${selectedImageIndex + 1}`}
+                  className="w-auto h-auto max-h-[80vh] max-w-[90vw] object-contain rounded"
+                  loading="lazy"
+                  initial={isMobile && !hasAnimated ? { x: 0 } : { opacity: 0 }}
+                  animate={
+                    isMobile && !hasAnimated
+                      ? {
+                          x: [0, 30, -10, 0],
+                          transition: {
+                            x: {
+                              times: [0, 0.4, 0.7, 1],
+                              duration: 1.2,
+                              ease: 'easeOut',
+                              repeat: 1,
+                            },
+                          },
+                        }
+                      : { opacity: 1 }
+                  }
+                  exit={{ opacity: 0 }}
+                  transition={{ opacity: { duration: 0.2 } }}
+                />
+                {/* Хрестик с анимацией */}
+                <motion.button
+                  onClick={() => setSelectedImageIndex(null)}
+                  className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white rounded-full w-8 h-8 flex items-center justify-center shadow-md z-[100]"
+                  initial={isMobile && !hasAnimated ? { x: 0 } : { opacity: 1 }}
+                  animate={
+                    isMobile && !hasAnimated
+                      ? {
+                          x: [0, 30, -10, 0],
+                          transition: {
+                            x: {
+                              times: [0, 0.4, 0.7, 1],
+                              duration: 1.2,
+                              ease: 'easeOut',
+                              repeat: 1,
+                            },
+                          },
+                        }
+                      : { opacity: 1 }
+                  }
+                >
+                  <span className="text-xl font-bold">×</span>
+                </motion.button>
+                {project.images.length > 1 && (
+                  <>
+                    <ModalPrevArrow onClick={handlePrevImage} isMobile={isMobile} hasAnimated={hasAnimated} />
+                    <ModalNextArrow onClick={handleNextImage} isMobile={isMobile} hasAnimated={hasAnimated} />
+                  </>
+                )}
+              </div>
             </motion.div>
           </motion.div>
         )}

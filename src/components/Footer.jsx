@@ -1,65 +1,159 @@
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaFacebookF, FaInstagram, FaYoutube, FaTelegram } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import logo from '../assets/logofoo.png';
 
+// Варианты анимации для иконок
+const iconHover = {
+  hover: { scale: 1.2, rotate: 12, transition: { duration: 0.3 } },
+};
+
 export default function Footer() {
+  const handleLinkClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <footer className="bg-gray-900 text-white py-10">
-      <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer
+      className="bg-gradient-to-b from-gray-900 to-[#17253c] text-white py-8 sm:py-10"
+      role="contentinfo"
+    >
+      <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-8">
         {/* Компания */}
         <div>
-            <img 
-                src={logo} 
-                alt="Marmol House логотип" 
-                className="h-10 mb-4"
-            />
-            <p className="text-sm text-gray-400">Каркасные дома под ключ в Беларуси</p>
+          <img
+            src={logo}
+            alt="Marmol House логотип"
+            className="h-12 sm:h-14 mb-4"
+          />
+          <p className="text-sm sm:text-base text-gray-300">
+            Каркасные дома под ключ в Беларуси
+          </p>
         </div>
 
         {/* Контакты */}
         <div>
-          <h4 className="font-semibold mb-4">Контакты</h4>
-          <ul className="space-y-2 text-sm">
-            <li className="flex items-center gap-2">
-              <FaPhone /> <span>+375 (29) 184 54 81</span>
+          <h4 className="text-base sm:text-lg font-semibold mb-4 text-white">
+            Контакты
+          </h4>
+          <ul className="space-y-3 text-sm sm:text-base text-gray-300">
+            <li className="flex items-center gap-1 sm:gap-2 min-w-0">
+              <motion.div whileHover="hover" variants={iconHover}>
+                <FaPhone className="text-yellow-500 w-4 h-4 flex-shrink-0" />
+              </motion.div>
+              <span>+375 (29) 184 54 81</span>
             </li>
-            <li className="flex items-center gap-2">
-              <FaEnvelope /> <span>yurymarmol.83@gmail.com</span>
+            <li className="flex items-center gap-1 sm:gap-2 min-w-0">
+              <motion.div whileHover="hover" variants={iconHover}>
+                <FaEnvelope className="text-yellow-500 w-4 h-4 flex-shrink-0" />
+              </motion.div>
+              <span className="text-ellipsis overflow-hidden whitespace-nowrap">
+                yurymarmol.83@gmail.com
+              </span>
             </li>
-            <li className="flex items-center gap-2">
-              <FaMapMarkerAlt /> <span>г. Гродно, ул. Лелевеля, 12, к 6</span>
+            <li className="flex items-center gap-1 sm:gap-2 min-w-0">
+              <motion.div whileHover="hover" variants={iconHover}>
+                <FaMapMarkerAlt className="text-yellow-500 w-4 h-4 flex-shrink-0" />
+              </motion.div>
+              <span>г. Гродно, ул. Лелевеля, 12, к 6</span>
             </li>
           </ul>
         </div>
 
         {/* Навигация */}
-        <div>
-          <h4 className="font-semibold mb-4">Навигация</h4>
-          <ul className="space-y-2 text-sm text-gray-400">
-            <li><a href="#" className="hover:text-yellow-400">Главная</a></li>
-            <li><Link to={'/gallery'} className="hover:text-yellow-400">Проекты</Link></li>
-            <li><Link to={'/equipment'} className="hover:text-yellow-400">Комплектация</Link></li>
-            <li><Link to={'/contact'} className="hover:text-yellow-400">Контакты</Link></li>
-            <li><Link to={'/about'} className="hover:text-yellow-400">О нас</Link></li>
+        <div role="navigation">
+          <h4 className="text-base sm:text-lg font-semibold mb-4 text-white">
+            Навигация
+          </h4>
+          <ul className="space-y-3 text-sm sm:text-base text-gray-300">
+            <li>
+              <Link
+                to="/"
+                className="hover:text-yellow-500 transition-colors duration-300"
+                onClick={handleLinkClick}
+              >
+                Главная
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/gallery"
+                className="hover:text-yellow-500 transition-colors duration-300"
+                onClick={handleLinkClick}
+              >
+                Проекты
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/contact"
+                className="hover:text-yellow-500 transition-colors duration-300"
+                onClick={handleLinkClick}
+              >
+                Контакты
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/about"
+                className="hover:text-yellow-500 transition-colors duration-300"
+                onClick={handleLinkClick}
+              >
+                О нас
+              </Link>
+            </li>
           </ul>
         </div>
 
         {/* Соцсети */}
         <div>
-          <h4 className="font-semibold mb-4">Мы в соцсетях</h4>
+          <h4 className="text-base sm:text-lg font-semibold mb-4 text-white">
+            Мы в соцсетях
+          </h4>
           <div className="flex space-x-4 text-lg">
-            <a href="#" target="_blank" className="hover:text-yellow-400"><FaFacebookF /></a>
-            <a href="https://www.instagram.com/marmol_house/" target="_blank" className="hover:text-yellow-400"><FaInstagram /></a>
-            <a href="#" target="_blank" className="hover:text-yellow-400"><FaYoutube /></a>
-            <a href="#" target="_blank" className="hover:text-yellow-400"><FaTelegram /></a>
+            <motion.a
+              href="#"
+              target="_blank"
+              aria-label="Facebook Marmol House"
+              className="bg-gray-800 p-2 rounded-full hover:bg-yellow-500 hover:text-white transition-all duration-300"
+              whileHover="hover"
+              variants={iconHover}
+            >
+              <FaFacebookF />
+            </motion.a>
+            <motion.a
+              href="https://www.instagram.com/marmol_house/"
+              target="_blank"
+              aria-label="Instagram Marmol House"
+              className="bg-gray-800 p-2 rounded-full hover:bg-yellow-500 hover:text-white transition-all duration-300"
+              whileHover="hover"
+              variants={iconHover}
+            >
+              <FaInstagram />
+            </motion.a>
+            <motion.a
+              href="#"
+              target="_blank"
+              aria-label="YouTube Marmol House"
+              className="bg-gray-800 p-2 rounded-full hover:bg-yellow-500 hover:text-white transition-all duration-300"
+              whileHover="hover"
+              variants={iconHover}
+            >
+              <FaYoutube />
+            </motion.a>
+            <motion.a
+              href="https://t.me/MarmolHouse"
+              target="_blank"
+              aria-label="Telegram Marmol House"
+              className="bg-gray-800 p-2 rounded-full hover:bg-yellow-500 hover:text-white transition-all duration-300"
+              whileHover="hover"
+              variants={iconHover}
+            >
+              <FaTelegram />
+            </motion.a>
           </div>
         </div>
       </div>
-
-      {/* Нижний ряд */}
-      {/* <div className="mt-10 text-center text-gray-500 text-sm border-t border-gray-700 pt-4">
-        © {new Date().getFullYear()} Marmol House
-      </div> */}
     </footer>
   );
 }
