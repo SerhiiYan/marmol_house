@@ -48,14 +48,14 @@ export default function Footer() {
                 <FaEnvelope className="text-yellow-500 w-4 h-4 flex-shrink-0" />
               </motion.div>
               <span className="text-ellipsis overflow-hidden whitespace-nowrap">
-                yurymarmol.83@gmail.com
+                yurmarmol@gmail.com
               </span>
             </li>
             <li className="flex items-center gap-1 sm:gap-2 min-w-0">
               <motion.div whileHover="hover" variants={iconHover}>
                 <FaMapMarkerAlt className="text-yellow-500 w-4 h-4 flex-shrink-0" />
               </motion.div>
-              <span>г. Гродно, ул. Лелевеля, 12, к 6</span>
+              <span>г. Гродно, ул. Лелевеля, 12A, к 6</span>
             </li>
           </ul>
         </div>

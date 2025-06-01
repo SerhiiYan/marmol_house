@@ -5,7 +5,7 @@ const CompletedProjects = [
     id: uuidv4(),
     title: 'Дом из Блока',
     images: ['/assets/completed/180/3.jpg', '/assets/completed/180/1.jpg', '/assets/completed/180/4.jpg', '/assets/completed/180/2.jpg'],
-    price: '320 000 BYN',
+    price: '290 000 BYN',
     description: [
       'Барановичи',
       'Площадь: 180м²',
@@ -19,7 +19,7 @@ const CompletedProjects = [
     id: uuidv4(),
     title: 'Дом из Блока с гаражом',
     images: ['/assets/completed/tarusichy/1.jpg', '/assets/completed/tarusichy/2.jpg', '/assets/completed/tarusichy/3.jpg', '/assets/completed/tarusichy/4.jpg'],
-    price: '228 000 BYN',
+    price: '167 000 BYN',
     description: [
       'Тарусичи',
       'Площадь: 152м²',
@@ -33,7 +33,7 @@ const CompletedProjects = [
     id: uuidv4(),
     title: 'Реконструкция дома',
     images: ['/assets/completed/ivanovci/1.jpg', '/assets/completed/ivanovci/2.jpg', '/assets/completed/ivanovci/3.jpg',],
-    price: '27 000 BYN',
+    price: '132 000 BYN',
     description: [
       'Ивановцы',
       'Площадь: 120м²',

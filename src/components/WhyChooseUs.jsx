@@ -2,6 +2,10 @@ import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import safetyIcon from '../assets/safety.png';
+import priceIcon from '../assets/price.png';
+import expIcon from '../assets/exp.png';
+import garantieIcon from '../assets/garantie.png';
 
 // Данные о преимуществах компании
 const features = [
@@ -9,25 +13,25 @@ const features = [
     title: 'Надёжное строительство',
     description:
       'Строим тёплые и комфортные дома по всей Беларуси — каркасные, газосиликатные, с мансардой или без. Всё под ключ.',
-    icon: '/safety.png',
+    icon: safetyIcon,
   },
   {
     title: 'Фиксированная цена',
     description:
       'Цена фиксируется в договоре и остаётся неизменной. Изменения возможны только по желанию заказчика.',
-    icon: '/price.png',
+    icon: priceIcon,
   },
   {
     title: '10 лет опыта',
     description:
       'У нас слаженная команда профессионалов. Каждый специалист имеет опыт, квалификацию и разряд.',
-    icon: '/exp.png',
+    icon: expIcon,
   },
   {
     title: 'Гарантия 5 лет',
     description:
       'Даём 5 лет гарантии на все работы. Объект обслуживается в течение этого срока бесплатно по гарантии.',
-    icon: '/garantie.png',
+    icon: garantieIcon,
   },
 ];
 
@@ -37,7 +41,6 @@ const iconVariants = {
   hover: { rotate: 12, scale: 1.1 },
 };
 
-// Компонент секции преимуществ компании
 export default function WhyChooseUs() {
   useEffect(() => {
     AOS.init({ duration: 800, once: true });
@@ -82,9 +85,10 @@ export default function WhyChooseUs() {
                 src={feature.icon}
                 alt={feature.title}
                 className="w-12 h-12 rounded-full bg-white shadow-md p-2 object-contain"
+                loading="lazy"
               />
             </motion.div>
-            <h3 className="text-lg sm:text-xl font-semibold text-yellow-500 mb-2 text-center">
+            <h3 className="text-lg sm:text-xl font-semibold text-[#f9c615] mb-2 text-center">
               {feature.title}
             </h3>
             <p className="text-sm sm:text-base text-gray-600 text-center">
