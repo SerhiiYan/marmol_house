@@ -12,8 +12,24 @@
   ],
   "routes": [
     {
-      "src": "/(.*)",
+      "src": "/(?!api/.*|assets/.*|_next/.*|favicon.ico|sitemap.xml|robots.txt)(.*)",
       "dest": "/index.html"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "/sitemap.xml",
+      "dest": "/sitemap.xml"
+    },
+    {
+      "src": "/robots.txt",
+      "dest": "/robots.txt"
     }
   ],
   "redirects": [
@@ -25,4 +41,3 @@
     }
   ]
 }
-
