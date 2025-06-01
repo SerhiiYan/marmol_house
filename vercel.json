@@ -13,7 +13,11 @@
   "routes": [
     {
       "src": "/(?!api/.*|assets/.*|_next/.*|favicon.ico|sitemap.xml|robots.txt)(.*)",
-      "dest": "/index.html"
+      "dest": "/index.html",
+      "headers": {
+        "X-Prerender-Token": "$PRERENDER_TOKEN",
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate"
+      }
     },
     {
       "src": "/api/(.*)",
@@ -30,14 +34,6 @@
     {
       "src": "/robots.txt",
       "dest": "/robots.txt"
-    }
-  ],
-  "redirects": [
-    {
-      "source": "/(.*)",
-      "destination": "https://marmolhouse.vercel.app/$1",
-      "permanent": true,
-      "statusCode": 301
     }
   ]
 }
