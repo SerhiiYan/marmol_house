@@ -33,3 +33,8 @@ function App() {
 }
 
 export default App;
+
+   //   "headers": {
+    //     "X-Prerender-Token": "$PRERENDER_TOKEN",
+    //     "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate"
+    //   }
