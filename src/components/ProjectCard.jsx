@@ -13,6 +13,7 @@ const ProjectCard = ({ project }) => {
             src={project.images[0]}
             alt={`Проект ${project.title}`}
             className="w-full h-64 sm:h-56 lg:h-60 object-cover"
+            loading="lazy"
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.3 }}
           />
