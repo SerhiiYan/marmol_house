@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "name": "marmolhouse",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/",
+      "headers": {
+        "X-Prerender-Token": "GQwX7VGSvU6EcvJOir1b"
+      }
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "destination": "https://marmolhouse.vercel.app/$1",
+      "permanent": true,
+      "statusCode": 301
+    }
+  ]
+}
