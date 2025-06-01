@@ -15,7 +15,7 @@
       "src": "/(.*)",
       "dest": "/",
       "headers": {
-        "X-Prerender-Token": "GQwX7VGSvU6EcvJOir1b"
+        "X-Prerender-Token": "$PRERENDER_TOKEN"
       }
     }
   ],

@@ -5,6 +5,7 @@ import { FaHardHat, FaBuilding, FaUsers, FaCheckCircle } from "react-icons/fa";
 import teamImage from "../assets/people.png";
 import { Link } from "react-router-dom";
 
+
 // Анимации
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -18,6 +19,7 @@ const staggerChildren = {
     transition: { staggerChildren: 0.15, delayChildren: 0.2 },
   },
 };
+
 
 function About() {
   return (
