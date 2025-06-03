@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function ModalForm({ show, onClose, defaultComment = '' }) {
   const [formData, setFormData] = useState({ name: '', phone: '', comment: '' });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  // 🆕 Оновлюємо comment при зміні defaultComment
   useEffect(() => {
     setFormData((prev) => ({ ...prev, comment: defaultComment }));
   }, [defaultComment]);
@@ -17,9 +17,7 @@ export default function ModalForm({ show, onClose, defaultComment = '' }) {
       await fetch('https://script.google.com/macros/s/AKfycby6QFmJOZb0l39zhVHOzl5ghg-bGa0Lj8OdK5Z6CCXWX33oT8fB1cOL67gCZqniA9jn/exec', {
         method: 'POST',
         mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: formData.name,
           phone: formData.phone,
@@ -33,9 +31,11 @@ export default function ModalForm({ show, onClose, defaultComment = '' }) {
         setSuccess(false);
       }, 2000);
     } catch (error) {
-      alert('Ошибка при отправке');
+      console.error('Form submission error:', error);
+      alert('Ошибка при отправке формы. Попробуйте позже.');
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   if (!show) return null;
@@ -54,7 +54,7 @@ export default function ModalForm({ show, onClose, defaultComment = '' }) {
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             required
-            className="w-full border px-4 py-2 rounded"
+            className="w-full border px-4 py-2 rounded focus:ring-[#f9c615] focus:border-[#f9c615]"
           />
           <input
             type="tel"
@@ -62,18 +62,32 @@ export default function ModalForm({ show, onClose, defaultComment = '' }) {
             value={formData.phone}
             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
             required
-            className="w-full border px-4 py-2 rounded"
+            className="w-full border px-4 py-2 rounded focus:ring-[#f9c615] focus:border-[#f9c615]"
           />
           <textarea
             placeholder="Комментарий"
             value={formData.comment}
             onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
-            className="w-full border px-4 py-2 rounded"
+            className="w-full border px-4 py-2 rounded focus:ring-[#f9c615] focus:border-[#f9c615]"
           />
+          <div className="flex items-center">
+            <input
+              id="acceptPolicy"
+              type="checkbox"
+              required
+              className="mr-2 text-[#f9c615] focus:ring-[#f9c615]"
+            />
+            <label htmlFor="acceptPolicy" className="text-sm text-gray-600">
+              Я согласен с{' '}
+              <Link to="/privacy" className="text-[#f9c615] underline hover:text-[#e5b512]">
+                политикой конфиденциальности
+              </Link>
+            </label>
+          </div>
           <button
             type="submit"
             disabled={loading}
-            className="bg-yellow-400 text-black font-semibold py-2 px-4 rounded hover:bg-yellow-300 w-full"
+            className="bg-[#f9c615] text-[#17253c] font-semibold py-2 px-4 rounded hover:bg-[#e5b512] w-full disabled:opacity-50"
           >
             {loading ? 'Отправка...' : 'Отправить'}
           </button>

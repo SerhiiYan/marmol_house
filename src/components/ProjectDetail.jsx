@@ -306,7 +306,7 @@ const ProjectDetail = () => {
           <p className="mt-4 font-semibold text-lg text-red-600">
             Цена: {project.price}
           </p>
-          <button
+          {/* <button
             onClick={() =>
               setFormInfo({
                 show: true,
@@ -316,7 +316,7 @@ const ProjectDetail = () => {
             className="mt-4 bg-yellow-400 text-black font-semibold py-2 px-4 rounded hover:bg-yellow-300 self-start"
           >
             Заказать консультацию
-          </button>
+          </button> */}
         </div>
       </div>
 

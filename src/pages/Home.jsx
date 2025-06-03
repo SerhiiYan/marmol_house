@@ -10,89 +10,126 @@ import HousePackages from '../components/HousePackages';
 import Footer from '../components/Footer';
 import WhyChooseUs from '../components/WhyChooseUs';
 import TestimonialsSlider from '../components/TestimonialsSlider';
+import Privacy from './Privacy';
 
-// Компонент главной страницы
 function Home() {
   const [showModal, setShowModal] = useState(false);
-  const [formData, setFormData] = useState({ name: '', phone: '', comments: '' });
+  const [formData, setFormData] = useState({ name: '', phone: '', comment: '' }); 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  // Обработка отправки формы
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      await fetch('https://script.google.com/macros/s/AKfycby6QFmJOZb0l39zhVHOzl5ghg-bGa0Lj8OdK5Z6CCXWX33oT8fB1cOL67gCZqniA9jn/exec', {
+      const response = await fetch('https://script.google.com/macros/s/AKfycby6QFmJOZb0l39zhVHOzl5ghg-bGa0Lj8OdK5Z6CCXWX33oT8fB1cOL67gCZqniA9jn/exec', {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: formData.name,
           phone: formData.phone,
-          message: formData.comments || 'Хочу консультации по строительству дома',
+          message: formData.comment || 'Хочу консультации по строительству дома',
         }),
       });
       setSuccess(true);
-      setFormData({ name: '', phone: '', comments: '' });
+      setFormData({ name: '', phone: '', comment: '' });
       setTimeout(() => {
         setShowModal(false);
         setSuccess(false);
       }, 2000);
     } catch (error) {
-      console.error('Ошибка отправки формы:', error);
+      console.error('Form submission error:', error);
       alert('Ошибка при отправке формы. Попробуйте позже.');
     } finally {
       setLoading(false);
     }
   };
 
-  // Структурированные данные для SEO
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     name: 'Marmol House',
     description: 'Строительство каркасных домов под ключ в Гродно и по всей Беларуси. Работаем по 240 указу для многодетных семей.',
-    url: 'https://marmol-house.vercel.app', // Реальный URL
+    url: 'https://marmolhouse.by',
     telephone: '+375291845481',
     address: {
       '@type': 'PostalAddress',
+      streetAddress: 'г. Гродно, ул. Лелевеля, 12A, к 6',
       addressLocality: 'Гродно',
+      postalCode: '230000',
       addressCountry: 'BY',
     },
-    sameAs: [
-      'https://facebook.com/marmolhouse',
-      'https://instagram.com/marmolhouse',
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 53.6784,
+      longitude: 23.8295,
+    },
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        opens: '09:00',
+        closes: '18:00',
+      },
     ],
-    image: 'https://marmol-house.vercel.app/assets/logo.png',
-    openingHours: 'Mo-Fr 09:00-18:00',
+    sameAs: ['https://facebook.com/marmolhouse', 'https://instagram.com/marmolhouse'],
+    image: 'https://marmolhouse.by/assets/logo.png',
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.8',
+      reviewCount: '50',
+    },
+  };
+
+  const videoStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: 'Каркасные дома Marmol House',
+    description: 'Видео о строительстве каркасных домов в Гродно и Беларуси.',
+    thumbnailUrl: 'https://marmolhouse.by/og-image.png',
+    uploadDate: '2025-06-02',
+    contentUrl: 'https://marmolhouse.by/assets/herovideo.webm',
+    embedUrl: 'https://marmolhouse.by/assets/herovideo.webm',
   };
 
   return (
     <main className="w-full overflow-x-hidden">
-      {/* Метатеги для SEO */}
       <Helmet>
         <html lang="ru" />
-        <title>Каркасные дома под ключ в Беларуси | Marmol House</title>
+        <title>Каркасные дома под ключ в Гродно и Беларуси | Marmol House</title>
         <meta
           name="description"
-          content="Строим каркасные дома под ключ в Гродно и по всей Беларуси. Работаем по 240 указу для многодетных семей, проект в подарок, фиксированная цена."
+          content="Строительство каркасных домов под ключ в Гродно и по всей Беларуси. Работаем по 240 указу для многодетных семей, проект в подарок, фиксированная цена."
         />
         <meta
           name="keywords"
-          content="каркасные дома, строительство домов, Гродно, Беларусь, 240 указ, многодетные семьи, дом под ключ, Marmol House"
+          content="каркасные дома, строительство домов, Гродно, Беларусь, дом под ключ, 240 указ, многодетные семьи, проект дома, Marmol House"
         />
         <meta name="robots" content="index, follow" />
+        <meta name="author" content="Marmol House" />
+        <link rel="canonical" href="https://marmolhouse.by" />
         <meta property="og:title" content="Каркасные дома под ключ | Marmol House" />
-        <meta property="og:description" content="Строительство каркасных домов в Гродно и Беларуси по 240 указу. Проект в подарок!" />
+        <meta
+          property="og:description"
+          content="Строительство каркасных домов в Гродно и Беларуси по 240 указу. Проект в подарок!"
+        />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://marmol-house.vercel.app" />
-        <meta property="og:image" content="https://marmol-house.vercel.app/og-image.png" />
+        <meta property="og:url" content="https://marmolhouse.by" />
+        <meta property="og:image" content="https://marmolhouse.by/og-image.png" />
         <meta property="og:locale" content="ru_RU" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Каркасные дома под ключ | Marmol House" />
+        <meta
+          name="twitter:description"
+          content="Строительство каркасных домов в Гродно и Беларуси по 240 указу."
+        />
+        <meta name="twitter:image" content="https://marmolhouse.by/og-image.png" />
+        <meta name="twitter:site" content="@MarmolHouse" />
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
+        <script type="application/ld+json">{JSON.stringify(videoStructuredData)}</script>
       </Helmet>
 
-      {/* Hero Section */}
       <section className="relative w-full min-h-screen" aria-labelledby="hero-heading">
         <h1 id="hero-heading" className="sr-only">Строительство каркасных домов в Гродно и Беларуси</h1>
         <video
@@ -123,29 +160,32 @@ function Home() {
           >
             Заказать консультацию
           </button>
-          {/* Преимущества */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-xs sm:max-w-2xl lg:max-w-5xl text-white mt-10 sm:mt-16" aria-labelledby="benefits-heading">
+
+          <div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-xs sm:max-w-2xl lg:max-w-5xl text-white mt-10 sm:mt-16"
+            aria-labelledby="benefits-heading"
+          >
             <h3 id="benefits-heading" className="sr-only">Преимущества строительства с Marmol House</h3>
             {[
               {
-                title: "Работаем по 240 указу",
-                text: "Многодетные семьи получают участок бесплатно и частичную оплату строительства за счёт бюджета.",
+                title: 'Работаем по 240 указу',
+                description: 'Многодетные семьи получают участок бесплатно и частичную оплату строительства за счёт бюджета.',
               },
               {
-                title: "Проект в подарок",
-                text: "Бесплатный проект дома с учётом ваших пожеланий и особенностей участка при заказе строительства.",
+                title: 'Проект в подарок',
+                description: 'Бесплатный проект дома с учётом ваших пожеланий и особенностей участка при заказе строительства.',
               },
               {
-                title: "Фиксированная цена",
-                text: "Цена прописывается в договоре и остаётся неизменной на всех этапах строительства.",
+                title: 'Фиксированная цена',
+                description: 'Цена прописывается в договоре и остаётся неизменной на всех этапах строительства.',
               },
-            ].map((item, index) => (
-              <article key={index} className="flex flex-col">
+            ].map((item) => (
+              <article key={item.title} className="flex flex-col">
                 <h4 className="flex items-center justify-center font-bold text-[#f9c615] uppercase mb-3 sm:mb-4">
                   <FaInfoCircle className="mr-2" aria-hidden="true" />
                   {item.title}
                 </h4>
-                <p className="text-sm sm:text-base text-justify">{item.text}</p>
+                <p className="text-sm sm:text-base text-justify">{item.description}</p>
               </article>
             ))}
           </div>
@@ -160,16 +200,11 @@ function Home() {
       <section><TestimonialsSlider /></section>
       <Footer />
 
-      {/* Модальное окно */}
       {showModal && (
         <ModalForm
           show={showModal}
           onClose={() => setShowModal(false)}
-          formData={formData}
-          setFormData={setFormData}
-          handleSubmit={handleSubmit}
-          loading={loading}
-          success={success}
+          defaultComment={formData.comment}
         />
       )}
     </main>
