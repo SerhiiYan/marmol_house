@@ -1,5 +1,4 @@
 import { Routes, Route } from 'react-router-dom';
-import { SpeedInsights } from '@vercel/speed-insights/react';
 import Header from './components/Header';
 import Home from './pages/Home';
 import Gallery from './pages/Gallery';
@@ -28,7 +27,6 @@ function App() {
             <Route path="/privacy" element={<Privacy />} />
           </Routes>
         </main>
-        <SpeedInsights />
       </div>
     </Layout>
   );
