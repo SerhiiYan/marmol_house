@@ -18,7 +18,7 @@ const Contact = () => {
 
         <div className="space-y-2">
           <h2 className="text-xl font-semibold text-gray-800">Email</h2>
-          <p className="text-gray-600 hover:text-black transition-colors">yurymarmol.83@gmail.com</p>
+          <p className="text-gray-600 hover:text-black transition-colors">yurmarmol@gmail.com</p>
         </div>
 
         <div className="space-y-2">

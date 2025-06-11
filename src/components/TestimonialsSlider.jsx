@@ -96,6 +96,7 @@ export default function Testimonials() {
                 <div className="flex items-center mb-3">
                   <img
                     src={t.img}
+                    loading="lazy"
                     alt={`Фото клиента ${t.name}`}
                     className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover mr-3 ring-2 ring-gradient-to-r from-yellow-500 to-[#17253c]"
                   />

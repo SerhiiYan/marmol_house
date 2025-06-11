@@ -46,6 +46,7 @@ export default function WhyChooseFrameHouse() {
         <div data-aos="zoom-in" className="flex justify-center lg:justify-center">
           <img
             src={HouseImage}
+            loading="lazy"
             alt="Преимущества каркасных домов Marmol House"
             className="w-full max-w-xs sm:max-w-sm lg:max-w-md object-contain"
           />

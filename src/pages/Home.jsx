@@ -1,8 +1,6 @@
-import { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { FaInfoCircle } from 'react-icons/fa';
 import herovideo from '../assets/herovideo.webm';
-import ModalForm from '../components/ModalForm';
 import HowWeWork from '../components/HowWeWork';
 import WhyChooseFrameHouse from '../components/WhyChooseFrameHouse';
 import BlockHouseFeatureCircle from '../components/BlockHouseFeatureCircle';
@@ -10,41 +8,9 @@ import HousePackages from '../components/HousePackages';
 import Footer from '../components/Footer';
 import WhyChooseUs from '../components/WhyChooseUs';
 import TestimonialsSlider from '../components/TestimonialsSlider';
-import Privacy from './Privacy';
+
 
 function Home() {
-  const [showModal, setShowModal] = useState(false);
-  const [formData, setFormData] = useState({ name: '', phone: '', comment: '' }); 
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const response = await fetch('https://script.google.com/macros/s/AKfycby6QFmJOZb0l39zhVHOzl5ghg-bGa0Lj8OdK5Z6CCXWX33oT8fB1cOL67gCZqniA9jn/exec', {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: formData.name,
-          phone: formData.phone,
-          message: formData.comment || 'Хочу консультации по строительству дома',
-        }),
-      });
-      setSuccess(true);
-      setFormData({ name: '', phone: '', comment: '' });
-      setTimeout(() => {
-        setShowModal(false);
-        setSuccess(false);
-      }, 2000);
-    } catch (error) {
-      console.error('Form submission error:', error);
-      alert('Ошибка при отправке формы. Попробуйте позже.');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const structuredData = {
     '@context': 'https://schema.org',
@@ -145,7 +111,7 @@ function Home() {
           Видео недоступно.
         </video>
         <div className="absolute top-0 left-0 w-full h-full bg-black/60" aria-hidden="true" />
-        <div className="relative z-10 flex flex-col items-center text-center px-2 sm:px-4 lg:px-6 pt-36 sm:pt-40">
+        <div className="relative z-10 flex flex-col items-center text-center px-2 sm:px-4 lg:px-6 pt-36 sm:pt-60">
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4">
             Строим каркасные дома под ключ<br />
             <span className="text-[#f9c615] text-3xl sm:text-4xl md:text-5xl lg:text-6xl">в Гродно и Беларуси</span>
@@ -153,13 +119,6 @@ function Home() {
           <p className="text-base sm:text-lg md:text-xl text-white mb-6">
             Работаем по 240 указу для многодетных семей
           </p>
-          <button
-            onClick={() => setShowModal(true)}
-            className="bg-[#f9c615] text-[#17253c] font-semibold py-2 px-4 sm:py-3 sm:px-6 rounded-lg hover:bg-[#e5b512] transition-colors duration-200 mt-4 sm:mt-8"
-            aria-label="Заказать консультацию по строительству каркасного дома"
-          >
-            Заказать консультацию
-          </button>
 
           <div
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-xs sm:max-w-2xl lg:max-w-5xl text-white mt-10 sm:mt-16"
@@ -199,14 +158,6 @@ function Home() {
       <section><HowWeWork /></section>
       <section><TestimonialsSlider /></section>
       <Footer />
-
-      {showModal && (
-        <ModalForm
-          show={showModal}
-          onClose={() => setShowModal(false)}
-          defaultComment={formData.comment}
-        />
-      )}
     </main>
   );
 }

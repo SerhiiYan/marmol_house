@@ -88,7 +88,7 @@ export default function WhyChooseUs() {
                 loading="lazy"
               />
             </motion.div>
-            <h3 className="text-lg sm:text-xl font-semibold text-[#f9c615] mb-2 text-center">
+            <h3 className="text-lg sm:text-xl font-semibold text-[#17253c] mb-2 text-center">
               {feature.title}
             </h3>
             <p className="text-sm sm:text-base text-gray-600 text-center">

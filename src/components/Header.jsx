@@ -27,7 +27,7 @@ const Header = () => {
     <header className="fixed top-0 left-0 w-full bg-[#17253c]/90 text-white shadow-md z-50 backdrop-blur-sm">
       <div className="max-w-6xl mx-auto flex items-center justify-between py-3 sm:py-4 px-4 sm:px-6">
         <Link to="/" className="flex items-center space-x-2">
-          <img src={logo} alt="Marmol House" className="h-6 sm:h-7 w-auto" />
+          <img src={logo} loading="lazy" alt="Marmol House" className="h-6 sm:h-7 w-auto" />
           <span className="text-xl sm:text-2xl font-bold text-yellow-400">Marmol House</span>
         </Link>
         {/* Десктопная навигация */}

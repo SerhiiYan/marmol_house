@@ -6,7 +6,6 @@ import projects from '../data/projects';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useState, useRef, useEffect } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import ModalForm from './ModalForm';
 import ProjectCard from './ProjectCard';
 import ProjectEquipment from './ProjectEquipment';
 
@@ -306,17 +305,6 @@ const ProjectDetail = () => {
           <p className="mt-4 font-semibold text-lg text-red-600">
             Цена: {project.price}
           </p>
-          {/* <button
-            onClick={() =>
-              setFormInfo({
-                show: true,
-                comment: `Добрый день, хочу консультацию по проекту "${project.title}"`,
-              })
-            }
-            className="mt-4 bg-yellow-400 text-black font-semibold py-2 px-4 rounded hover:bg-yellow-300 self-start"
-          >
-            Заказать консультацию
-          </button> */}
         </div>
       </div>
 
@@ -427,11 +415,11 @@ const ProjectDetail = () => {
         )}
       </AnimatePresence>
 
-      <ModalForm
+      {/* <ModalForm
         show={formInfo.show}
         onClose={() => setFormInfo({ show: false, comment: '' })}
         defaultComment={formInfo.comment}
-      />
+      /> */}
     </div>
   );
 };

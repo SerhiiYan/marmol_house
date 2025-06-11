@@ -16,6 +16,7 @@ const ProjectPlan = () => {
         <img
             src={project.images[project.images.length - 1]} 
             alt={`План проекта ${project.title}`}
+            loading="lazy"
             className="max-w-full max-h-[80vh] object-contain mx-auto"
         />
       </div>

@@ -4,7 +4,6 @@ import Home from './pages/Home';
 import Gallery from './pages/Gallery';
 import Contact from './pages/Contact';
 import About from './pages/About';
-import Privacy from './pages/Privacy';
 import Layout from './components/Layout';
 import ProjectDetail from './components/ProjectDetail';
 import ProjectPlan from './components/ProjectPlan';
@@ -24,7 +23,6 @@ function App() {
             <Route path="/completed" element={<CompletedProjects />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<About />} />
-            <Route path="/privacy" element={<Privacy />} />
           </Routes>
         </main>
       </div>

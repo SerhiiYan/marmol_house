@@ -3,7 +3,7 @@ import { v4 as uuidv4, v4 } from 'uuid';
 const CompletedProjects = [
   {
     id: uuidv4(),
-    title: 'Дом из Блока',
+    title: 'Дом из блока',
     images: ['/assets/completed/180/3.jpg', '/assets/completed/180/1.jpg', '/assets/completed/180/4.jpg', '/assets/completed/180/2.jpg'],
     price: '290 000 BYN',
     description: [
@@ -11,13 +11,10 @@ const CompletedProjects = [
       'Площадь: 180м²',
       'Завершено: 15/09/2024',
     ],
-    // Дополнительные поля, если нужно
-    completionDate: '15/09/2024г',
-    clientFeedback: 'Отличный дом, построен быстро и качественно!',
   },
   {
     id: uuidv4(),
-    title: 'Дом из Блока с гаражом',
+    title: 'Дом из блока с гаражом',
     images: ['/assets/completed/tarusichy/1.jpg', '/assets/completed/tarusichy/2.jpg', '/assets/completed/tarusichy/3.jpg', '/assets/completed/tarusichy/4.jpg'],
     price: '167 000 BYN',
     description: [
@@ -25,9 +22,6 @@ const CompletedProjects = [
       'Площадь: 152м²',
       'Завершено: 25/05/2024г',
     ],
-    // Дополнительные поля, если нужно
-    completionDate: '25/05/2024г',
-    clientFeedback: 'Отличный дом, построен быстро и качественно!',
   },
   {
     id: uuidv4(),
@@ -39,9 +33,28 @@ const CompletedProjects = [
       'Площадь: 120м²',
       'Завершено: 08/06/2024',
     ],
-    // Дополнительные поля, если нужно
-    completionDate: '08.06.2024г',
-    clientFeedback: 'Отличный дом, построен быстро и качественно!',
+  },
+  {
+    id: uuidv4(),
+    title: 'Дом из блока',
+    images: ['/assets/completed/grodno/1.jpg', '/assets/completed/grodno/2.jpg', '/assets/completed/grodno/3.jpg',],
+    price: '345 000 BYN',
+    description: [
+      'Гродно, Южный 4',
+      'Площадь: 200м²',
+      'Завершено: 21/04/2023',
+    ],
+  },
+  {
+    id: uuidv4(),
+    title: 'Дом из блока',
+    images: ['/assets/completed/pogorany/1.jpg', '/assets/completed/pogorany/2.jpg', '/assets/completed/pogorany/3.jpg', '/assets/completed/pogorany/4.jpg'],
+    price: '372 000 BYN',
+    description: [
+      'Погораны',
+      'Площадь: 200м²',
+      'Завершено: 05/09/2023',
+    ],
   },
 ];
 

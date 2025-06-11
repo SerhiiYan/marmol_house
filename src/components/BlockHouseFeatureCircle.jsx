@@ -39,9 +39,8 @@ const advantages = [
 // Компонент секции преимуществ домов из газосиликатных блоков
 export default function BlockHouseFeatureCircle() {
   useEffect(() => {
-    AOS.init({ duration: 800, once: true });
-    return () => AOS.refresh();
-  }, []);
+  AOS.init({ duration: 800, once: true });
+}, []);
 
   return (
     <section
@@ -61,6 +60,7 @@ export default function BlockHouseFeatureCircle() {
         <div className="absolute inset-0 flex items-center justify-center z-10" data-aos="zoom-in">
           <img
             src={BlockHouseImage}
+            loading="lazy"
             alt="Преимущества домов из газосиликатных блоков Marmol House"
             className="w-[600px] h-[600px] object-contain"
           />
@@ -87,6 +87,7 @@ export default function BlockHouseFeatureCircle() {
         <div className="w-full flex justify-center mb-6 sm:mb-8" data-aos="zoom-in">
           <img
             src={BlockHouseImage}
+            loading="lazy"
             alt="Преимущества домов из газосиликатных блоков Marmol House"
             className="w-full max-w-xs sm:max-w-sm h-auto object-contain"
           />

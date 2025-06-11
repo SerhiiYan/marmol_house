@@ -158,6 +158,7 @@ const CompletedProjects = () => {
                 <div className="relative overflow-hidden">
                   <motion.img
                     src={project.images[0]}
+                    loading="lazy"
                     alt={`Проект ${project.title}`}
                     className="w-full h-64 sm:h-56 lg:h-60 object-cover"
                     whileHover={{ scale: 1.05 }}

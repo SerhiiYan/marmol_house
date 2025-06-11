@@ -23,6 +23,7 @@ export default function Footer() {
         <div>
           <img
             src={logo}
+            loading="lazy"
             alt="Marmol House логотип"
             className="h-12 sm:h-14 mb-4"
           />
@@ -82,6 +83,15 @@ export default function Footer() {
                 onClick={handleLinkClick}
               >
                 Проекты
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/completed"
+                className="hover:text-yellow-500 transition-colors duration-300"
+                onClick={handleLinkClick}
+              >
+                Нашы работы
               </Link>
             </li>
             <li>

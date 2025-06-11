@@ -61,6 +61,7 @@ const ProjectModal = ({ project, onClose }) => {
                   <img
                     src={img}
                     alt={`Фото ${idx + 1}`}
+                    loading="lazy"
                     className="h-[500px] w-full object-cover rounded"
                   />
                 </div>

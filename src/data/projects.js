@@ -699,18 +699,6 @@ const projects = [
     },
     {
       id: 28,
-      title: 'Гараж M5',
-      type: 'Гаражи',
-      images: [
-        'https://via.placeholder.com/400x300',
-        'https://via.placeholder.com/400x300'
-      ],
-      description: 'Просторный гараж с хозблоком и автоматическими воротами.',
-      price: 'от 160 425 BYN',
-      materials: 'Металлопрофиль, бетон, кирпич',
-    },
-    {
-      id: 29,
       title: 'Модис',
       type: 'Барнхаусы',
       images: [
@@ -733,7 +721,7 @@ const projects = [
       materials: 'Металлопрофиль, бетон, кирпич',
     },
     {
-      id: 30,
+      id: 29,
       title: 'Вента',
       type: 'Барнхаусы',
       images: [
@@ -756,7 +744,7 @@ const projects = [
       materials: 'Металлопрофиль, бетон, кирпич',
     },
     {
-      id: 31,
+      id: 30,
       title: 'Омега',
       type: 'Барнхаусы',
       images: [
@@ -780,7 +768,7 @@ const projects = [
       materials: 'Металлопрофиль, бетон, кирпич',
     },
     {
-      id: 32,
+      id: 31,
       title: 'Мерлен',
       type: 'Барнхаусы',
       images: [
@@ -803,7 +791,7 @@ const projects = [
       materials: 'Металлопрофиль, бетон, кирпич',
     },
     {
-      id: 33,
+      id: 32,
       title: 'Брейн',
       type: 'Барнхаусы',
       images: [
@@ -827,7 +815,7 @@ const projects = [
       materials: 'Металлопрофиль, бетон, кирпич',
     },
     {
-      id: 34,
+      id: 33,
       title: 'Барни',
       type: 'Барнхаусы',
       images: [
@@ -852,7 +840,7 @@ const projects = [
       materials: 'Металлопрофиль, бетон, кирпич',
     },
     {
-      id: 35,
+      id: 34,
       title: 'Баир',
       type: 'Барнхаусы',
       images: [
