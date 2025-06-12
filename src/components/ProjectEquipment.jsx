@@ -28,7 +28,7 @@ const ProjectEquipment = ({ packages, categories }) => {
               onClick={() => setActivePackage(idx)}
               className={`px-4 py-2 font-semibold text-sm md:text-base ${
                 activePackage === idx
-                  ? 'border-b-2 border-yellow-400 text-[#17253c]'
+                  ? 'border-b-2 border-yellow-400 text-red-600'
                   : 'text-gray-600'
               }`}
             >

@@ -88,6 +88,14 @@ const ProjectDetail = () => {
   const { id } = useParams();
   const project = projects.find((p) => p.id === parseInt(id));
 
+  const topRef = useRef(null);
+
+  useEffect(() => {
+    if (topRef.current) {
+      topRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [id]);
+
   // Для анимации слайдера других проектов
   const relatedProjectsRef = useRef(null);
   const isRelatedProjectsInView = useInView(relatedProjectsRef, { once: true, margin: '-50px' });
@@ -102,7 +110,7 @@ const ProjectDetail = () => {
     }
   }, [selectedImageIndex]);
 
-  if (!project) return;
+  if (!project) return null;
 
   // Данные комплектаций
   const categories = [
@@ -170,7 +178,8 @@ const ProjectDetail = () => {
         "Полный комплект: электрика, сантехника, вентиляция.",
       ],
     },
-  ]
+  ];
+
   // Настройки основного слайдера
   const settings = {
     dots: true,
@@ -192,7 +201,7 @@ const ProjectDetail = () => {
     slidesToScroll: 1,
     arrows: true,
     autoplay: true,
-    autoplaySpeed: 3000,
+    autoplaySpeed: [3000],
     prevArrow: <PrevArrow />,
     nextArrow: <NextArrow />,
     responsive: [
@@ -261,7 +270,7 @@ const ProjectDetail = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 pt-28 py-10">
+    <div ref={topRef} className="max-w-6xl mx-auto px-4 pt-28 py-10">
       <h1 className="text-3xl font-bold mb-6 text-[#17253c]">{project.title}</h1>
 
       <div className="flex flex-col lg:flex-row gap-8 items-stretch">
@@ -414,12 +423,6 @@ const ProjectDetail = () => {
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* <ModalForm
-        show={formInfo.show}
-        onClose={() => setFormInfo({ show: false, comment: '' })}
-        defaultComment={formInfo.comment}
-      /> */}
     </div>
   );
 };
