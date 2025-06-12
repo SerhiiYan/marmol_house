@@ -237,7 +237,7 @@ const CompletedProjects = () => {
                   exit={{ opacity: 0 }}
                   transition={{ opacity: { duration: 0.2 } }}
                 />
-                {/* Хрестик внутри фото с анимацией */}
+                {/* Х*/}
                 <motion.button
                   onClick={handleCloseModal}
                   className="absolute top-1 right-1 bg-black/50 hover:bg-black/70 text-white rounded-full w-8 h-8 flex items-center justify-center shadow-md z-[100]"

@@ -107,7 +107,6 @@ function Home() {
           aria-hidden="true"
         >
           <source src={herovideo} type="video/webm" />
-          <source src="/assets/herovideo.mp4" type="video/mp4" />
           Видео недоступно.
         </video>
         <div className="absolute top-0 left-0 w-full h-full bg-black/60" aria-hidden="true" />

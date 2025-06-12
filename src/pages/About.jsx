@@ -30,8 +30,8 @@ function About() {
         <meta name="description" content="Узнайте больше о Marmol House — строительстве каркасных домов в Гродно и по всей Беларуси." />
         <meta property="og:title" content="О нас | Marmol House" />
         <meta property="og:description" content="Мы строим каркасные дома под ключ по 240 указу." />
-        <meta property="og:url" content="https://marmolhouse.vercel.app/about" />
-        <meta property="og:image" content="https://marmolhouse.vercel.app/og-image.png" />
+        <meta property="og:url" content="https://marmolhouse.by/about" />
+        <meta property="og:image" content="https://marmolhouse.by/og-image.png" />
       </Helmet>
 
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-28 sm:pt-32 pb-12 sm:pb-16 text-gray-800">
