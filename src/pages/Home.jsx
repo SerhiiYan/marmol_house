@@ -18,6 +18,7 @@ function Home() {
     name: 'Marmol House',
     description: 'Строительство каркасных домов под ключ в Гродно и по всей Беларуси. Работаем по 240 указу для многодетных семей.',
     url: 'https://marmolhouse.by',
+    logo: 'https://marmolhouse.by/assets/logo.png',
     telephone: '+375291845481',
     address: {
       '@type': 'PostalAddress',
@@ -48,6 +49,18 @@ function Home() {
     },
   };
 
+  const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Marmol House",
+  "url": "https://marmolhouse.by",
+  "logo": "https://marmolhouse.by/assets/logo.png",
+  "sameAs": [
+    "https://facebook.com/marmolhouse",
+    "https://instagram.com/marmolhouse"
+  ]
+};
+
   const videoStructuredData = {
     '@context': 'https://schema.org',
     '@type': 'VideoObject',
@@ -63,10 +76,10 @@ function Home() {
     <main className="w-full overflow-x-hidden">
       <Helmet>
         <html lang="ru" />
-        <title>Каркасные дома под ключ в Гродно и Беларуси | Marmol House</title>
-        <meta
-          name="description"
-          content="Строительство каркасных домов под ключ в Гродно и по всей Беларуси. Работаем по 240 указу для многодетных семей, проект в подарок, фиксированная цена."
+        <title>Каркасные дома под ключ в Беларуси — Marmol House</title>
+        <meta 
+          name="description" 
+          content="Строительство каркасных домов под ключ в Беларуси. Проект в подарок, работа по 240 указу для многодетных семей, фиксированная цена, доставка и монтаж." 
         />
         <meta
           name="keywords"
@@ -75,7 +88,7 @@ function Home() {
         <meta name="robots" content="index, follow" />
         <meta name="author" content="Marmol House" />
         <link rel="canonical" href="https://marmolhouse.by" />
-        <meta property="og:title" content="Каркасные дома под ключ | Marmol House" />
+        <meta property="og:title" content="Каркасные дома под ключ в Беларуси — Marmol House" />
         <meta
           property="og:description"
           content="Строительство каркасных домов в Гродно и Беларуси по 240 указу. Проект в подарок!"
@@ -92,6 +105,7 @@ function Home() {
         />
         <meta name="twitter:image" content="https://marmolhouse.by/og-image.png" />
         <meta name="twitter:site" content="@MarmolHouse" />
+        <script type="application/ld+json">{JSON.stringify(organizationSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
         <script type="application/ld+json">{JSON.stringify(videoStructuredData)}</script>
       </Helmet>
@@ -111,10 +125,10 @@ function Home() {
         </video>
         <div className="absolute top-0 left-0 w-full h-full bg-black/60" aria-hidden="true" />
         <div className="relative z-10 flex flex-col items-center text-center px-2 sm:px-4 lg:px-6 pt-36 sm:pt-60">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4">
             Строим каркасные дома под ключ<br />
             <span className="text-[#f9c615] text-3xl sm:text-4xl md:text-5xl lg:text-6xl">в Гродно и Беларуси</span>
-          </h2>
+          </h1>
           <p className="text-base sm:text-lg md:text-xl text-white mb-6">
             Работаем по 240 указу для многодетных семей
           </p>
