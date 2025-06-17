@@ -8,6 +8,7 @@ import Layout from './components/Layout';
 import ProjectDetail from './components/ProjectDetail';
 import ProjectPlan from './components/ProjectPlan';
 import CompletedProjects from './pages/CompletedProjects';
+import NotFound from './components/NotFound';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/completed" element={<CompletedProjects />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<About />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
       </div>
