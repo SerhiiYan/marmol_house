@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { motion, AnimatePresence } from 'framer-motion';
 import projects from '../data/projects';
 import GalleryFilter from '../components/GalleryFilter';
 import ProjectCard from '../components/ProjectCard';
+
 
 const Gallery = () => {
   const [selectedCategory, setSelectedCategory] = useState('Все');
@@ -13,6 +15,14 @@ const Gallery = () => {
 
   return (
     <main className="max-w-7xl mx-auto px-4 pt-28 pb-10">
+      <Helmet>
+        <title>Галерея проектов | Marmol House</title>
+        <meta
+          name="description"
+          content="Посмотрите реализованные проекты домов, бань и гаражей от Marmol House. Качественное строительство по всей Беларуси."
+        />
+        <link rel="canonical" href="https://marmolhouse.by/gallery" />
+    </Helmet>
       <h1 className="text-3xl md:text-4xl font-bold text-center text-[#17253c] mb-4">
         Наши проекты
       </h1>

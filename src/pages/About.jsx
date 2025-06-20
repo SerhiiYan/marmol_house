@@ -32,6 +32,7 @@ function About() {
         <meta property="og:description" content="Мы строим каркасные дома под ключ по 240 указу." />
         <meta property="og:url" content="https://marmolhouse.by/about" />
         <meta property="og:image" content="https://marmolhouse.by/og-image.png" />
+        <link rel="canonical" href="https://marmolhouse.by/about" />
       </Helmet>
 
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-28 sm:pt-32 pb-12 sm:pb-16 text-gray-800">

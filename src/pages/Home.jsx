@@ -102,6 +102,7 @@ function Home() {
           name="twitter:description"
           content="Строительство каркасных домов в Гродно и Беларуси по 240 указу."
         />
+        <link rel="canonical" href="https://marmolhouse.by/" />
         <meta name="twitter:image" content="https://marmolhouse.by/og-image.png" />
         <meta name="twitter:site" content="@MarmolHouse" />
         <script type="application/ld+json">{JSON.stringify(organizationSchema)}</script>
