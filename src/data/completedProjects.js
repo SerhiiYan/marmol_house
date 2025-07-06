@@ -56,6 +56,28 @@ const CompletedProjects = [
       'Завершено: 05/09/2023',
     ],
   },
+   {
+    id: uuidv4(),
+    title: 'Дом из блока',
+    images: ['/assets/completed/corobchicy/1.jpg', '/assets/completed/corobchicy/2.jpg', '/assets/completed/corobchicy/3.jpg'],
+    price: '235 400 BYN',
+    description: [
+      'Коробчицы',
+      'Площадь: 130м²',
+      'Завершено: 08/10/2024',
+    ],
+  },
+   {
+    id: uuidv4(),
+    title: 'Дом из блока',
+    images: ['/assets/completed/uzhnyi/1.jpg', '/assets/completed/uzhnyi/2.jpg', '/assets/completed/uzhnyi/3.jpg'],
+    price: '330 600 BYN',
+    description: [
+      'Гродно, Южный',
+      'Площадь: 185м²',
+      'Завершено: 25/04/2024',
+    ],
+  },
 ];
 
 export default CompletedProjects;

@@ -54,7 +54,7 @@ const getStructuredData = () => {
       "@type": "Offer",
       "url": "https://marmolhouse.by/completed",
       "priceCurrency": "BYN",
-      "price": project.price.replace(/\D/g, ''), // видаляємо пробіли й "BYN"
+      "price": project.price.replace(/\D/g, ''),
       "availability": "https://schema.org/InStock"
     }
   }));
