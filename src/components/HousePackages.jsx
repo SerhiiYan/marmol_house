@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AOS from 'aos';
@@ -45,7 +46,7 @@ const packages = [
   },
 ];
 
-export default function HousePackages() {
+function HousePackages() {
   useEffect(() => {
     AOS.init({ duration: 800, once: true });
   }, []);
@@ -83,3 +84,5 @@ export default function HousePackages() {
     </section>
   );
 }
+
+export default React.memo(HousePackages);

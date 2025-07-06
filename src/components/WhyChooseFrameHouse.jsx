@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -29,7 +30,7 @@ const reasons = [
 ];
 
 // Компонент секции преимуществ каркасных домов
-export default function WhyChooseFrameHouse() {
+function WhyChooseFrameHouse() {
   useEffect(() => {
     AOS.init({ duration: 800, once: true });
     return () => AOS.refresh();
@@ -79,3 +80,5 @@ export default function WhyChooseFrameHouse() {
     </section>
   );
 }
+
+export default React.memo(WhyChooseFrameHouse);

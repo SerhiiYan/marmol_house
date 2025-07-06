@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import AOS from 'aos';
@@ -41,7 +42,7 @@ const iconVariants = {
   hover: { rotate: 12, scale: 1.1 },
 };
 
-export default function WhyChooseUs() {
+function WhyChooseUs() {
   useEffect(() => {
     AOS.init({ duration: 800, once: true });
     return () => AOS.refresh();
@@ -100,3 +101,5 @@ export default function WhyChooseUs() {
     </section>
   );
 }
+
+export default React.memo(WhyChooseUs);

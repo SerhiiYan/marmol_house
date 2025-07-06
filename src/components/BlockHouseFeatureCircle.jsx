@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -37,7 +38,7 @@ const advantages = [
 ];
 
 // Компонент секции преимуществ домов из газосиликатных блоков
-export default function BlockHouseFeatureCircle() {
+function BlockHouseFeatureCircle() {
   useEffect(() => {
   AOS.init({ duration: 800, once: true });
 }, []);
@@ -113,3 +114,5 @@ export default function BlockHouseFeatureCircle() {
     </section>
   );
 }
+
+export default React.memo(BlockHouseFeatureCircle);

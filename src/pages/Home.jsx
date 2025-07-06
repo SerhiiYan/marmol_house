@@ -9,10 +9,7 @@ import Footer from '../components/Footer';
 import WhyChooseUs from '../components/WhyChooseUs';
 import TestimonialsSlider from '../components/TestimonialsSlider';
 
-
-function Home() {
-
-  const structuredData = {
+const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     name: 'Marmol House',
@@ -67,10 +64,28 @@ function Home() {
     name: 'Каркасные дома Marmol House',
     description: 'Видео о строительстве каркасных домов в Гродно и Беларуси.',
     thumbnailUrl: 'https://marmolhouse.by/og-image.png',
-    uploadDate: '2025-06-02',
+    uploadDate: '2025-04-02',
     contentUrl: 'https://marmolhouse.by/assets/herovideo.webm',
     embedUrl: 'https://marmolhouse.by/assets/herovideo.webm',
   };
+
+const homeBenefits = [
+  {
+    title: 'Работаем по 240 указу',
+    description: 'Многодетные семьи получают участок бесплатно и частичную оплату строительства за счёт бюджета.',
+  },
+  {
+    title: 'Проект в подарок',
+    description: 'Бесплатный проект дома с учётом ваших пожеланий и особенностей участка при заказе строительства.',
+  },
+  {
+    title: 'Фиксированная цена',
+    description: 'Цена прописывается в договоре и остаётся неизменной на всех этапах строительства.',
+  },
+];
+
+function Home() {
+
 
   return (
     <main className="w-full overflow-x-hidden">
@@ -138,20 +153,7 @@ function Home() {
             aria-labelledby="benefits-heading"
           >
             <h3 id="benefits-heading" className="sr-only">Преимущества строительства с Marmol House</h3>
-            {[
-              {
-                title: 'Работаем по 240 указу',
-                description: 'Многодетные семьи получают участок бесплатно и частичную оплату строительства за счёт бюджета.',
-              },
-              {
-                title: 'Проект в подарок',
-                description: 'Бесплатный проект дома с учётом ваших пожеланий и особенностей участка при заказе строительства.',
-              },
-              {
-                title: 'Фиксированная цена',
-                description: 'Цена прописывается в договоре и остаётся неизменной на всех этапах строительства.',
-              },
-            ].map((item) => (
+            {homeBenefits.map((item) => (
               <article key={item.title} className="flex flex-col">
                 <h4 className="flex items-center justify-center font-bold text-[#f9c615] uppercase mb-3 sm:mb-4">
                   <FaInfoCircle className="mr-2" aria-hidden="true" />

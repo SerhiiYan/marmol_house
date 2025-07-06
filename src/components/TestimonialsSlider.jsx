@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect } from 'react';
 import Slider from 'react-slick';
 import { motion } from 'framer-motion';
@@ -59,7 +60,7 @@ const fadeIn = {
 };
 
 // Компонент секции отзывов клиентов
-export default function Testimonials() {
+function Testimonials() {
   return (
     <section
       className="py-8 sm:py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-50 to-gray-100"
@@ -127,3 +128,5 @@ export default function Testimonials() {
     </section>
   );
 }
+
+export default React.memo(Testimonials);

@@ -1,3 +1,4 @@
+import React from "react";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaFacebookF, FaInstagram, FaYoutube, FaTelegram } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -8,7 +9,7 @@ const iconHover = {
   hover: { scale: 1.2, rotate: 12, transition: { duration: 0.3 } },
 };
 
-export default function Footer() {
+function Footer() {
   const handleLinkClick = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -42,15 +43,13 @@ export default function Footer() {
               <motion.div whileHover="hover" variants={iconHover}>
                 <FaPhone className="text-yellow-500 w-4 h-4 flex-shrink-0" />
               </motion.div>
-              <span>+375 (29) 184 54 81</span>
+              <a href="tel:+375291845481"><span>+375 (29) 184 54 81</span></a>
             </li>
             <li className="flex items-center gap-1 sm:gap-2 min-w-0">
               <motion.div whileHover="hover" variants={iconHover}>
                 <FaEnvelope className="text-yellow-500 w-4 h-4 flex-shrink-0" />
               </motion.div>
-              <span className="text-ellipsis overflow-hidden whitespace-nowrap">
-                yurmarmol@gmail.com
-              </span>
+              <a className="text-ellipsis overflow-hidden whitespace-nowrap" href="mailto:yurmarmol@gmail.com">yurmarmol@gmail.com</a>
             </li>
             <li className="flex items-center gap-1 sm:gap-2 min-w-0">
               <motion.div whileHover="hover" variants={iconHover}>
@@ -167,3 +166,5 @@ export default function Footer() {
     </footer>
   );
 }
+
+export default React.memo(Footer);
