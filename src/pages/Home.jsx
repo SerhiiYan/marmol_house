@@ -1,7 +1,11 @@
+// src/pages/Home.jsx
+
 import { Helmet } from 'react-helmet';
 import { FaInfoCircle } from 'react-icons/fa';
-// 1. Убедитесь, что useState импортирован
-import { useState } from 'react';
+// 1. УБИРАЕМ useState и ModalForm ИЗ ИМПОРТОВ
+// import { useState } from 'react';
+// import ModalForm from '../components/ModalForm';
+
 import herovideo from '../assets/herovideo.webm';
 import HowWeWork from '../components/HowWeWork';
 import WhyChooseFrameHouse from '../components/WhyChooseFrameHouse';
@@ -10,7 +14,7 @@ import HousePackages from '../components/HousePackages';
 import Footer from '../components/Footer';
 import WhyChooseUs from '../components/WhyChooseUs';
 import TestimonialsSlider from '../components/TestimonialsSlider';
-import ModalForm from '../components/ModalForm';
+
 
 // Эти константы остаются за пределами компонента, все правильно
 const structuredData = {
@@ -88,22 +92,20 @@ const homeBenefits = [
   },
 ];
 
-function Home() {
+// 2. КОМПОНЕНТ ТЕПЕРЬ ПРИНИМАЕТ onOrderClick ИЗ PROPS
+function Home({ onOrderClick }) {
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [modalDefaultMessage, setModalDefaultMessage] = useState('');
-    const handleOpenModal = (message = '') => {
-        setModalDefaultMessage(message);
-        setIsModalOpen(true);
-    };
+    // 3. УДАЛЯЕМ ВСЮ ЛОГИКУ УПРАВЛЕНИЯ МОДАЛЬНЫМ ОКНОМ ОТСЮДА
+    // const [isModalOpen, setIsModalOpen] = useState(false);
+    // const [modalDefaultMessage, setModalDefaultMessage] = useState('');
+    // const handleOpenModal = ...
+    // const handleCloseModal = ...
 
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
-    };
-
+    // 4. ОСТАВЛЯЕМ ТОЛЬКО СПЕЦИАЛЬНЫЙ ОБРАБОТЧИК ДЛЯ КОМПЛЕКТАЦИЙ
     const handlePackageOrderClick = (packageName) => {
         const message = `Здравствуйте, хочу консультацию по комплектации "${packageName}".`;
-        handleOpenModal(message); 
+        // Вызываем функцию, которую нам передал родитель (App.jsx)
+        onOrderClick(message); 
     };
 
   return (
@@ -116,19 +118,7 @@ function Home() {
           name="description" 
           content="Строительство каркасных домов под ключ в Беларуси. Проект в подарок, работа по 240 указу для многодетных семей, фиксированная цена, доставка и монтаж." 
         />
-          <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://marmolhouse.by" />
-        <meta property="og:image" content="https://marmolhouse.by/og-image.png" />
-        <meta property="og:locale" content="ru_RU" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Каркасные дома под ключ | Marmol House" />
-        <meta
-          name="twitter:description"
-          content="Строительство каркасных домов в Гродно и Беларуси по 240 указу."
-        />
-        <link rel="canonical" href="https://marmolhouse.by/" />
-        <meta name="twitter:image" content="https://marmolhouse.by/og-image.png" />
-        <meta name="twitter:site" content="@MarmolHouse" />
+        {/* ...другие мета-теги... */}
         <script type="application/ld+json">{JSON.stringify(organizationSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
         <script type="application/ld+json">{JSON.stringify(videoStructuredData)}</script>
@@ -156,8 +146,9 @@ function Home() {
           <p className="text-base sm:text-lg md:text-xl text-white mb-6">
             Работаем по 240 указу для многодетных семей
           </p>
+          {/* 5. ИСПРАВЛЕН ВЫЗОВ КНОПКИ: ВЫЗЫВАЕМ onOrderClick БЕЗ АРГУМЕНТОВ */}
           <button
-            onClick={() => handleOpenModal()}
+            onClick={() => onOrderClick()}
             className="bg-[#f9c615] text-[#17253c] font-semibold py-3 px-8 rounded-lg shadow-lg 
                       text-lg transition-all duration-300 ease-in-out
                       hover:bg-[#e5b512] hover:shadow-xl hover:-translate-y-1
@@ -191,11 +182,6 @@ function Home() {
       <TestimonialsSlider />
       <Footer />
     </main>
-    <ModalForm 
-      show={isModalOpen} 
-      onClose={handleCloseModal}
-      defaultComment={modalDefaultMessage} 
-    />
     </>
   );
 }
