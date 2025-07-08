@@ -11,6 +11,7 @@ const NotFound = () => {
           name="description"
           content="Страница не найдена. Но мы точно знаем, как построить вам уютный дом :)"
         />
+        <meta name="robots" content="noindex, follow" />
       </Helmet>
       <div className="min-h-screen flex flex-col items-center justify-center text-[#17253c] p-4 text-center">
         <motion.img

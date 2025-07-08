@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet';
 import { FaInfoCircle } from 'react-icons/fa';
+import { useState } from 'react';
 import herovideo from '../assets/herovideo.webm';
 import HowWeWork from '../components/HowWeWork';
 import WhyChooseFrameHouse from '../components/WhyChooseFrameHouse';
@@ -8,6 +9,7 @@ import HousePackages from '../components/HousePackages';
 import Footer from '../components/Footer';
 import WhyChooseUs from '../components/WhyChooseUs';
 import TestimonialsSlider from '../components/TestimonialsSlider';
+import ModalForm from '../components/ModalForm';
 
 const structuredData = {
     '@context': 'https://schema.org',
@@ -86,8 +88,14 @@ const homeBenefits = [
 
 function Home() {
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    // 3. ФУНКЦИИ ДЛЯ ОТКРЫТИЯ И ЗАКРЫТИЯ
+    const handleOpenModal = () => setIsModalOpen(true);
+    const handleCloseModal = () => setIsModalOpen(false);
 
   return (
+    <>
     <main className="w-full overflow-x-hidden">
       <Helmet>
         <html lang="ru" />
@@ -147,7 +155,15 @@ function Home() {
           <p className="text-base sm:text-lg md:text-xl text-white mb-6">
             Работаем по 240 указу для многодетных семей
           </p>
-
+          <button
+            onClick={handleOpenModal}
+            className="bg-[#f9c615] text-[#17253c] font-semibold py-3 px-8 rounded-lg shadow-lg 
+                      text-lg transition-all duration-300 ease-in-out
+                      hover:bg-[#e5b512] hover:shadow-xl hover:-translate-y-1
+                      active:scale-95"
+          >
+            Заказать консультацию
+          </button>
           <div
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-xs sm:max-w-2xl lg:max-w-5xl text-white mt-10 sm:mt-16"
             aria-labelledby="benefits-heading"
@@ -174,6 +190,11 @@ function Home() {
       <TestimonialsSlider />
       <Footer />
     </main>
+    <ModalForm 
+      show={isModalOpen} 
+      onClose={handleCloseModal} 
+    />
+    </>
   );
 }
 

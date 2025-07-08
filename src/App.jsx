@@ -9,6 +9,7 @@ import ProjectDetail from './components/ProjectDetail';
 import ProjectPlan from './components/ProjectPlan';
 import CompletedProjects from './pages/CompletedProjects';
 import NotFound from './components/NotFound';
+import Privacy from './pages/Privacy'
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<About />} />
             <Route path="*" element={<NotFound />} />
+            <Route path='/privacy' element={<Privacy />} />
           </Routes>
         </main>
       </div>
