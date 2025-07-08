@@ -90,13 +90,8 @@ const homeBenefits = [
 
 function Home() {
 
-    // 2. ДОБАВЛЕНО СОСТОЯНИЕ ДЛЯ ХРАНЕНИЯ СООБЩЕНИЯ
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalDefaultMessage, setModalDefaultMessage] = useState('');
-
-
-    // 3. УНИВЕРСАЛЬНАЯ ФУНКЦИЯ ДЛЯ ОТКРЫТИЯ ОКНА
-    // Принимает сообщение. Если сообщения нет, будет пустая строка.
     const handleOpenModal = (message = '') => {
         setModalDefaultMessage(message);
         setIsModalOpen(true);
@@ -106,10 +101,9 @@ function Home() {
         setIsModalOpen(false);
     };
 
-    // 4. ФУНКЦИЯ-ОБРАБОТЧИК СПЕЦИАЛЬНО ДЛЯ КАРТОЧЕК КОМПЛЕКТАЦИЙ
     const handlePackageOrderClick = (packageName) => {
         const message = `Здравствуйте, хочу консультацию по комплектации "${packageName}".`;
-        handleOpenModal(message); // Вызываем общую функцию открытия с готовым сообщением
+        handleOpenModal(message); 
     };
 
   return (
@@ -122,7 +116,19 @@ function Home() {
           name="description" 
           content="Строительство каркасных домов под ключ в Беларуси. Проект в подарок, работа по 240 указу для многодетных семей, фиксированная цена, доставка и монтаж." 
         />
-        {/* ... остальной Helmet ... */}
+          <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://marmolhouse.by" />
+        <meta property="og:image" content="https://marmolhouse.by/og-image.png" />
+        <meta property="og:locale" content="ru_RU" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Каркасные дома под ключ | Marmol House" />
+        <meta
+          name="twitter:description"
+          content="Строительство каркасных домов в Гродно и Беларуси по 240 указу."
+        />
+        <link rel="canonical" href="https://marmolhouse.by/" />
+        <meta name="twitter:image" content="https://marmolhouse.by/og-image.png" />
+        <meta name="twitter:site" content="@MarmolHouse" />
         <script type="application/ld+json">{JSON.stringify(organizationSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
         <script type="application/ld+json">{JSON.stringify(videoStructuredData)}</script>
@@ -150,7 +156,6 @@ function Home() {
           <p className="text-base sm:text-lg md:text-xl text-white mb-6">
             Работаем по 240 указу для многодетных семей
           </p>
-          {/* 5. ОБНОВЛЕННЫЙ ВЫЗОВ ДЛЯ ГЛАВНОЙ КНОПКИ */}
           <button
             onClick={() => handleOpenModal()}
             className="bg-[#f9c615] text-[#17253c] font-semibold py-3 px-8 rounded-lg shadow-lg 
@@ -180,17 +185,12 @@ function Home() {
 
       <WhyChooseFrameHouse />
       <BlockHouseFeatureCircle />
-      
-      {/* 6. ПЕРЕДАЕМ ОБРАБОТЧИК В КОМПОНЕНТ КОМПЛЕКТАЦИЙ */}
       <HousePackages onOrderClick={handlePackageOrderClick} />
-      
       <WhyChooseUs />
       <HowWeWork />
       <TestimonialsSlider />
       <Footer />
     </main>
-
-    {/* 7. ПЕРЕДАЕМ ВСЕ НЕОБХОДИМЫЕ PROPS В МОДАЛЬНОЕ ОКНО */}
     <ModalForm 
       show={isModalOpen} 
       onClose={handleCloseModal}
