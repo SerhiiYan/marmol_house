@@ -42,7 +42,7 @@ function App() {
   };
 
   return (
-    <Layout>
+  
       <div className="min-h-screen bg-white text-dark scrollbar-gutter-stable">
         <Header />
         <ScrollToTop />
@@ -58,6 +58,7 @@ function App() {
             {/* 5. ПЕРЕДАЕМ ФУНКЦИЮ ОТКРЫТИЯ В ТЕ КОМПОНЕНТЫ, ГДЕ ОНА НУЖНА */}
             <Route path="/" element={<Home onOrderClick={handleOpenModal} />} />
             <Route path="/services/frame-houses" element={<FrameHousesService onOrderClick={handleOpenModal} />} />
+            <Route path="/services/gas-silicate-houses" element={<GasSilicateHousesService onOrderClick={handleOpenModal} />} />
 
             {/* Остальные роуты */}
             <Route path="/gallery" element={<Gallery />} />
@@ -73,7 +74,7 @@ function App() {
           </Routes>
         </main>
       </div>
-    </Layout>
+
   );
 }
 

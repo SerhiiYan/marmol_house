@@ -13,6 +13,8 @@ export default {
       animation: {
         scroll: 'scroll 20s linear infinite',
         fadeInLeft: 'fadeInLeft 0.8s ease-out both',
+        // Добавлено для градиента
+        'gradient-xy': 'gradient-xy 10s ease infinite',
       },
       keyframes: {
         scroll: {
@@ -27,6 +29,17 @@ export default {
           '100%': {
             opacity: 1,
             transform: 'translateX(0)',
+          },
+        },
+        // Добавлено для градиента
+        'gradient-xy': {
+          '0%, 100%': {
+            'background-size': '200% 200%',
+            'background-position': 'left center',
+          },
+          '50%': {
+            'background-size': '200% 200%',
+            'background-position': 'right center',
           },
         },
       },

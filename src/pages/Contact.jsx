@@ -43,7 +43,7 @@ const Contact = () => {
         <div className="space-y-2">
           <h2 className="text-xl font-semibold text-gray-800">Адрес</h2>
           <p className="text-gray-600 hover:text-black transition-colors">
-            г. Гродно, ул. Лелевеля, 12, кабинет 6
+            г. Гродно, ул. Лелевеля 12, кабинет 6
           </p>
         </div>
       </motion.div>
@@ -55,7 +55,7 @@ const Contact = () => {
         transition={{ delay: 0.6, duration: 0.6 }}
       >
         <iframe
-          title="Карта - ул. Лелевеля, 12A"
+          title="Карта - ул. Лелевеля 12A"
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2364.047621362822!2d23.820859900000002!3d53.6639519!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46dfd7d2201bf22b%3A0xa9490ad61d0a97d5!2z0YPQuy4g0JvRjtC80LjRg9C70L7QstCwLCAxMiwg0JPQsNCz0L7RgNC-0LLQsCwg0JHRg9C70YzQstGB0LosINCf0L7Qu9C40YbQsA!5e0!3m2!1sru!2sby!4v1747305691832!5m2!1sru!2sby&gestureHandling=greedy"
           width="100%"
           height="400"

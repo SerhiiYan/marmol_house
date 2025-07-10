@@ -7,12 +7,15 @@ import 'aos/dist/aos.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircleIcon, ShieldCheckIcon, ClockIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
 import { FaRulerCombined, FaHammer, FaTree, FaHome } from 'react-icons/fa';
+import Footer from '../components/Footer';
 
 // --- ДАННЫЕ ДЛЯ СТРАНИЦЫ ---
 
 // 1. ОБЪЕДИНЯЕМ ВСЕ КОМПЛЕКТАЦИИ В ОДИН МАССИВ
 const framePackages = {
   'Эконом': {
+    technology: 'Классический каркасный дом. Идеальный баланс цены и качества для сезонного или круглогодичного проживания.',
+    tabSubtitle: 'Каркасная технология',
     price: 1200,
     details: [
       { category: 'Фундамент', items: ['Монолитный железобетонный свайно-ростверковый', 'Сваи Ø300 мм, ростверк 250×400 мм', 'Арматура Ø10 мм, бетон С16/20'] },
@@ -22,6 +25,8 @@ const framePackages = {
     ]
   },
   'Премиум': {
+    technology: 'Улучшенный каркасный дом с дополнительным утеплением и повышенным комфортом для самых требовательных.',
+    tabSubtitle: 'Каркасная технология',
     price: 1500,
     details: [
       { category: 'Фундамент', items: ['Усиленный свайно-ростверковый (ростверк 300мм, арматура Ø12мм)', 'Класс бетона С16/20'] },
@@ -32,11 +37,13 @@ const framePackages = {
     ]
   },
   'Премиум+': {
+    technology: 'Максимально надежный каменный дом из газосиликатных блоков. Премиальные материалы и бескомпромиссное качество.',
+    tabSubtitle: 'Газосиликатная технология',
     price: 1700,
     details: [
       { category: 'Фундамент', items: ['Монолитный железобетонный ленточный', 'Армирование каркасами Ø12 мм', 'Устройство крылец и террас по проекту'] },
       { category: 'Стены и перегородки', items: ['Газосиликатные блоки 400мм + утепление 50мм', 'Внутренняя отделка: гипсовая/цементная штукатурка', 'Перегородки из блоков 100/200мм и кирпича'] },
-      { category: 'Пол и потолок', items: ['Утепленный экструзией черновой пол + чистовая стяжка 70мм', 'Высота потолков 2.7 м, утепление 150мм', 'Двойная обшивка потолка гипсокартоном'] },
+      { category: 'Пол и потолок', items: ['Утепленный экструдированным пенополистиролам пол + чистовая стяжка 70мм', 'Высота потолков 2.7 м, утепление 150мм', 'Двойная обшивка потолка гипсокартоном'] },
       { category: 'Кровля и проемы', items: ['Металлочерепица "Монтеррей Norman" с водосточной системой', 'Двухкамерные стеклопакеты (пятикамерный профиль)', 'Подшивка свесов софитом'] },
       { category: 'Инженерия', items: ['Полный комплект электрики и сантехники', 'Вентиляционная шахта из клинкерного кирпича', 'Разводка всех сетей по дому'] }
     ]
@@ -44,10 +51,10 @@ const framePackages = {
 };
 
 const constructionSteps = [
-  { name: 'Проект и фундамент', description: 'Разрабатываем архитектурный проект и возводим надежный свайно-ростверковый фундамент.', icon: FaRulerCombined, image: '/assets/service/fundament.jpg' },
-  { name: 'Сборка каркаса', description: 'Возводим несущие стены и перегородки из сухого бруса. Формируем прочный "скелет" вашего будущего дома.', icon: FaHammer, image: '/assets/service/frame.jpg' },
-  { name: 'Кровля и окна', description: 'Монтируем стропильную систему, укладываем металлочерепицу и устанавливаем качественные стеклопакеты.', icon: FaHome, image: '/assets/service/roof.jpg' },
-  { name: 'Отделка и утепление', description: 'Утепляем стены минеральной ватой, обшиваем фасад имитацией бруса и подготавливаем дом к сдаче.', icon: FaTree, image: '/assets/service/mineral.jpg' },
+  { name: 'Проект и фундамент', description: 'Разрабатываем архитектурный проект и возводим надежный свайно-ростверковый фундамент.', icon: FaRulerCombined, image: '/assets/service/fundament.webp' },
+  { name: 'Сборка каркаса', description: 'Возводим несущие стены и перегородки из сухого бруса. Формируем прочный "скелет" вашего будущего дома.', icon: FaHammer, image: '/assets/service/frame.webp' },
+  { name: 'Кровля и окна', description: 'Монтируем стропильную систему, укладываем металлочерепицу и устанавливаем качественные стеклопакеты.', icon: FaHome, image: '/assets/service/roof.webp' },
+  { name: 'Отделка и утепление', description: 'Утепляем стены минеральной ватой, обшиваем фасад имитацией бруса и подготавливаем дом к сдаче.', icon: FaTree, image: '/assets/service/mineral.webp' },
 ];
 
 const ourBenefits = [
@@ -80,17 +87,17 @@ const FrameHousesService = ({ onOrderClick }) => {
         <meta name="description" content="Закажите строительство современного и теплого каркасного дома под ключ от Marmol House. Гарантия 5 лет, фиксированная цена в договоре, сроки от 3 месяцев." />
       </Helmet>
       
-      <div className="pt-20"> {/* Отступ от sticky хедера */}
+      {/* Отступ от sticky хедера */}
 
-        <section className="relative h-[70vh] bg-cover bg-center flex items-center justify-center text-white" style={{ backgroundImage: "url('/assets/service/framehouse.jpg')" }}>
+        <section className="relative h-[70vh] bg-cover bg-center flex items-center justify-center text-white" style={{ backgroundImage: "url('/assets/service/framehouse.webp')" }}>
           <div className="absolute inset-0 bg-black/60"></div>
           <div className="relative z-10 text-center px-4" data-aos="fade-up">
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight">Каркасные дома под ключ</h1>
-            <p className="mt-4 text-lg md:text-xl max-w-2xl">Строим современные и энергоэффективные дома в Гродно и по всей Беларуси. С гарантией и по фиксированной цене.</p>
+            <p className="mt-4 text-lg md:text-xl max-w-2xl mx-auto">Строим современные и энергоэффективные дома в Гродно и по всей Беларуси. С гарантией и по фиксированной цене.</p>
             <button 
               onClick={() => handleOrder("Здравствуйте, хочу консультацию по строительству каркасного дома.")}
               className="mt-8 bg-[#f9c615] text-[#17253c] font-bold py-3 px-8 rounded-lg text-lg shadow-lg transform hover:scale-105 transition-transform">
-              Рассчитать стоимость
+              Получить консультацию
             </button>
           </div>
         </section>
@@ -133,62 +140,68 @@ const FrameHousesService = ({ onOrderClick }) => {
               <h2 className="text-3xl font-bold text-center text-[#17253c] mb-4" data-aos="fade-up">Что входит в стоимость?</h2>
               <p className="text-center text-gray-600 mb-8" data-aos="fade-up" data-aos-delay="100">Выберите комплектацию, чтобы увидеть детальный состав работ и материалов.</p>
               
-              <div className="flex justify-center mb-8 bg-gray-100 p-1 rounded-full" data-aos="fade-up" data-aos-delay="150">
-                {Object.keys(framePackages).map(tabName => (
-                  <button
-                    key={tabName}
-                    onClick={() => setActiveTab(tabName)}
-                    className={`relative w-full py-2.5 text-sm font-bold rounded-full transition-colors ${activeTab === tabName ? 'text-[#17253c]' : 'text-gray-500 hover:text-gray-900'}`}
-                  >
-                    {activeTab === tabName && ( <motion.div layoutId="tab-highlighter" className="absolute inset-0 bg-white shadow rounded-full" /> )}
-                    <span className="relative z-10">{tabName}</span>
-                  </button>
-                ))}
-              </div>
+               <div className="flex justify-center mb-8 bg-gray-100 p-1.5 rounded-full" data-aos="fade-up" data-aos-delay="150">
+            {Object.keys(framePackages).map(tabName => (
+              <button
+                key={tabName}
+                onClick={() => setActiveTab(tabName)}
+                className={`relative w-full px-2 py-3 rounded-full transition-colors ${activeTab === tabName ? '' : 'hover:bg-gray-200/50'}`}
+              >
+                {/* Анимированный фон */}
+                {activeTab === tabName && ( 
+                  <motion.div layoutId="tab-highlighter" className="absolute inset-0 bg-white shadow-md rounded-full" /> 
+                )}
+                
+                {/* Контейнер для текста */}
+                <div className="relative z-10 flex flex-col items-center">
+                  <span className={`font-bold transition-colors ${activeTab === tabName ? 'text-[#17253c]' : 'text-gray-600'}`}>
+                    {tabName}
+                  </span>
+                  <span className={`text-xs mt-1 transition-colors ${activeTab === tabName ? 'text-gray-500' : 'text-gray-400'}`}>
+                    {framePackages[tabName].tabSubtitle}
+                  </span>
+                </div>
+              </button>
+            ))}
+          </div>
 
               <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeTab}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <h3 className="text-2xl font-semibold text-center text-[#17253c] mb-8">Комплектация "<span className="text-[#f9c615]">{activeTab}</span>" от {framePackages[activeTab].price} BYN/м²</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {framePackages[activeTab].details.map((category) => (
-                      <div key={category.category} className="bg-gray-50 p-6 rounded-xl border">
-                        <h4 className="text-xl font-semibold text-[#17253c] mb-4">{category.category}</h4>
-                        <ul className="space-y-3">
-                          {category.items.map((item) => (
-                            <li key={item} className="flex items-start">
-                              <CheckCircleIcon className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
-                              <span className="text-gray-700">{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+              className="text-center" // Добавили text-center для всего блока
+            >
+              <h3 className="text-2xl font-semibold text-[#17253c] mb-2">Комплектация "<span className="text-[#f9c615]">{activeTab}</span>" от {framePackages[activeTab].price} BYN/м²</h3>
+              
+              {/* --- 2. ВЫВОДИМ ОПИСАНИЕ ТЕХНОЛОГИИ --- */}
+              <p className="text-gray-500 mb-8 max-w-2xl mx-auto">
+                {framePackages[activeTab].technology}
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left"> {/* Вернули text-left для карточек */}
+                {framePackages[activeTab].details.map((category) => (
+                  <div key={category.category} className="bg-gray-50 p-6 rounded-xl border">
+                    <h4 className="text-xl font-semibold text-[#17253c] mb-4">{category.category}</h4>
+                    <ul className="space-y-3">
+                      {category.items.map((item) => (
+                        <li key={item} className="flex items-start">
+                          <CheckCircleIcon className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
+                          <span className="text-gray-700">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                </motion.div>
-              </AnimatePresence>
+                ))}
+              </div>
+            </motion.div>
+          </AnimatePresence>
             </div>
           </section>
         </div>
-        
-        <section className="py-20 bg-[#17253c] text-white">
-          <div className="max-w-4xl mx-auto px-4 text-center" data-aos="zoom-in">
-              <h2 className="text-3xl font-bold text-[#f9c615]">Готовы построить дом своей мечты?</h2>
-              <p className="mt-4 text-lg text-gray-300">Оставьте заявку, и мы бесплатно подготовим для вас подробную смету и ответим на все вопросы.</p>
-              <button 
-                onClick={() => handleOrder(`Здравствуйте, хочу заказать бесплатную смету на каркасный дом.`)}
-                className="mt-8 bg-[#f9c615] text-[#17253c] font-bold py-3 px-8 rounded-lg text-lg shadow-lg transform hover:scale-105 transition-transform">
-                  Получить бесплатную смету
-              </button>
-          </div>
-        </section>
-
-      </div>
+        <Footer />
     </>
   );
 };

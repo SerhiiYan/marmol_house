@@ -1,11 +1,200 @@
-import React from 'react';
+// src/pages/GasSilicateHousesService.jsx
 
-const GasSilicateHousesService = () => {
+import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { motion, AnimatePresence } from 'framer-motion';
+import { CheckCircleIcon, ShieldCheckIcon, ClockIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
+import { FaLayerGroup, FaRulerCombined, FaHome } from 'react-icons/fa';
+import { GiStairs } from 'react-icons/gi';
+import Footer from '../components/Footer';
+
+// --- ЕДИНЫЙ МАССИВ ДАННЫХ ДЛЯ ВСЕХ КОМПЛЕКТАЦИЙ ---
+const allPackages = {
+  'Эконом': {
+    price: 1200,
+    technology: 'Классический каркасный дом. Идеальный баланс цены и качества для сезонного или круглогодичного проживания.',
+    tabSubtitle: 'Каркасная технология',
+    details: [
+      { category: 'Фундамент', items: ['Монолитный железобетонный свайно-ростверковый', 'Сваи Ø300 мм, ростверк 250×400 мм', 'Арматура Ø10 мм, бетон С16/20'] },
+      { category: 'Стены и перегородки', items: ['Несущий каркас из бруса 50×150 мм', 'Утепление минеральной ватой 150 мм', 'Снаружи — имитация бруса с покраской', 'Внутри — ОСБ плита 9 мм или ГКЛ 12 мм'] },
+      { category: 'Пол и потолок', items: ['Черновая стяжка пола 70 мм', 'Высота потолков 2.6 м', 'Утепление потолка 150 мм (Технониколь)', 'Обшивка потолка гипсокартоном'] },
+      { category: 'Кровля и проемы', items: ['Металлочерепица "Монтеррей Norman"', 'Стропильная система 50х175 мм', 'Однокамерные стеклопакеты', 'Надежная входная дверь'] },
+    ]
+  },
+  'Премиум': {
+    price: 1500,
+    technology: 'Улучшенный каркасный дом с дополнительным утеплением и повышенным комфортом для самых требовательных.',
+    tabSubtitle: 'Каркасная технология',
+    details: [
+      { category: 'Фундамент', items: ['Усиленный свайно-ростверковый (ростверк 300мм, арматура Ø12мм)', 'Класс бетона С16/20'] },
+      { category: 'Стены и перегородки', items: ['Каркас 50×150мм с двойным утеплением (150+50мм)', 'Отделка: имитация бруса, короед, евровагонка или 2 слоя ГКЛ', 'Ветрозащитная плёнка'] },
+      { category: 'Пол и потолок', items: ['Утепленный черновой пол 50мм + чистовая стяжка 70мм', 'Высота потолков 2.7 м', 'Двойная обшивка потолка гипсокартоном'] },
+      { category: 'Кровля и проемы', items: ['Металлочерепица "Монтеррей Norman" с водосточной системой', 'Двухкамерные стеклопакеты (пятикамерный профиль)', 'Подшивка свесов софитом'] },
+      { category: 'Инженерия', items: ['Электрика, ТВ кабели, заземление', 'Водоснабжение, канализация, радиаторы', 'Вентиляционная шахта из кирпича'] }
+    ]
+  },
+  'Премиум+': {
+    price: 1700,
+    technology: 'Максимально надежный каменный дом из газосиликатных блоков. Премиальные материалы и бескомпромиссное качество.',
+    tabSubtitle: 'Газосиликатная технология',
+    details: [
+      { category: 'Фундамент', items: ['Монолитный железобетонный ленточный', 'Армирование каркасами Ø12 мм', 'Устройство крылец и террас по проекту'] },
+      { category: 'Стены и перегородки', items: ['Газосиликатные блоки 400мм + утепление 50мм', 'Внутренняя отделка: гипсовая/цементная штукатурка', 'Перегородки из блоков 100/200мм и кирпича'] },
+      { category: 'Пол и потолок', items: ['Утепленный экструдированным пенополистиролом пол + чистовая стяжка 70мм', 'Высота потолков 2.7 м, утепление 150мм', 'Двойная обшивка потолка гипсокартоном'] },
+      { category: 'Кровля и проемы', items: ['Металлочерепица "Монтеррей Norman" с водосточной системой', 'Двухкамерные стеклопакеты (пятикамерный профиль)', 'Подшивка свесов софитом'] },
+      { category: 'Инженерия', items: ['Полный комплект электрики и сантехники', 'Вентиляционная шахта из клинкерного кирпича', 'Разводка всех сетей по дому'] }
+    ]
+  }
+};
+
+
+const constructionSteps = [
+  { name: 'Фундамент и плита', description: 'Возводим надежный ленточный или плитный фундамент, готовим основание для вашего каменного дома.', icon: FaRulerCombined, image: '/assets/service/monolit.webp' },
+  { name: 'Возведение стен', description: 'Производим кладку газосиликатных блоков на специальный клей, с обязательным армированием каждого ряда.', icon: FaLayerGroup, image: '/assets/service/gasoblock.webp' },
+  { name: 'Перекрытия и кровля', description: 'Монтируем межэтажные перекрытия и возводим стропильную систему под выбранный тип кровли.', icon: GiStairs, image: '/assets/service/roof.webp' },
+  { name: 'Фасад и отделка', description: 'Утепляем и отделываем фасад (штукатурка, кирпич, планкен), подготавливая дом к чистовым работам.', icon: FaHome, image: '/assets/service/exterdesign.webp' },
+];
+
+const gasSilicateBenefits = [
+  { name: 'Надежность на века', description: 'Каменные стены не подвержены гниению, усадке и служат нескольким поколениям вашей семьи.', icon: ShieldCheckIcon },
+  { name: 'Идеальный микроклимат', description: 'Пористая структура блоков позволяет дому "дышать", поддерживая комфортную влажность и температуру.', icon: ClockIcon },
+  { name: 'Пожаробезопасность', description: 'Газосиликат — негорючий материал, что обеспечивает максимальную безопасность для вас и ваших близких.', icon: DocumentTextIcon },
+];
+
+
+const GasSilicateHousesService = ({ onOrderClick }) => {
+  useEffect(() => {
+    AOS.init({ duration: 800, once: true, offset: 100 });
+  }, []);
+
+  // НА ЭТОЙ СТРАНИЦЕ ПО УМОЛЧАНИЮ АКТИВЕН ТАБ "ПРЕМИУМ+"
+  const [activeTab, setActiveTab] = useState('Премиум+');
+  
+  const handleOrder = (message) => {
+    if (onOrderClick) {
+      onOrderClick(message);
+    } else {
+      console.error("Проблема: функция onOrderClick не была передана в GasSilicateHousesService.");
+    }
+  };
+
   return (
-    <div className="pt-24 px-4">
-      <h1 className="text-3xl font-bold text-center">Дома из газосиликатных блоков</h1>
-      <p className="text-center mt-4">Здесь будет подробное описание услуги по строительству домов из газосиликатных блоков, их плюсы и особенности.</p>
-    </div>
+    <>
+      <Helmet>
+        <title>Строительство домов из газосиликатных блоков | Marmol House</title>
+        <meta name="description" content="Строим надежные и теплые дома из газосиликатных блоков под ключ в Гродно и по всей Беларуси. Официальная гарантия, фиксированная цена." />
+      </Helmet>
+      
+        <section className="relative h-[70vh] bg-cover bg-center flex items-center justify-center text-white" style={{ backgroundImage: "url('/assets/service/blockhouse-hero.webp')" }}>
+          <div className="absolute inset-0 bg-black/60"></div>
+          <div className="relative z-10 text-center px-4" data-aos="fade-up">
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight">Дома из газосиликатных блоков</h1>
+            <p className="mt-4 text-lg md:text-xl max-w-2xl mx-auto">Надежные каменные дома для комфортной жизни. Строим под ключ с соблюдением всех технологий.</p>
+            <button 
+              onClick={() => handleOrder("Здравствуйте, хочу консультацию по строительству дома из блоков.")}
+              className="mt-8 bg-[#f9c615] text-[#17253c] font-bold py-3 px-8 rounded-lg text-lg shadow-lg transform hover:scale-105 transition-transform">
+              Получить консультацию
+            </button>
+          </div>
+        </section>
+
+        <div className="max-w-6xl mx-auto px-4">
+          <section className="py-20">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+              {gasSilicateBenefits.map((benefit, index) => (
+                <div key={benefit.name} className="flex flex-col items-center" data-aos="fade-up" data-aos-delay={index * 100}>
+                  <benefit.icon className="w-12 h-12 text-[#f9c615] mb-4" />
+                  <h3 className="text-xl font-semibold text-[#17253c]">{benefit.name}</h3>
+                  <p className="mt-2 text-gray-600">{benefit.description}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="py-20 bg-gray-50 -mx-4 px-4 sm:-mx-6 md:-mx-8">
+             <div className="max-w-6xl mx-auto">
+               <h2 className="text-3xl font-bold text-center text-[#17253c] mb-12" data-aos="fade-up">Этапы строительства вашего каменного дома</h2>
+               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                  {constructionSteps.map((step, index) => (
+                    <div key={step.name} className="bg-white rounded-xl shadow-lg overflow-hidden group transition-transform duration-300 hover:-translate-y-2" data-aos="zoom-in" data-aos-delay={index * 100}>
+                      <div className="overflow-hidden h-48"><img src={step.image} alt={step.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
+                      <div className="p-6">
+                        <div className="flex items-center mb-3"><step.icon className="w-6 h-6 text-[#17253c] mr-3"/><h3 className="text-lg font-semibold text-[#17253c]">{step.name}</h3></div>
+                        <p className="text-gray-600 text-sm">{step.description}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+             </div>
+          </section>
+
+          <section className="py-20">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-3xl font-bold text-center text-[#17253c] mb-4" data-aos="fade-up">Что входит в стоимость?</h2>
+              <p className="text-center text-gray-600 mb-8" data-aos="fade-up" data-aos-delay="100">Выберите технологию и комплектацию, чтобы увидеть детальный состав работ и материалов.</p>
+              
+               <div className="flex justify-center mb-8 bg-gray-100 p-1.5 rounded-full" data-aos="fade-up" data-aos-delay="150">
+            {Object.keys(allPackages).map(tabName => (
+              <button
+                key={tabName}
+                onClick={() => setActiveTab(tabName)}
+                className={`relative w-full px-2 py-3 rounded-full transition-colors ${activeTab === tabName ? '' : 'hover:bg-gray-200/50'}`}
+              >
+                {/* Анимированный фон */}
+                {activeTab === tabName && ( 
+                  <motion.div layoutId="tab-highlighter" className="absolute inset-0 bg-white shadow-md rounded-full" /> 
+                )}
+                
+                {/* Контейнер для текста */}
+                <div className="relative z-10 flex flex-col items-center">
+                  <span className={`font-bold transition-colors ${activeTab === tabName ? 'text-[#17253c]' : 'text-gray-600'}`}>
+                    {tabName}
+                  </span>
+                  <span className={`text-xs mt-1 transition-colors ${activeTab === tabName ? 'text-gray-500' : 'text-gray-400'}`}>
+                    {allPackages[tabName].tabSubtitle}
+                  </span>
+                </div>
+              </button>
+            ))}
+          </div>
+
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeTab}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-center"
+                >
+                  <h3 className="text-2xl font-semibold text-[#17253c] mb-2">Комплектация "<span className="text-[#f9c615]">{activeTab}</span>" от {allPackages[activeTab].price} BYN/м²</h3>
+                  <p className="text-gray-500 mb-8 max-w-2xl mx-auto">{allPackages[activeTab].technology}</p>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+                    {allPackages[activeTab].details.map((category) => (
+                      <div key={category.category} className="bg-gray-50 p-6 rounded-xl border">
+                        <h4 className="text-xl font-semibold text-[#17253c] mb-4">{category.category}</h4>
+                        <ul className="space-y-3">
+                          {category.items.map((item) => (
+                            <li key={item} className="flex items-start">
+                              <CheckCircleIcon className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
+                              <span className="text-gray-700">{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </section>
+
+        </div>
+        <Footer />
+    </>
   );
 };
 
