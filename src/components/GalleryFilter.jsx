@@ -1,43 +1,32 @@
+// src/components/GalleryFilter.jsx
+
 import { motion } from 'framer-motion';
 
 const categories = ['Все', 'Бани', 'Дачи', 'Дом до 100м²', 'Дом от 100м²', 'Гаражи', 'Барнхаусы'];
 
 const GalleryFilter = ({ selected, onSelect }) => {
   return (
-    <nav className="my-6 md:my-10">
-      {/* Кнопки для планшетов и десктопа */}
-      <div className="hidden md:flex overflow-x-auto gap-3 justify-center pb-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+    <nav className="flex justify-center my-8 md:my-12">
+      <div className="flex w-full md:w-auto overflow-x-auto space-x-2 p-2 bg-gray-100 rounded-full scrollbar-hide">
         {categories.map((cat) => (
-          <motion.button
+          <button
             key={cat}
             onClick={() => onSelect(cat)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className={`flex-shrink-0 px-3 py-2 rounded-full font-semibold text-base ${
-              selected === cat
-                ? 'bg-yellow-400 text-[#17253c]'
-                : 'bg-gray-100 text-[#17253c] hover:bg-gray-200 border border-gray-300'
+            className={`relative flex-shrink-0 px-4 py-2.5 rounded-full text-sm sm:text-base font-semibold transition-colors ${
+              selected === cat ? 'text-[#17253c]' : 'text-gray-500 hover:text-gray-900'
             }`}
-            aria-current={selected === cat ? 'true' : 'false'}
+            style={{ WebkitTapHighlightColor: "transparent" }}
           >
-            {cat}
-          </motion.button>
+            {selected === cat && (
+              <motion.div
+                layoutId="filter-highlighter" 
+                className="absolute inset-0 bg-white shadow-md rounded-full"
+                transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+              />
+            )}
+            <span className="relative z-10">{cat}</span>
+          </button>
         ))}
-      </div>
-      {/* Для моб */}
-      <div className="md:hidden">
-        <select
-          value={selected}
-          onChange={(e) => onSelect(e.target.value)}
-          className="w-full p-2 rounded border border-gray-300 bg-gray-100 text-[#17253c] text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
-          aria-label="Выберите категорию проектов"
-        >
-          {categories.map((cat) => (
-            <option key={cat} value={cat}>
-              {cat}
-            </option>
-          ))}
-        </select>
       </div>
     </nav>
   );

@@ -118,7 +118,6 @@ function HousePackages({ onOrderClick }) {
                 </div>
                 
                 <div className="flex-grow p-8 flex flex-col"> 
-                  <p className="text-gray-600 mb-6 flex-grow">{pack.description}</p>
                   <ul className="space-y-3 mb-8">
                     {pack.highlights.map((item, i) => (
                       <li key={i} className="flex items-start">

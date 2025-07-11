@@ -6,9 +6,11 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircleIcon, ShieldCheckIcon, ClockIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
-import { FaLayerGroup, FaRulerCombined, FaHome } from 'react-icons/fa';
+import { FaLayerGroup, FaRulerCombined, FaHome, FaShieldAlt, FaVolumeDown, FaFire, FaTools } from 'react-icons/fa';
 import { GiStairs } from 'react-icons/gi';
 import Footer from '../components/Footer';
+import TechnologyBenefits from '../components/TechnologyBenefits';
+import BlockHouseImage from '../assets/blueprint2.png';
 
 // --- ЕДИНЫЙ МАССИВ ДАННЫХ ДЛЯ ВСЕХ КОМПЛЕКТАЦИЙ ---
 const allPackages = {
@@ -57,12 +59,18 @@ const constructionSteps = [
   { name: 'Фасад и отделка', description: 'Утепляем и отделываем фасад (штукатурка, кирпич, планкен), подготавливая дом к чистовым работам.', icon: FaHome, image: '/assets/service/exterdesign.webp' },
 ];
 
-const gasSilicateBenefits = [
-  { name: 'Надежность на века', description: 'Каменные стены не подвержены гниению, усадке и служат нескольким поколениям вашей семьи.', icon: ShieldCheckIcon },
-  { name: 'Идеальный микроклимат', description: 'Пористая структура блоков позволяет дому "дышать", поддерживая комфортную влажность и температуру.', icon: ClockIcon },
-  { name: 'Пожаробезопасность', description: 'Газосиликат — негорючий материал, что обеспечивает максимальную безопасность для вас и ваших близких.', icon: DocumentTextIcon },
+const gasSilicateBenefitsData = [
+  { title: 'Долговечность', text: 'Каменные дома служат до 100–150 лет, не требуя сложного ухода.', icon: <FaShieldAlt size={24}/> },
+  { title: 'Тишина и комфорт', text: 'Газосиликат отлично сохраняет тепло и защищает от уличного шума.', icon: <FaVolumeDown size={24}/> },
+  { title: 'Пожаробезопасность', text: 'Материал не горит и не поддерживает горение, обеспечивая высший класс безопасности.', icon: <FaFire size={24}/> },
+  { title: 'Идеальные стены', text: 'Ровная поверхность блоков упрощает и удешевляет внутреннюю отделку.', icon: <FaTools size={24}/> },
 ];
 
+const ourBenefits = [
+  { name: 'Гарантия 5 лет', description: 'Мы уверены в качестве наших домов и даем официальную гарантию на все конструктивные элементы.', icon: ShieldCheckIcon },
+  { name: 'Строим от 3 месяцев', description: 'Благодаря отлаженной технологии, вы сможете отпраздновать новоселье уже в следующем сезоне.', icon: ClockIcon },
+  { name: 'Фиксированная цена', description: 'Стоимость, указанная в договоре, остается неизменной до конца строительства. Никаких скрытых платежей.', icon: DocumentTextIcon },
+];
 
 const GasSilicateHousesService = ({ onOrderClick }) => {
   useEffect(() => {
@@ -100,10 +108,18 @@ const GasSilicateHousesService = ({ onOrderClick }) => {
           </div>
         </section>
 
+        <TechnologyBenefits
+            title="Преимущества домов из газосиликатных блоков"
+            imageSrc={BlockHouseImage}
+            benefits={gasSilicateBenefitsData}
+            imageAlt="Чертеж современного дома из газосиликатных блоков"
+            bgColor="bg-white"
+        />
+
         <div className="max-w-6xl mx-auto px-4">
           <section className="py-20">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
-              {gasSilicateBenefits.map((benefit, index) => (
+              {ourBenefits.map((benefit, index) => (
                 <div key={benefit.name} className="flex flex-col items-center" data-aos="fade-up" data-aos-delay={index * 100}>
                   <benefit.icon className="w-12 h-12 text-[#f9c615] mb-4" />
                   <h3 className="text-xl font-semibold text-[#17253c]">{benefit.name}</h3>
@@ -113,7 +129,7 @@ const GasSilicateHousesService = ({ onOrderClick }) => {
             </div>
           </section>
 
-          <section className="py-20 bg-gray-50 -mx-4 px-4 sm:-mx-6 md:-mx-8">
+          <section className="py-20 -mx-4 px-4 sm:-mx-2 md:-mx-8">
              <div className="max-w-6xl mx-auto">
                <h2 className="text-3xl font-bold text-center text-[#17253c] mb-12" data-aos="fade-up">Этапы строительства вашего каменного дома</h2>
                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">

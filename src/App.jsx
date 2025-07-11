@@ -59,7 +59,7 @@ function App() {
             <Route path="/" element={<Home onOrderClick={handleOpenModal} />} />
             <Route path="/services/frame-houses" element={<FrameHousesService onOrderClick={handleOpenModal} />} />
             <Route path="/services/gas-silicate-houses" element={<GasSilicateHousesService onOrderClick={handleOpenModal} />} />
-
+            <Route path="/gallery" element={<Gallery onOrderClick={handleOpenModal} />} />
             {/* Остальные роуты */}
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/projects/:id" element={<ProjectDetail />} />

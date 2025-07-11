@@ -6,11 +6,18 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircleIcon, ShieldCheckIcon, ClockIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
-import { FaRulerCombined, FaHammer, FaTree, FaHome } from 'react-icons/fa';
+import { FaRulerCombined, FaHammer, FaTree, FaHome, FaBolt, FaClock, FaWeightHanging, } from 'react-icons/fa';
 import Footer from '../components/Footer';
+import TechnologyBenefits from '../components/TechnologyBenefits';
+import FrameHouseImage from '../assets/blueprint6.png';
 
 // --- ДАННЫЕ ДЛЯ СТРАНИЦЫ ---
-
+const frameHouseBenefitsData = [
+  { title: 'Энергоэффективность', text: 'Стены отлично сохраняют тепло, снижая расходы на отопление.', icon: <FaBolt size={24}/> },
+  { title: 'Скорость строительства', text: 'Полный цикл — от фундамента до отделки — занимает от 2 до 4 месяцев.', icon: <FaClock size={24}/> },
+  { title: 'Легкий вес', text: 'Конструкция позволяет экономить на фундаменте и строить на сложных грунтах.', icon: <FaWeightHanging size={24}/> },
+  { title: 'Гибкость планировок', text: 'Легко менять внутреннюю планировку без сложных и дорогих перепланировок.', icon: <FaHome size={24}/> },
+];
 // 1. ОБЪЕДИНЯЕМ ВСЕ КОМПЛЕКТАЦИИ В ОДИН МАССИВ
 const framePackages = {
   'Эконом': {
@@ -102,6 +109,14 @@ const FrameHousesService = ({ onOrderClick }) => {
           </div>
         </section>
 
+        <TechnologyBenefits 
+          title="Почему выбирают каркасные дома"
+          imageSrc={FrameHouseImage}
+          benefits={frameHouseBenefitsData}
+          imageAlt="Чертеж современного каркасного дома"
+          bgColor="bg-white" 
+        />
+
         <div className="max-w-6xl mx-auto px-4">
           <section className="py-20">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
@@ -115,7 +130,7 @@ const FrameHousesService = ({ onOrderClick }) => {
             </div>
           </section>
 
-          <section className="py-20 bg-gray-50 -mx-4 px-4">
+          <section className="py-20 -mx-4 px-4 sm:-mx-2 md:-mx-8">
              <h2 className="text-3xl font-bold text-center text-[#17253c] mb-12 max-w-6xl mx-auto" data-aos="fade-up">Технология строительства: просто, надежно и наглядно</h2>
              <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 {constructionSteps.map((step, index) => (
