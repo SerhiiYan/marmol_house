@@ -4,10 +4,11 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { XMarkIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
+import { slugify } from '../utils/slugify'; 
 
 const ProjectQuickViewModal = ({ project, onClose, onOrder }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-
+  const projectUrl = `/projects/${slugify(project.title)}`;
   const handleNext = (e) => { e.stopPropagation(); setCurrentIndex((prev) => (prev + 1) % project.images.length); };
   const handlePrev = (e) => { e.stopPropagation(); setCurrentIndex((prev) => (prev - 1 + project.images.length) % project.images.length); };
   
@@ -97,7 +98,7 @@ const ProjectQuickViewModal = ({ project, onClose, onOrder }) => {
               <button onClick={handleOrderClick} className="w-full bg-[#f9c615] text-[#17253c] font-semibold py-3 rounded-lg hover:bg-yellow-400 transition-colors transform hover:scale-105">
                 Заказать расчет по этому проекту
               </button>
-              <Link to={`/projects/${project.id}`} className="w-full text-center bg-gray-200 text-gray-800 font-semibold py-3 rounded-lg hover:bg-gray-300 transition-colors">
+              <Link to={projectUrl} className="w-full text-center bg-gray-200 text-gray-800 font-semibold py-3 rounded-lg hover:bg-gray-300 transition-colors">
                 Перейти на страницу проекта
               </Link>
             </div>

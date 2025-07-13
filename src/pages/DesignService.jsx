@@ -177,6 +177,7 @@ const DesignService = ({ onOrderClick }) => {
 
         </div>
       </div>
+      <Footer />
     </>
   );
 };
