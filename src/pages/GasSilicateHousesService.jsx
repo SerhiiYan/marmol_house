@@ -9,6 +9,7 @@ import { CheckCircleIcon, ShieldCheckIcon, ClockIcon, DocumentTextIcon } from '@
 import { FaLayerGroup, FaRulerCombined, FaHome, FaShieldAlt, FaVolumeDown, FaFire, FaTools } from 'react-icons/fa';
 import { GiStairs } from 'react-icons/gi';
 import Footer from '../components/Footer';
+import CustomPackageBlock from '../components/CustomPackageBlock';
 import TechnologyBenefits from '../components/TechnologyBenefits';
 import BlockHouseImage from '../assets/blueprint2.png';
 
@@ -149,8 +150,15 @@ const GasSilicateHousesService = ({ onOrderClick }) => {
           <section className="py-20">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl font-bold text-center text-[#17253c] mb-4" data-aos="fade-up">Что входит в стоимость?</h2>
-              <p className="text-center text-gray-600 mb-8" data-aos="fade-up" data-aos-delay="100">Выберите технологию и комплектацию, чтобы увидеть детальный состав работ и материалов.</p>
-              
+            <p className="text-center text-gray-600 mb-8" data-aos="fade-up" data-aos-delay="100">Мы предлагаем как готовые комплектации "под ключ", так и базовые решения, которые можно адаптировать под ваш бюджет.</p>
+            
+            {/* 2. ВСТАВЛЯЕМ НАШ НОВЫЙ БЛОК ПРЯМО ЗДЕСЬ */}
+            <CustomPackageBlock onOrderClick={handleOrder} />
+
+            {/* Добавляем небольшой заголовок-разделитель */}
+            <h3 className="text-2xl font-semibold text-center text-[#17253c] mt-16 mb-8" data-aos="fade-up">
+              Или выберите одну из наших полных комплектаций:
+            </h3>
                <div className="flex justify-center mb-8 bg-gray-100 p-1.5 rounded-full" data-aos="fade-up" data-aos-delay="150">
             {Object.keys(allPackages).map(tabName => (
               <button

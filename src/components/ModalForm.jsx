@@ -146,7 +146,7 @@ export default function ModalForm({ show, onClose, defaultComment = '' }) {
                   className="mt-1 h-4 w-4 rounded border-gray-300 text-[#f9c615] focus:ring-[#f9c615]"
                 />
                 <label htmlFor="acceptPolicy" className="ml-2 text-sm text-gray-600">
-                  Я согласен на обработку персональных данных и принимаю условия <Link to="/privacy" className="text-[#f9c615] underline hover:text-[#e5b512]">политики конфиденциальности</Link>.
+                  Я согласен на обработку персональных данных и принимаю условия <Link to="/privacy" target='_blank' className="text-[#f9c615] underline hover:text-[#e5b512]">политики конфиденциальности</Link>.
                 </label>
               </div>
 
