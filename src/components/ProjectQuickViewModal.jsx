@@ -23,7 +23,6 @@ const ProjectQuickViewModal = ({ project, onClose, onOrder }) => {
     onOrder(message);
   };
 
-  // --- ВЫНОСИМ JSX ДЛЯ ЦЕН В ПЕРЕИСПОЛЬЗУЕМЫЙ КОМПОНЕНТ ---
   const PricePackages = () => (
     <>
       <h3 className="font-semibold text-gray-800 mb-3">Примерные цены по комплектациям:</h3>
@@ -45,7 +44,6 @@ const ProjectQuickViewModal = ({ project, onClose, onOrder }) => {
         className="relative w-full max-w-6xl max-h-[90vh] bg-white rounded-2xl shadow-xl flex flex-col lg:flex-row overflow-y-auto lg:overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* --- ЛЕВАЯ КОЛОНКА --- */}
         <div className="w-full lg:w-3/5 flex flex-col bg-gray-100">
           <div className="relative w-full" style={{ paddingTop: '75%' }}>
             <div className="absolute inset-0">
@@ -63,22 +61,18 @@ const ProjectQuickViewModal = ({ project, onClose, onOrder }) => {
                 </button>
             ))}
           </div>
-          {/* Цены под картинкой теперь видны ТОЛЬКО на десктопе */}
           <div className="hidden lg:block p-6 bg-white border-t border-gray-200 flex-grow overflow-y-auto">
             <PricePackages />
           </div>
         </div>
 
-        {/* --- ПРАВАЯ КОЛОНКА --- */}
         <div className="w-full lg:w-2/5 p-6 flex flex-col">
-          {/* Верхний блок */}
           <div>
             <div className="flex justify-between items-start mb-2">
                 <span className="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">{project.type}</span>
                 <button onClick={onClose} className="text-gray-400 hover:text-gray-800 -mt-1 -mr-1" aria-label="Закрыть окно"><XMarkIcon className="w-7 h-7"/></button>
             </div>
             
-            {/* --- ИСПРАВЛЕННЫЙ БЛОК: ЦЕНА НАПРОТИВ НАЗВАНИЯ --- */}
             <div className="flex justify-between items-baseline mb-4">
               <h2 id="modal-title" className="text-2xl font-bold text-[#17253c]">{project.title}</h2>
               <p className="text-xl font-bold text-rose-600 flex-shrink-0 ml-4 whitespace-nowrap">
@@ -88,22 +82,17 @@ const ProjectQuickViewModal = ({ project, onClose, onOrder }) => {
             <div className="border-t border-gray-200"></div>
           </div>
 
-          {/* Центральный блок */}
           <div className="my-4 flex-grow overflow-y-auto pr-2">
             <h3 className="font-semibold text-gray-800 mb-3">Общая информация:</h3>
             <ul className="text-gray-700 space-y-1.5 list-disc list-inside">
               {project.description.map((line, i) => <li key={i}>{line}</li>)}
             </ul>
           </div>
-          
-          {/* --- НИЖНИЙ БЛОК: ИЗМЕНЕНА СТРУКТУРА --- */}
-          {/* Этот блок теперь содержит и цены (на мобильных), и кнопки */}
+
           <div className="pt-4 border-t border-gray-200 mt-auto">
-            {/* Цены видны ТОЛЬКО на мобильных */}
             <div className="block lg:hidden mb-4">
               <PricePackages />
             </div>
-            {/* Кнопки */}
             <div className="flex flex-col space-y-3">
               <button onClick={handleOrderClick} className="w-full bg-[#f9c615] text-[#17253c] font-semibold py-3 rounded-lg hover:bg-yellow-400 transition-colors transform hover:scale-105">
                 Заказать расчет по этому проекту

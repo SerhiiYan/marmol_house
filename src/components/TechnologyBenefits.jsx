@@ -19,7 +19,6 @@ const TechnologyBenefits = ({ title, imageSrc, benefits, imageAlt, bgColor = 'bg
         {title}
       </h2>
 
-      {/* Desktop Layout (с картинкой в центре) */}
       <div className="hidden lg:block relative w-full max-w-5xl mx-auto" style={{ height: '600px' }}>
         <div className="absolute inset-0 flex items-center justify-center z-10" data-aos="zoom-in" data-aos-duration="1000">
           <img
@@ -30,7 +29,6 @@ const TechnologyBenefits = ({ title, imageSrc, benefits, imageAlt, bgColor = 'bg
           />
         </div>
 
-        {/* Располагаем преимущества по кругу */}
         <div
           className="absolute w-64 h-64 bg-yellow-400/10 rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
           data-aos="zoom-in"
@@ -38,12 +36,11 @@ const TechnologyBenefits = ({ title, imageSrc, benefits, imageAlt, bgColor = 'bg
         />
 
         {benefits.map((benefit, index) => {
-          // Позиции заданы так, чтобы карточки не пересекались
           const positions = [
-            'top-0 left-1/2 -translate-x-1/2 -translate-y-1/4', // Верх, сдвинута чуть выше
-            'top-1/2 right-0 translate-x-1/3',                 // Право, сдвинута чуть правее
-            'bottom-0 left-1/3 -translate-x-1/2 translate-y-1/4',// Низ, сдвинута чуть ниже
-            'top-1/2 left-0 -translate-x-1/3'                  // Лево, сдвинута чуть левее
+            'top-0 left-1/2 -translate-x-1/2 -translate-y-1/4', 
+            'top-1/2 right-0 translate-x-1/3',                 
+            'bottom-0 left-1/3 -translate-x-1/2 translate-y-1/4',
+            'top-1/2 left-0 -translate-x-1/3'                  
           ];
           
           return (
@@ -63,7 +60,6 @@ const TechnologyBenefits = ({ title, imageSrc, benefits, imageAlt, bgColor = 'bg
                 })}
             </div>
 
-      {/* Mobile Layout (карточки под картинкой) */}
       <div className="block lg:hidden max-w-xl mx-auto">
         <div className="w-full flex justify-center mb-10" data-aos="zoom-in">
           <img

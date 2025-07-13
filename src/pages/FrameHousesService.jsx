@@ -11,14 +11,14 @@ import Footer from '../components/Footer';
 import TechnologyBenefits from '../components/TechnologyBenefits';
 import FrameHouseImage from '../assets/blueprint6.png';
 
-// --- ДАННЫЕ ДЛЯ СТРАНИЦЫ ---
+
 const frameHouseBenefitsData = [
   { title: 'Энергоэффективность', text: 'Стены отлично сохраняют тепло, снижая расходы на отопление.', icon: <FaBolt size={24}/> },
   { title: 'Скорость строительства', text: 'Полный цикл — от фундамента до отделки — занимает от 2 до 4 месяцев.', icon: <FaClock size={24}/> },
   { title: 'Легкий вес', text: 'Конструкция позволяет экономить на фундаменте и строить на сложных грунтах.', icon: <FaWeightHanging size={24}/> },
   { title: 'Гибкость планировок', text: 'Легко менять внутреннюю планировку без сложных и дорогих перепланировок.', icon: <FaHome size={24}/> },
 ];
-// 1. ОБЪЕДИНЯЕМ ВСЕ КОМПЛЕКТАЦИИ В ОДИН МАССИВ
+
 const framePackages = {
   'Эконом': {
     technology: 'Классический каркасный дом. Идеальный баланс цены и качества для сезонного или круглогодичного проживания.',
@@ -70,7 +70,6 @@ const ourBenefits = [
   { name: 'Фиксированная цена', description: 'Стоимость, указанная в договоре, остается неизменной до конца строительства. Никаких скрытых платежей.', icon: DocumentTextIcon },
 ];
 
-// Компонент принимает функцию onOrderClick из props
 const FrameHousesService = ({ onOrderClick }) => {
   useEffect(() => {
     AOS.init({ duration: 800, once: true, offset: 100 });
@@ -78,7 +77,6 @@ const FrameHousesService = ({ onOrderClick }) => {
 
   const [activeTab, setActiveTab] = useState('Эконом');
   
-  // Безопасный вызов функции, переданной через props
   const handleOrder = (message) => {
     if (onOrderClick) {
       onOrderClick(message);
@@ -93,8 +91,6 @@ const FrameHousesService = ({ onOrderClick }) => {
         <title>Строительство каркасных домов под ключ в Гродно и Беларуси | Marmol House</title>
         <meta name="description" content="Закажите строительство современного и теплого каркасного дома под ключ от Marmol House. Гарантия 5 лет, фиксированная цена в договоре, сроки от 3 месяцев." />
       </Helmet>
-      
-      {/* Отступ от sticky хедера */}
 
         <section className="relative h-[70vh] bg-cover bg-center flex items-center justify-center text-white" style={{ backgroundImage: "url('/assets/service/framehouse.webp')" }}>
           <div className="absolute inset-0 bg-black/60"></div>
@@ -162,12 +158,10 @@ const FrameHousesService = ({ onOrderClick }) => {
                 onClick={() => setActiveTab(tabName)}
                 className={`relative w-full px-2 py-3 rounded-full transition-colors ${activeTab === tabName ? '' : 'hover:bg-gray-200/50'}`}
               >
-                {/* Анимированный фон */}
                 {activeTab === tabName && ( 
                   <motion.div layoutId="tab-highlighter" className="absolute inset-0 bg-white shadow-md rounded-full" /> 
                 )}
                 
-                {/* Контейнер для текста */}
                 <div className="relative z-10 flex flex-col items-center">
                   <span className={`font-bold transition-colors ${activeTab === tabName ? 'text-[#17253c]' : 'text-gray-600'}`}>
                     {tabName}
@@ -187,16 +181,15 @@ const FrameHousesService = ({ onOrderClick }) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
-              className="text-center" // Добавили text-center для всего блока
+              className="text-center"
             >
               <h3 className="text-2xl font-semibold text-[#17253c] mb-2">Комплектация "<span className="text-[#f9c615]">{activeTab}</span>" от {framePackages[activeTab].price} BYN/м²</h3>
               
-              {/* --- 2. ВЫВОДИМ ОПИСАНИЕ ТЕХНОЛОГИИ --- */}
               <p className="text-gray-500 mb-8 max-w-2xl mx-auto">
                 {framePackages[activeTab].technology}
               </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left"> {/* Вернули text-left для карточек */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left"> 
                 {framePackages[activeTab].details.map((category) => (
                   <div key={category.category} className="bg-gray-50 p-6 rounded-xl border">
                     <h4 className="text-xl font-semibold text-[#17253c] mb-4">{category.category}</h4>

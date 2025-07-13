@@ -12,7 +12,7 @@ import Footer from '../components/Footer';
 import TechnologyBenefits from '../components/TechnologyBenefits';
 import BlockHouseImage from '../assets/blueprint2.png';
 
-// --- ЕДИНЫЙ МАССИВ ДАННЫХ ДЛЯ ВСЕХ КОМПЛЕКТАЦИЙ ---
+
 const allPackages = {
   'Эконом': {
     price: 1200,
@@ -77,7 +77,7 @@ const GasSilicateHousesService = ({ onOrderClick }) => {
     AOS.init({ duration: 800, once: true, offset: 100 });
   }, []);
 
-  // НА ЭТОЙ СТРАНИЦЕ ПО УМОЛЧАНИЮ АКТИВЕН ТАБ "ПРЕМИУМ+"
+
   const [activeTab, setActiveTab] = useState('Премиум+');
   
   const handleOrder = (message) => {
@@ -158,12 +158,11 @@ const GasSilicateHousesService = ({ onOrderClick }) => {
                 onClick={() => setActiveTab(tabName)}
                 className={`relative w-full px-2 py-3 rounded-full transition-colors ${activeTab === tabName ? '' : 'hover:bg-gray-200/50'}`}
               >
-                {/* Анимированный фон */}
+
                 {activeTab === tabName && ( 
                   <motion.div layoutId="tab-highlighter" className="absolute inset-0 bg-white shadow-md rounded-full" /> 
                 )}
                 
-                {/* Контейнер для текста */}
                 <div className="relative z-10 flex flex-col items-center">
                   <span className={`font-bold transition-colors ${activeTab === tabName ? 'text-[#17253c]' : 'text-gray-600'}`}>
                     {tabName}

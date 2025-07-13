@@ -56,7 +56,7 @@ function HousePackages({ onOrderClick }) {
     <section className="py-16 px-4 md:px-10 bg-gray-50" aria-labelledby="packages-heading">
       <div className="max-w-7xl mx-auto text-center mb-12" data-aos="fade-up">
 
-        <h2 id="packages-heading" className="text-3xl font-bold text-[#17253c] mb-4">Выберите свою комплектацию дома</h2>
+        <h2 id="packages-heading" className="text-3xl md:text-4xl font-bold text-[#17253c] mb-4">Выберите свою комплектацию дома</h2>
         <p className="text-gray-600 max-w-2xl mx-auto text-lg">
           Подбираем комплектацию под ваши задачи — от дачи выходного дня до дома для круглогодичного проживания.
         </p>

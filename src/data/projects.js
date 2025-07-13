@@ -249,7 +249,7 @@ const projects = [
         "/assets/house100/z72/3.jpg", "/assets/house100/z72/4.jpg", "/assets/house100/z72/5.png",
       ],
       description: [
-        "Площадь: ~72,9 м² (с террасой — 77 м²)",
+        "Площадь: ~72,9 м²",
         "Прихожая — 4,5 м²",
         "Холл — 5,5 м²",
         "Гостиная — 20,2 м²",
@@ -275,7 +275,7 @@ const projects = [
         "/assets/house100/z87/3.jpg", "/assets/house100/z87/4.jpg", "/assets/house100/z87/5.jpg",
       ],
       description: [
-        "Площадь: ~69,4 м² (с террасой — 72,7 м²)",
+        "Площадь: ~69,4 м²",
         "Прихожая — 3,7 м²",
         "Котельная — 5,4 м²",
         "Холл — 2,5 м²",
@@ -303,7 +303,7 @@ const projects = [
         "/assets/house100/z139/3.jpg", "/assets/house100/z139/4.jpg", "/assets/house100/z139/5.jpg",
       ],
       description: [
-        "Площадь: 60,9 м² (с террасой — 67,8 м²)",
+        "Площадь: 60,9 м²",
         "Прихожая — 1,9 м²",
         "Холл — 6,4 м²",
         "Ванная комната — 3,2 м²",
@@ -330,7 +330,7 @@ const projects = [
         "/assets/house100/z262/3.jpg", "/assets/house100/z262/4.jpg", "/assets/house100/z262/5.jpg",
       ],
       description: [
-        "Площадь: 65,2 м² (с террасой — 72,5 м²)",
+        "Площадь: 65,2 м²",
         "Прихожая — 4,3 м²",
         "Кухня + кладовая — 12,0 м²",
         "Холл — 4,2 м²",
@@ -356,7 +356,7 @@ const projects = [
         "/assets/house100/z313/3.jpg", "/assets/house100/z313/4.jpg", "/assets/house100/z313/5.jpg", "/assets/house100/z313/6.jpg", "/assets/house100/z313/7.jpg",
       ],
       description: [
-        "Площадь: 84,1 м² (с террасой — 95,5 м²)",
+        "Площадь: 84,1 м²",
         "Прихожая — 4,1 м²",
         "Котельная — 5,4 м²",
         "Ванная комната — 6,2 м²",
@@ -384,7 +384,7 @@ const projects = [
         "/assets/house100/z356/3.jpg", "/assets/house100/z356/4.jpg", "/assets/house100/z356/5.jpg", "/assets/house100/z356/6.jpg",
       ],
       description: [
-        "Площадь: 99,1 м² (с террасой — 103 м²)",
+        "Площадь: 99,1 м²",
         "Прихожая — 6,5 м²",
         "Спальня — 10,7 м²",
         "Спальня — 12,1 м²",
@@ -413,7 +413,7 @@ const projects = [
         "/assets/house100/z440/3.jpg", "/assets/house100/z440/4.jpg", "/assets/house100/z440/5.jpg", "/assets/house100/z440/6.jpg", "/assets/house100/z440/7.jpg", "/assets/house100/z440/8.jpg",
       ],
       description: [
-        "Площадь: ~69 м² (с террасой — 84,6 м²)",
+        "Площадь: ~69 м²",
         "Кладовая — 4,8 м²",
         "Гостиная + столовая — 20,1 м²",
         "Кухня — 7,8 м²",
@@ -478,7 +478,7 @@ const projects = [
         "/assets/house150/z64/3.jpg", "/assets/house150/z64/4.jpg", "/assets/house150/z64/5.png",
       ],
       description: [
-        'Площадь: 83,8 м² (с террасой — 86,8 м²)',
+        'Площадь: 83,8 м²',
         'Прихожая — 4,0 м²',
         'Котельная — 6,9 м²',
         'Холл — 5,8 м²',
@@ -531,7 +531,7 @@ const projects = [
         "/assets/house150/z176/3.jpg", "/assets/house150/z176/4.jpg", "/assets/house150/z176/5.jpg", "/assets/house150/z176/6.jpg",
       ],
       description: [
-        'Площадь: 115 м² (с террасой — 122,8 м²)',
+        'Площадь: 115 м²',
         'Прихожая — 4,7 м²',
         'Холл — 4,2 м²',
         'Ванная комната — 7,0 м²',
@@ -560,7 +560,7 @@ const projects = [
         "/assets/house150/z191/3.jpg", "/assets/house150/z191/4.jpg", "/assets/house150/z191/5.jpg",
       ],
       description: [
-        'Площадь: 100,2 м² (с террасой — 115,5 м²)',
+        'Площадь: 100,2 м²',
         'Прихожая — 4,5 м²',
         'Котельная — 5,6 м²',
         'Холл — 8,3 м²',
@@ -589,7 +589,7 @@ const projects = [
         "/assets/house150/z259/3.jpg", "/assets/house150/z259/4.jpg", "/assets/house150/z259/5.jpg",
       ],
       description: [
-        'Площадь: 85,4 м² (с гаражом — 103,1 м², с террасой — 108,7 м²)',
+        'Площадь: 85,4 м²',
         'Холл — 10,9 м²',
         'Гараж — 17,7 м²',
         'Спальня — 13,1 м²',
@@ -618,7 +618,7 @@ const projects = [
         "/assets/house150/z273/3.jpg", "/assets/house150/z273/4.jpg", "/assets/house150/z273/5.jpg", "/assets/house150/z273/6.jpg",
       ],
       description: [
-        'Площадь: 93,9 м² (с террасой — 101 м²)',
+        'Площадь: 93,9 м²',
         'Санузел — 2,8 м²',
         'Терраса — 0,0 м² / 7,1 м² (на выбор)',
         'Гостиная — 26,2 м²',
@@ -646,7 +646,7 @@ const projects = [
         "/assets/house150/z368d/3.jpg", "/assets/house150/z368d/4.jpg", "/assets/house150/z368d/5.jpg", "/assets/house150/z368d/6.jpg",
       ],
       description: [
-        'Площадь: 107,9 м² (с террасой — 120,5 м²)',
+        'Площадь: 107,9 м²',
         'Прихожая — 4,3 м²',
         'Гостиная — 27,8 м²',
         'Кухня — 13,4 м²',
@@ -676,7 +676,7 @@ const projects = [
         "/assets/house150/z415/3.jpg", "/assets/house150/z415/4.jpg", "/assets/house150/z415/5.jpg", "/assets/house150/z415/6.jpg",
       ],
       description: [
-        'Площадь: ~113 м² (с террасой — 121,6 м²)',
+        'Площадь: ~113 м²',
         'Прихожая — 6,4 м²',
         'Спальня — 14,2 м²',
         'Спальня — 15,8 м²',

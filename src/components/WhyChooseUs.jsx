@@ -1,105 +1,98 @@
-import React from 'react';
-import { useEffect } from 'react';
-import { motion } from 'framer-motion';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import safetyIcon from '../assets/safety.png';
-import priceIcon from '../assets/price.png';
-import expIcon from '../assets/exp.png';
-import garantieIcon from '../assets/garantie.png';
+// src/components/WhyChooseUs.jsx
 
-// Данные о преимуществах компании
-const features = [
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { ShieldCheckIcon, DocumentTextIcon, UserGroupIcon, CameraIcon } from '@heroicons/react/24/outline';
+
+
+import ceoImage from '../assets/ceo.webp'; 
+import logoWatermark from '../assets/logo.png'; 
+
+const benefits = [
   {
-    title: 'Надёжное строительство',
-    description:
-      'Строим тёплые и комфортные дома по всей Беларуси — каркасные, газосиликатные, с мансардой или без. Всё под ключ.',
-    icon: safetyIcon,
+    icon: <ShieldCheckIcon />,
+    title: 'Гарантия по договору',
+    description: 'Предоставляем официальную гарантию 5 лет на все конструктивные элементы дома. Ваше спокойствие — наш приоритет.',
+    linkTo: '/about',
+    linkText: 'Подробнее о гарантиях'
   },
   {
-    title: 'Фиксированная цена',
-    description:
-      'Цена фиксируется в договоре и остаётся неизменной. Изменения возможны только по желанию заказчика.',
-    icon: priceIcon,
+    icon: <UserGroupIcon />,
+    title: 'Штатные строительные бригады',
+    description: 'Мы не привлекаем сторонних подрядчиков. Все работы выполняют наши постоянные, проверенные специалисты.',
+    linkTo: '/about',
+    linkText: 'Наша команда'
   },
   {
-    title: '10 лет опыта',
-    description:
-      'У нас слаженная команда профессионалов. Каждый специалист имеет опыт, квалификацию и разряд.',
-    icon: expIcon,
+    icon: <DocumentTextIcon />,
+    title: 'Фиксированная смета',
+    description: 'Стоимость, утвержденная в договоре, не изменится в процессе строительства. Вы платите ровно столько, сколько договорились.',
+    linkTo: '/contact',
+    linkText: 'Получить консультацию по смете'
   },
   {
-    title: 'Гарантия 5 лет',
-    description:
-      'Даём 5 лет гарантии на все работы. Объект обслуживается в течение этого срока бесплатно по гарантии.',
-    icon: garantieIcon,
-  },
+    icon: <CameraIcon />,
+    title: 'Полная прозрачность',
+    description: 'Предоставляем фото- и видеоотчеты с каждого этапа строительства, чтобы вы всегда были в курсе процесса.',
+    linkTo: '/completed',
+    linkText: 'Смотреть отчеты'
+  }
 ];
 
-// Варианты анимации для иконки
-const iconVariants = {
-  rest: { rotate: 0, scale: 1 },
-  hover: { rotate: 12, scale: 1.1 },
-};
-
-function WhyChooseUs() {
-  useEffect(() => {
-    AOS.init({ duration: 800, once: true });
-    return () => AOS.refresh();
-  }, []);
-
+const WhyChooseUs = () => {
   return (
-    <section
-      className="py-12 sm:py-16 px-4 sm:px-6 lg:px-10 bg-gray-50"
-      aria-labelledby="why-choose-us-heading"
-      role="region"
-    >
-      <div className="max-w-7xl mx-auto text-center mb-8 sm:mb-12" data-aos="zoom-in">
-        <h2
-          id="why-choose-us-heading"
-          className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-[#17253c] mb-4"
-        >
-          Почему выбирают нас?
-        </h2>
-        <p className="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base">
-          Узнайте, почему сотни клиентов доверяют нам строительство своих домов.
-        </p>
-      </div>
 
-      <div className="grid gap-6 sm:gap-8 sm:grid-cols-2 md:grid-cols-4 max-w-7xl mx-auto">
-        {features.map((feature, index) => (
-          <motion.div
-            key={index}
-            className="bg-gray-100 p-4 sm:p-6 rounded-xl hover:bg-gray-100/50 hover:shadow-xl transition-all duration-300"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.5, delay: index * 0.2 }}
-            whileHover="hover"
-          >
-            <motion.div
-              className="flex justify-center mb-4"
-              variants={iconVariants}
-              transition={{ duration: 0.3 }}
-            >
-              <img
-                src={feature.icon}
-                alt={feature.title}
-                className="w-12 h-12 rounded-full bg-white shadow-md p-2 object-contain"
-                loading="lazy"
-              />
-            </motion.div>
-            <h3 className="text-lg sm:text-xl font-semibold text-[#17253c] mb-2 text-center">
-              {feature.title}
-            </h3>
-            <p className="text-sm sm:text-base text-gray-600 text-center">
-              {feature.description}
-            </p>
-          </motion.div>
-        ))}
+    <section className="bg-white py-20 overflow-hidden" aria-labelledby="why-us-heading">
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+            
+
+            <div data-aos="fade-right" className="hidden lg:block w-full h-[700px] relative group">
+                <div className="absolute inset-0 bg-gray-50 rounded-2xl"></div>
+                <div className="absolute top-0 right-0 h-full w-2/3 bg-white/80 transform -skew-x-12 translate-x-1/4 transition-transform duration-500 ease-out group-hover:translate-x-1/3"></div>
+                <div className="absolute top-0 left-0 h-full w-2/3 bg-[#f9c615]/80 transform -skew-x-12 -translate-x-1/4 transition-transform duration-500 ease-out group-hover:-translate-x-1/3 relative overflow-hidden"> 
+ 
+                    <img src={logoWatermark} alt="" className="absolute -bottom-12 left-8 top-20 w-3/4 h-3/4 object-contain opacity-20"/>
+                </div>
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md h-full transition-transform duration-500 ease-out group-hover:scale-105 z-10">
+
+                    <img src={ceoImage} alt="Сергей Янушкевич, руководитель строительной компании Marmol House" className="absolute bottom-0 h-full w-full object-contain object-bottom"/>
+                </div>
+            </div>
+
+            <div data-aos="fade-left" className="lg:col-start-2">
+                <div className="text-center lg:text-left mb-12">
+
+                    <h2 id="why-us-heading" className="text-3xl md:text-4xl font-bold text-[#17253c] mt-2">
+                        Почему нам доверяют строительство своего дома
+                    </h2>
+                </div>
+                
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {benefits.map((benefit, index) => (
+                    
+                    <li key={benefit.title}>
+                        <div 
+                            className="bg-gray-50/70 p-6 rounded-2xl border border-gray-200 hover:shadow-lg hover:border-white transition-all duration-300 h-full"
+                            data-aos="fade-up"
+                            data-aos-delay={index * 100}
+                        >
+                            <div>
+                                <h3 className="text-lg font-semibold text-[#17253c]">{benefit.title}</h3>
+                                <p className="mt-2 text-gray-600 text-semi leading-relaxed">{benefit.description}</p>
+                                <Link to={benefit.linkTo} className="text-sm font-semibold text-[#17253c] hover:text-[#f9c615] transition-colors mt-4 inline-block">
+                                    {benefit.linkText} →
+                                </Link>
+                            </div>
+                        </div>
+                    </li>
+                    ))}
+                </ul>
+            </div>
+        </div>
       </div>
     </section>
   );
 }
 
-export default React.memo(WhyChooseUs);
+export default WhyChooseUs;

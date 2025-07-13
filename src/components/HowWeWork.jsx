@@ -1,89 +1,100 @@
-import React from 'react';
-import { useEffect } from 'react';
+// src/components/HowWeWork.jsx
+
+import React, { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-// Данные об этапах работы
+import { 
+  PencilSquareIcon, 
+  ClipboardDocumentCheckIcon, 
+  BuildingOffice2Icon, 
+  KeyIcon, 
+  WrenchScrewdriverIcon,
+  ChatBubbleLeftRightIcon
+} from '@heroicons/react/24/outline';
+
+
+
 const steps = [
   {
+    icon: <ChatBubbleLeftRightIcon />,
     title: 'Заявка и консультация',
-    description: 'Обсуждаем проект и бюджет.',
+    description: 'Обсуждаем ваши пожелания, цели и бюджет. Отвечаем на все вопросы и помогаем определиться с направлением.',
   },
   {
-    title: 'Подбор проекта',
-    description: 'Готовые решения или индивидуальный подход.',
+    icon: <PencilSquareIcon />,
+    title: 'Подбор проекта и сметы',
+    description: 'Выбираем готовый проект или разрабатываем индивидуальный. Составляем подробную и прозрачную смету.',
   },
   {
-    title: 'Смета и договор',
-    description: 'Фиксируем стоимость и сроки.',
+    icon: <ClipboardDocumentCheckIcon />,
+    title: 'Подписание договора',
+    description: 'Заключаем официальный договор, в котором четко прописаны все условия, фиксированная стоимость и сроки.',
   },
   {
-    title: 'Строительство',
-    description: 'Поэтапное выполнение работ.',
+    icon: <BuildingOffice2Icon />,
+    title: 'Строительство дома',
+    description: 'Завозим материалы и поэтапно возводим ваш дом, строго соблюдая все строительные нормы и технологии.',
   },
   {
-    title: 'Сдача объекта',
-    description: 'Передача готового дома.',
+    icon: <KeyIcon />,
+    title: 'Приемка и сдача объекта',
+    description: 'Мы завершаем все работы, проводим финальную проверку и торжественно вручаем вам ключи от вашего нового дома.',
   },
   {
-    title: 'Гарантия и сопровождение',
-    description: 'Остаёмся на связи: гарантийное обслуживание и помощь при эксплуатации.',
+    icon: <WrenchScrewdriverIcon />,
+    title: 'Гарантийное обслуживание',
+    description: 'Наша работа не заканчивается после сдачи. Мы предоставляем 5 лет гарантии и всегда остаёмся на связи.',
   },
 ];
 
-// Компонент секции этапов работы
-function HowWeWork() {
+
+const HowWeWork = () => {
   useEffect(() => {
-    AOS.init({ duration: 800, once: true });
-    return () => AOS.refresh();
+    AOS.init({ duration: 600, once: true, offset: 100 });
   }, []);
 
   return (
-    <section
-      className="py-8 sm:py-12 px-4 sm:px-6 lg:px-8 bg-gray-50"
-      aria-labelledby="how-we-work-heading"
-      role="region"
-    >
-      <div className="max-w-6xl mx-auto">
-        <h2
-          id="how-we-work-heading"
-          className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-center mb-6 sm:mb-8 text-[#17253c]"
-          data-aos="zoom-in"
-        >
-          Как мы работаем
-        </h2>
 
-        <div
-          className="grid gap-7 sm:grid-cols-2 md:grid-cols-3"
-          role="list"
-        >
-          {steps.map((step, index) => (
-            <div
-              key={index}
-              className={`relative bg-white p-3 sm:p-4 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 border-l-4 border-yellow-500 md:[&:nth-child(2n)]:translate-y-4 sm:[&:nth-child(2n)]:translate-y-2`}
-              data-aos="fade-up"
-              data-aos-delay={index * 100}
-              role="listitem"
-            >
-              <div
-                className="absolute -top-3 -left-3 w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-yellow-500 text-white font-bold text-xs sm:text-sm"
-                data-aos="zoom-in"
-                data-aos-delay={index * 100}
-              >
-                {index + 1}
-              </div>
-              <h3 className="text-base sm:text-lg font-semibold text-[#17253c] mt-2 mb-1">
-                {step.title}
-              </h3>
-              <p className="text-sm sm:text-base text-gray-600">
-                {step.description}
-              </p>
-            </div>
-          ))}
+    <section className="bg-gray-50 py-20" aria-labelledby="how-we-work-heading">
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="text-center mb-16" data-aos="fade-up">
+          <h2 id="how-we-work-heading" className="text-3xl md:text-4xl font-bold text-[#17253c]">
+            Процесс работы в 6 простых шагов
+          </h2>
+          <p className="mt-4 text-lg text-gray-600">
+            От вашей идеи до ключей от готового дома — мы всегда рядом.
+          </p>
         </div>
+
+
+        <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {steps.map((step, index) => (
+
+            <li 
+              key={step.title}
+              className="relative p-6 bg-white rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden"
+              data-aos="fade-up"
+              data-aos-delay={50 + index * 50}
+            >
+              <div className="absolute -top-2 -right-2 text-[8rem] font-bold text-gray-100/80 -z-0" aria-hidden="true">
+                {String(index + 1).padStart(2, '0')}
+              </div>
+
+              <div className="relative z-10">
+                <div className="mb-4 flex-shrink-0 w-12 h-12 bg-yellow-100 text-[#f9c615] rounded-full flex items-center justify-center">
+                  {React.cloneElement(step.icon, { className: 'w-6 h-6' })}
+                </div>
+
+                <h3 className="text-lg font-semibold text-[#17253c] mb-2">{step.title}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">{step.description}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );
-}
+};
 
 export default React.memo(HowWeWork);

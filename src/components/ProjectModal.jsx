@@ -51,9 +51,7 @@ const ProjectModal = ({ project, onClose }) => {
           &times;
         </button>
 
-        {/* Контейнер картинки + текст */}
         <div className="flex flex-col lg:flex-row gap-6">
-          {/* Слайдер слева */}
           <div className="w-full lg:w-1/2">
             <Slider {...settings}>
               {project.images.map((img, idx) => (
@@ -69,18 +67,15 @@ const ProjectModal = ({ project, onClose }) => {
             </Slider>
           </div>
 
-          {/* Текст справа */}
           <div className="w-full lg:w-1/2 text-[#17253c]">
             <h2 className="text-2xl font-bold">{project.title}</h2>
 
-            {/* Описание помещений */}
 <ul className="list-disc pl-5 mt-2 space-y-1">
   {project.description.map((line, index) => (
     <li key={index} className="text-gray-800">{line}</li>
   ))}
 </ul>
 
-          {/* Блок комплектаций, если есть */}
           {project.packages && project.packages.length > 0 && (
             <div className="mt-4">
               <h3 className="font-semibold text-md mb-1">Комплектации:</h3>
