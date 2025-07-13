@@ -65,7 +65,7 @@ const Gallery = ({ onOrderClick }) => {
         </Helmet>
         
         <header className="text-center mb-8">
-            <h1 id="gallery-heading" className="text-3xl md:text-4xl font-bold text-[#17253c] mb-4">Наши проекты</h1>
+            <h1 id="gallery-heading" className="text-4xl md:text-5xl font-extrabold text-[#17253c] pb-3">Наши проекты</h1>
             <p className="text-gray-600">Ознакомьтесь с нашими лучшими проектами домов, бань и гаражей</p>
         </header>
         
