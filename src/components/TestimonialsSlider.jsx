@@ -1,37 +1,10 @@
+// src/components/TestimonialsSlider.jsx (или src/components/Testimonials.jsx)
+
 import React from 'react';
 import Slider from 'react-slick';
 import { motion } from 'framer-motion';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { Helmet } from "react-helmet";
-
-const testimonials = [
-  {
-    name: 'Александр К.',
-    text: 'Очень доволен строительством! Дом из газобетона получился теплый и аккуратный. Команда Marmol House работала быстро и профессионально.',
-    img: 'https://randomuser.me/api/portraits/men/32.jpg',
-    rating: 5, 
-  },
-  {
-    name: 'Ирина М.',
-    text: 'Заказывали баню — всё сделали в срок и даже раньше. Качество материалов отличное, всё аккуратно. Спасибо!',
-    img: 'https://randomuser.me/api/portraits/women/44.jpg',
-    rating: 5, 
-  },
-  {
-    name: 'Дмитрий С.',
-    text: 'Строили барнхаус под ключ. Остались только приятные впечатления. Честная смета, никаких сюрпризов, всё прозрачно.',
-    img: 'https://randomuser.me/api/portraits/men/10.jpg',
-    rating: 5, 
-  },
-  {
-    name: 'Светлана Н.',
-    text: 'Обратились по рекомендации. Всё прошло отлично: хорошие сроки, коммуникация и результат. Будем рекомендовать!',
-    img: 'https://randomuser.me/api/portraits/women/66.jpg',
-    rating: 5, 
-  },
-];
-
 
 
 const sliderSettings = {
@@ -63,51 +36,13 @@ const fadeIn = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
 
-const aggregateRatingSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
-  name: 'Marmol House',
-  image: 'https://marmolhouse.by/assets/logo.png',
-  telephone: '+375291845481',
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'Гродно',
-    addressCountry: 'BY',
-  },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '5.0', 
-    reviewCount: testimonials.length, 
-  },
-  review: testimonials.map(t => ({
-    '@type': 'Review',
-    author: {
-      '@type': 'Person',
-      name: t.name,
-    },
-    reviewRating: {
-      '@type': 'Rating',
-      ratingValue: t.rating, 
-      bestRating: '5',
-    },
-    reviewBody: t.text,
-  })),
-};
-
-
-function Testimonials() {
+function TestimonialsSlider({ testimonials }) {
   return (
     <section
       className="py-8 sm:py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-50 to-gray-100"
       aria-labelledby="testimonials-heading"
       role="region"
     >
-       <Helmet>
-        <script type="application/ld+json">
-          {JSON.stringify(aggregateRatingSchema)}
-        </script>
-      </Helmet>
-
       <div className="max-w-6xl mx-auto">
         <motion.h2
           id="testimonials-heading"
@@ -123,7 +58,6 @@ function Testimonials() {
 
         <Slider {...sliderSettings} className="testimonials-slider">
           {testimonials.map((t, i) => (
-
             <motion.article key={i} className="px-2 py-4 h-full" variants={fadeIn}>
               <div className={`bg-white p-3 sm:p-4 rounded-lg shadow-lg hover:shadow-xl hover:-translate-y-1 hover:rotate-0 transition-all duration-300 bg-gradient-to-br from-white to-yellow-50/20 h-full flex flex-col ${i % 2 === 0 ? 'sm:rotate-2' : 'sm:-rotate-2'}`}>
                 <header className="flex items-center mb-3">
@@ -151,4 +85,4 @@ function Testimonials() {
   );
 }
 
-export default React.memo(Testimonials);
+export default React.memo(TestimonialsSlider);

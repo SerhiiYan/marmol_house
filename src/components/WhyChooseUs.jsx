@@ -56,7 +56,7 @@ const WhyChooseUs = () => {
                 </div>
                 <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md h-full transition-transform duration-500 ease-out group-hover:scale-105 z-10">
 
-                    <img src={ceoImage} alt="Сергей Янушкевич, руководитель строительной компании Marmol House" className="absolute bottom-0 h-full w-full object-contain object-bottom"/>
+                    <img src={ceoImage} alt="Мармоль Юрий, руководитель строительной компании Marmol House" className="absolute bottom-0 h-full w-full object-contain object-bottom"/>
                 </div>
             </div>
 

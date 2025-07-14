@@ -8,8 +8,35 @@ import HowWeWork from '../components/HowWeWork';
 import HousePackages from '../components/HousePackages';
 import Footer from '../components/Footer';
 import WhyChooseUs from '../components/WhyChooseUs';
-import TestimonialsSlider from '../components/TestimonialsSlider';
+import TestimonialsSlider from '../components/TestimonialsSlider'; 
 
+
+const testimonials = [
+  {
+    name: 'Александр К.',
+    text: 'Очень доволен строительством! Дом из газобетона получился теплый и аккуратный. Команда Marmol House работала быстро и профессионально.',
+    img: 'https://randomuser.me/api/portraits/men/32.jpg',
+    rating: 5,
+  },
+  {
+    name: 'Ирина М.',
+    text: 'Заказывали баню — всё сделали в срок и даже раньше. Качество материалов отличное, всё аккуратно. Спасибо!',
+    img: 'https://randomuser.me/api/portraits/women/44.jpg',
+    rating: 5,
+  },
+  {
+    name: 'Дмитрий С.',
+    text: 'Строили барнхаус под ключ. Остались только приятные впечатления. Честная смета, никаких сюрпризов, всё прозрачно.',
+    img: 'https://randomuser.me/api/portraits/men/10.jpg',
+    rating: 5,
+  },
+  {
+    name: 'Светлана Н.',
+    text: 'Обратились по рекомендации. Всё прошло отлично: хорошие сроки, коммуникация и результат. Будем рекомендовать!',
+    img: 'https://randomuser.me/api/portraits/women/66.jpg',
+    rating: 5,
+  },
+];
 
 const localBusinessSchema = {
     '@context': 'https://schema.org',
@@ -36,10 +63,29 @@ const localBusinessSchema = {
         'opens': '09:00',
         'closes': '18:00',
     }],
-    'sameAs': [/* "https://facebook.com/marmolhouse", */ 'https://www.instagram.com/marmol_house/'],
+    'sameAs': ['https://www.instagram.com/marmol_house/'],
     'image': 'https://marmolhouse.by/og-image.png',
-};
 
+    'aggregateRating': {
+      '@type': 'AggregateRating',
+      'ratingValue': '5.0', 
+      'reviewCount': testimonials.length.toString(), 
+    },
+
+    'review': testimonials.map(t => ({
+      '@type': 'Review',
+      'author': {
+        '@type': 'Person',
+        'name': t.name,
+      },
+      'reviewRating': {
+        '@type': 'Rating',
+        'ratingValue': t.rating.toString(), 
+        'bestRating': '5',
+      },
+      'reviewBody': t.text,
+    })),
+};
 
 const videoSchema = {
     '@context': 'https://schema.org',
@@ -47,9 +93,9 @@ const videoSchema = {
     'name': 'Строительство каркасных домов — Marmol House',
     'description': 'Видео-презентация о строительстве современных каркасных домов в Гродно и по всей Беларуси.',
     'thumbnailUrl': 'https://marmolhouse.by/og-image.png',
-    'uploadDate': '2024-05-10', 
-    'contentUrl': 'https://marmolhouse.by' + herovideo, 
-    'embedUrl': 'https://marmolhouse.by' + herovideo,   
+    'uploadDate': '2024-05-10',
+    'contentUrl': 'https://marmolhouse.by' + herovideo,
+    'embedUrl': 'https://marmolhouse.by' + herovideo,
 };
 
 const homeBenefits = [
@@ -71,7 +117,7 @@ const homeBenefits = [
 function Home({ onOrderClick }) {
     const handlePackageOrderClick = (packageName) => {
         const message = `Здравствуйте, хочу консультацию по комплектации "${packageName}".`;
-        onOrderClick(message); 
+        onOrderClick(message);
     };
 
   return (
@@ -95,14 +141,13 @@ function Home({ onOrderClick }) {
           <link rel="canonical" href="https://marmolhouse.by/" />
           <meta name="twitter:image" content="https://marmolhouse.by/og-image.png" />
           <meta name="twitter:site" content="@MarmolHouse" />
-          
+
 
           <script type="application/ld+json">{JSON.stringify(localBusinessSchema)}</script>
           <script type="application/ld+json">{JSON.stringify(videoSchema)}</script>
         </Helmet>
 
         <section className="relative w-full min-h-screen" aria-labelledby="hero-heading">
-          <h1 id="hero-heading" className="sr-only">Строительство каркасных и газосиликатных домов в Гродно и Беларуси</h1>
           <video
             className="absolute top-0 left-0 w-full h-full object-cover"
             autoPlay loop muted playsInline aria-hidden="true"
@@ -112,10 +157,10 @@ function Home({ onOrderClick }) {
           </video>
           <div className="absolute top-0 left-0 w-full h-full bg-black/60" aria-hidden="true" />
           <div className="relative z-10 flex flex-col items-center text-center px-2 sm:px-4 lg:px-6 pt-36 sm:pt-60">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4">
-              Строим каркасные дома под ключ<br />
+            <h1 id="hero-heading" className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4">
+              Строим<br /> каркасные и блочные дома под ключ<br />
               <span className="text-[#f9c615] text-3xl sm:text-4xl md:text-5xl lg:text-6xl">в Гродно и Беларуси</span>
-            </h2>
+            </h1>
             <p className="text-base sm:text-lg md:text-xl text-white mb-6">
               Работаем по 240 указу для многодетных семей
             </p>
@@ -129,13 +174,13 @@ function Home({ onOrderClick }) {
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-xs sm:max-w-2xl lg:max-w-5xl text-white mt-10 sm:mt-16"
               aria-labelledby="benefits-heading"
             >
-              <h3 id="benefits-heading" className="sr-only">Преимущества строительства с Marmol House</h3>
+              <h2 id="benefits-heading" className="sr-only">Преимущества строительства с Marmol House</h2>
               {homeBenefits.map((item) => (
                 <article key={item.title} className="flex flex-col">
-                  <h4 className="flex items-center justify-center font-bold text-[#f9c615] uppercase mb-3 sm:mb-4">
+                  <h3 className="flex items-center justify-center font-bold text-[#f9c615] uppercase mb-3 sm:mb-4">
                     <FaInfoCircle className="mr-2" aria-hidden="true" />
                     {item.title}
-                  </h4>
+                  </h3>
                   <p className="text-sm sm:text-base text-justify">{item.description}</p>
                 </article>
               ))}
@@ -146,7 +191,7 @@ function Home({ onOrderClick }) {
         <WhyChooseUs />
         <HousePackages onOrderClick={handlePackageOrderClick} />
         <HowWeWork />
-        <TestimonialsSlider />
+        <TestimonialsSlider testimonials={testimonials} />
         <Footer />
       </main>
     </>
