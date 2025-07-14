@@ -19,45 +19,53 @@ export default function ModalForm({ show, onClose, defaultComment = '' }) {
       setHoneypot('');
       setSuccess(false);
       setError(null);
-
       setIsPolicyAccepted(true);
     }
   }, [show, defaultComment]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('--- Начинается отправка формы ---');
 
     if (honeypot) {
       onClose(); 
       return;
     }
+    
+    // Ручная проверка (остается как дополнительный слой защиты)
+    if (!formData.name.trim() || !formData.phone || formData.phone.length < 9 || !isPolicyAccepted) {
+        setError('Пожалуйста, заполните все обязательные поля.');
+        return;
+    }
 
     setLoading(true);
-    setSuccess(false);
     setError(null);
 
+    const requestBody = {
+        name: formData.name,
+        phone: `+375${formData.phone}`,
+        message: formData.comment || 'Клиент запросил консультацию',
+        honeypot: honeypot,
+    };
+
     try {
-      const response = await fetch('/api/form_handler.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: formData.name,
-          phone: `+375${formData.phone}`,
-          message: formData.comment || 'Клиент запросил консультацию',
-          honeypot: honeypot,
-        }),
-      });
-      if (!response.ok) throw new Error('Ошибка сети. Попробуйте снова.');
-      const result = await response.json();
-      if (result.success) {
-        setSuccess(true);
-      } else {
-        throw new Error(result.message || 'Не удалось отправить заявку.');
-      }
+        const response = await fetch('https://marmolhouse.by/api/form_handler.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(requestBody),
+        });
+        
+        const result = await response.json();
+        
+        if (!response.ok) throw new Error(result.message || `Ошибка сервера: ${response.status}`);
+        if (result.success) setSuccess(true);
+        else throw new Error(result.message || 'Произошла ошибка.');
+        
     } catch (err) {
-      setError(err.message);
+        console.error('Ошибка при отправке формы:', err);
+        setError(err.message);
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
   };
 
@@ -77,12 +85,7 @@ export default function ModalForm({ show, onClose, defaultComment = '' }) {
           </div>
         ) : (
           <>
-            <button
-              type="button"
-              onClick={onClose}
-              className="absolute top-3 right-3 p-1 rounded-full text-gray-400 hover:text-red-500 hover:scale-125 focus:outline-none focus:ring-2 focus:ring-red-500 transition-all"
-              aria-label="Закрыть модальное окно"
-            >
+            <button type="button" onClick={onClose} className="absolute top-3 right-3 p-1 rounded-full text-gray-400 hover:text-red-500 hover:scale-125" aria-label="Закрыть модальное окно">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
             
@@ -91,44 +94,42 @@ export default function ModalForm({ show, onClose, defaultComment = '' }) {
 
             <form onSubmit={handleSubmit} className="space-y-4" aria-labelledby="form-title">
               <div className="absolute left-[-5000px]" aria-hidden="true">
-                <input type="text" name="website" tabIndex="-1" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
+                <input 
+                  type="text" 
+                  name="user_nickname" 
+                  tabIndex="-1" 
+                  value={honeypot} 
+                  onChange={(e) => setHoneypot(e.target.value)} 
+                  autoComplete="new-password"
+                />
               </div>
 
               <div>
                 <label htmlFor="form-name" className="sr-only">Ваше имя</label>
                 <input
-                  id="form-name"
-                  type="text"
-                  name="name"
-                  placeholder="Ваше имя"
-                  value={formData.name}
+                  id="form-name" type="text" name="name" placeholder="Ваше имя"
+                  autoComplete="name" value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  required
                   className="w-full border px-4 py-2 rounded focus:ring-2 focus:ring-[#f9c615] focus:border-[#f9c615]"
+                  required // <-- ВОЗВРАЩАЕМ НАЗАД
                 />
               </div>
 
               <div>
                 <label htmlFor="form-phone" className="sr-only">Номер телефона</label>
                 <IMaskInput
-                  id="form-phone"
-                  mask="+375 (00) 000-00-00"
-                  unmask={true} 
-                  value={formData.phone}
-                  onAccept={(unmaskedValue) => setFormData({ ...formData, phone: unmaskedValue })}
-                  placeholder="+375 (29) 123-45-67"
-                  name="phone"
-                  required
+                  id="form-phone" mask="+375 (00) 000-00-00" unmask={true} 
+                  value={formData.phone} onAccept={(unmaskedValue) => setFormData({ ...formData, phone: unmaskedValue })}
+                  placeholder="+375 (29) 123-45-67" name="phone" autoComplete="tel"
                   className="w-full border px-4 py-2 rounded focus:ring-2 focus:ring-[#f9c615] focus:border-[#f9c615]"
+                  required // <-- ВОЗВРАЩАЕМ НАЗАД
                 />
               </div>
               
               <div>
                 <label htmlFor="form-comment" className="sr-only">Комментарий</label>
                 <textarea
-                  id="form-comment"
-                  name="comment"
-                  placeholder="Комментарий (необязательно)"
+                  id="form-comment" name="comment" placeholder="Комментарий (необязательно)"
                   value={formData.comment}
                   onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
                   className="w-full border px-4 py-2 rounded focus:ring-2 focus:ring-[#f9c615] focus:border-[#f9c615]"
@@ -138,31 +139,21 @@ export default function ModalForm({ show, onClose, defaultComment = '' }) {
 
               <div className="flex items-start">
                 <input
-                  id="acceptPolicy"
-                  type="checkbox"
-                  checked={isPolicyAccepted}
+                  id="acceptPolicy" type="checkbox" checked={isPolicyAccepted}
                   onChange={(e) => setIsPolicyAccepted(e.target.checked)}
-                  required
                   className="mt-1 h-4 w-4 rounded border-gray-300 text-[#f9c615] focus:ring-[#f9c615]"
+                  required // <-- ВОЗВРАЩАЕМ НАЗАД
                 />
                 <label htmlFor="acceptPolicy" className="ml-2 text-sm text-gray-600">
                   Я согласен на обработку персональных данных и принимаю условия <Link to="/privacy" target='_blank' className="text-[#f9c615] underline hover:text-[#e5b512]">политики конфиденциальности</Link>.
                 </label>
               </div>
+              
+              {error && <p className="text-red-600 text-center text-sm font-semibold">{error}</p>}
 
-              <button
-                type="submit"
-                disabled={loading || !isPolicyAccepted}
-                className="w-full bg-[#f9c615] text-[#17253c] font-bold py-3 px-4 rounded-lg hover:bg-[#e5b512] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-              >
+              <button type="submit" disabled={loading} className="w-full bg-[#f9c615] text-[#17253c] font-bold py-3 px-4 rounded-lg hover:bg-[#e5b512] disabled:opacity-50 disabled:cursor-not-allowed transition-all">
                 {loading ? 'Отправка...' : 'Получить консультацию'}
               </button>
-
-              <p className="text-xs text-gray-500 text-center">
-                🔒 Ваши данные в безопасности и не будут переданы третьим лицам.
-              </p>
-
-              {error && <p className="text-red-600 text-center mt-2">{error}</p>}
             </form>
           </>
         )}
@@ -170,4 +161,3 @@ export default function ModalForm({ show, onClose, defaultComment = '' }) {
     </div>
   );
 }
-

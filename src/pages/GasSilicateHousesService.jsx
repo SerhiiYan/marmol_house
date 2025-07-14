@@ -152,10 +152,9 @@ const GasSilicateHousesService = ({ onOrderClick }) => {
               <h2 className="text-3xl font-bold text-center text-[#17253c] mb-4" data-aos="fade-up">Что входит в стоимость?</h2>
             <p className="text-center text-gray-600 mb-8" data-aos="fade-up" data-aos-delay="100">Мы предлагаем как готовые комплектации "под ключ", так и базовые решения, которые можно адаптировать под ваш бюджет.</p>
             
-            {/* 2. ВСТАВЛЯЕМ НАШ НОВЫЙ БЛОК ПРЯМО ЗДЕСЬ */}
+
             <CustomPackageBlock onOrderClick={handleOrder} />
 
-            {/* Добавляем небольшой заголовок-разделитель */}
             <h3 className="text-2xl font-semibold text-center text-[#17253c] mt-16 mb-8" data-aos="fade-up">
               Или выберите одну из наших полных комплектаций:
             </h3>

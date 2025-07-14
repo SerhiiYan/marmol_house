@@ -1,5 +1,4 @@
 import React from 'react';
-import { useEffect } from 'react';
 import Slider from 'react-slick';
 import { motion } from 'framer-motion';
 import 'slick-carousel/slick/slick.css';
@@ -11,23 +10,28 @@ const testimonials = [
     name: 'Александр К.',
     text: 'Очень доволен строительством! Дом из газобетона получился теплый и аккуратный. Команда Marmol House работала быстро и профессионально.',
     img: 'https://randomuser.me/api/portraits/men/32.jpg',
+    rating: 5, 
   },
   {
     name: 'Ирина М.',
     text: 'Заказывали баню — всё сделали в срок и даже раньше. Качество материалов отличное, всё аккуратно. Спасибо!',
     img: 'https://randomuser.me/api/portraits/women/44.jpg',
+    rating: 5, 
   },
   {
     name: 'Дмитрий С.',
     text: 'Строили барнхаус под ключ. Остались только приятные впечатления. Честная смета, никаких сюрпризов, всё прозрачно.',
     img: 'https://randomuser.me/api/portraits/men/10.jpg',
+    rating: 5, 
   },
   {
     name: 'Светлана Н.',
     text: 'Обратились по рекомендации. Всё прошло отлично: хорошие сроки, коммуникация и результат. Будем рекомендовать!',
     img: 'https://randomuser.me/api/portraits/women/66.jpg',
+    rating: 5, 
   },
 ];
+
 
 
 const sliderSettings = {
@@ -62,7 +66,6 @@ const fadeIn = {
 const aggregateRatingSchema = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
-
   name: 'Marmol House',
   image: 'https://marmolhouse.by/assets/logo.png',
   telephone: '+375291845481',
@@ -71,13 +74,11 @@ const aggregateRatingSchema = {
     addressLocality: 'Гродно',
     addressCountry: 'BY',
   },
-
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '5.0', 
     reviewCount: testimonials.length, 
   },
-
   review: testimonials.map(t => ({
     '@type': 'Review',
     author: {
@@ -86,7 +87,7 @@ const aggregateRatingSchema = {
     },
     reviewRating: {
       '@type': 'Rating',
-      ratingValue: t.rating,
+      ratingValue: t.rating, 
       bestRating: '5',
     },
     reviewBody: t.text,
@@ -123,7 +124,7 @@ function Testimonials() {
         <Slider {...sliderSettings} className="testimonials-slider">
           {testimonials.map((t, i) => (
 
-            <motion.article key={i} className="px-2 py-4 h-full" variants={fadeIn} /* ... */>
+            <motion.article key={i} className="px-2 py-4 h-full" variants={fadeIn}>
               <div className={`bg-white p-3 sm:p-4 rounded-lg shadow-lg hover:shadow-xl hover:-translate-y-1 hover:rotate-0 transition-all duration-300 bg-gradient-to-br from-white to-yellow-50/20 h-full flex flex-col ${i % 2 === 0 ? 'sm:rotate-2' : 'sm:-rotate-2'}`}>
                 <header className="flex items-center mb-3">
                   <img src={t.img} loading="lazy" alt={`Фото клиента ${t.name}`} className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover mr-3 ring-2 ring-gradient-to-r from-yellow-500 to-[#17253c]"/>

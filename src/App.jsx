@@ -55,7 +55,7 @@ function App() {
         <main>
           <Routes>
             
-            {/* --- Основные страницы --- */}
+
             <Route path="/" element={<Home onOrderClick={handleOpenModal} />} />
             <Route path="/gallery" element={<Gallery onOrderClick={handleOpenModal} />} />
             <Route path="/completed" element={<CompletedProjects />} />
@@ -63,17 +63,16 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/privacy" element={<Privacy />} />
 
-            {/* --- Страницы Услуг --- */}
+
             <Route path="/services/frame-houses" element={<FrameHousesService onOrderClick={handleOpenModal} />} />
             <Route path="/services/gas-silicate-houses" element={<GasSilicateHousesService onOrderClick={handleOpenModal} />} />
             <Route path="/services/design" element={<DesignService onOrderClick={handleOpenModal} />} />
 
-            {/* --- Динамические страницы --- */}
-            {/* Этот маршрут мы уже исправили для работы со слагами */}
+
             <Route path="/projects/:slug" element={<ProjectDetail />} /> 
             <Route path="/project-plan/:id" element={<ProjectPlan />} />
 
-            {/* --- Страница 404 --- */}
+
             <Route path="*" element={<NotFound />} />
             
           </Routes>
