@@ -158,7 +158,7 @@ function Home({ onOrderClick }) {
           <div className="absolute top-0 left-0 w-full h-full bg-black/60" aria-hidden="true" />
           <div className="relative z-10 flex flex-col items-center text-center px-2 sm:px-4 lg:px-6 pt-36 sm:pt-60">
             <h1 id="hero-heading" className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4">
-              Строим<br /> каркасные и блочные дома под ключ<br />
+              Строительство<br /> каркасных и блочных домов под ключ<br />
               <span className="text-[#f9c615] text-3xl sm:text-4xl md:text-5xl lg:text-6xl">в Гродно и Беларуси</span>
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-white mb-6">
