@@ -1,7 +1,6 @@
 // src/pages/FrameHousesService.jsx
 
 import React, { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -70,6 +69,78 @@ const ourBenefits = [
   { name: 'Фиксированная цена', description: 'Стоимость, указанная в договоре, остается неизменной до конца строительства. Никаких скрытых платежей.', icon: DocumentTextIcon },
 ];
 
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Главная', item: 'https://marmolhouse.by/' },
+    { '@type': 'ListItem', position: 2, name: 'Каркасные дома', item: 'https://marmolhouse.by/services/frame-houses' }, // Предполагаемый URL
+  ],
+};
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  'serviceType': 'Строительство каркасных домов под ключ',
+  'provider': {
+    '@type': 'LocalBusiness',
+    'name': 'Marmol House',
+    'image': 'https://marmolhouse.by/og-image.png',
+    'telephone': '+375291845481',
+    'address': {
+      '@type': 'PostalAddress',
+      'streetAddress': 'г. Гродно, ул. Лелевеля, 12A, к 6',
+      'addressLocality': 'Гродно',
+      'addressCountry': 'BY',
+    }
+  },
+  'areaServed': [
+      { '@type': 'City', 'name': 'Гродно' },
+      { '@type': 'Country', 'name': 'Беларусь' }
+  ],
+  'description': 'Строительство современных и энергоэффективных каркасных домов в Гродно и по всей Беларуси. Официальная гарантия 5 лет, фиксированная цена.',
+  'hasOfferCatalog': {
+      '@type': 'OfferCatalog',
+      'name': 'Комплектации каркасных домов'
+  }
+};
+
+const offerCatalogSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'OfferCatalog',
+  'name': 'Комплектации каркасных домов',
+  'itemListElement': Object.entries(framePackages).map(([name, data]) => ({
+    '@type': 'Offer',
+    'itemOffered': {
+      '@type': 'Service',
+      'name': `Строительство каркасного дома, комплектация "${name}"`
+    },
+    'priceSpecification': {
+      '@type': 'PriceSpecification',
+      'price': data.price,
+      'priceCurrency': 'BYN',
+      'unitText': 'за м²'
+    }
+  }))
+};
+
+const howToSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    'name': 'Как мы строим каркасный дом',
+    'description': 'Пошаговый процесс строительства вашего каркасного дома от проекта и фундамента до наружной отделки.',
+    'totalTime': 'P3M', // Примерная длительность 3 месяца (ISO 8601 duration format)
+    'step': constructionSteps.map((step, index) => ({
+        '@type': 'HowToStep',
+        'name': step.name,
+        'text': step.description,
+        'url': `https://marmolhouse.by/services/frame-houses#step-${index + 1}`,
+        'image': `https://marmolhouse.by${step.image}`
+    }))
+};
+
+
+
 const FrameHousesService = ({ onOrderClick }) => {
   useEffect(() => {
     AOS.init({ duration: 800, once: true, offset: 100 });
@@ -87,10 +158,20 @@ const FrameHousesService = ({ onOrderClick }) => {
 
   return (
     <>
-      <Helmet>
-        <title>Строительство каркасных домов под ключ в Гродно и Беларуси | Marmol House</title>
-        <meta name="description" content="Закажите строительство современного и теплого каркасного дома под ключ от Marmol House. Гарантия 5 лет, фиксированная цена в договоре, сроки от 3 месяцев." />
-      </Helmet>
+      <title>Строительство каркасных домов под ключ в Гродно и Беларуси | Marmol House</title>
+      <meta name="description" content="Закажите строительство современного и теплого каркасного дома под ключ от Marmol House. Гарантия 5 лет, фиксированная цена в договоре, сроки от 3 месяцев." />
+      <meta name="keywords" content="каркасный дом, строительство каркасных домов, построить каркасный дом гродно, цена каркасного дома, каркасник под ключ, marmol house" />
+      <link rel="canonical" href="https://marmolhouse.by/services/frame-houses" />
+      <meta property="og:title" content="Каркасные дома под ключ | Marmol House" />
+      <meta property="og:description" content="Строим современные и энергоэффективные дома с гарантией и по фиксированной цене." />
+      <meta property="og:url" content="https://marmolhouse.by/services/frame-houses" />
+      <meta property="og:image" content="https://marmolhouse.by/assets/service/framehouse.webp" />
+      {/* ... остальные og и twitter теги ... */}
+      
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(offerCatalogSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
 
         <section className="relative h-[70vh] bg-cover bg-center flex items-center justify-center text-white" style={{ backgroundImage: "url('/assets/service/framehouse.webp')" }}>
           <div className="absolute inset-0 bg-black/60"></div>

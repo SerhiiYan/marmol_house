@@ -1,30 +1,46 @@
 // src/pages/CompletedProjects.jsx
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { FaMapMarkerAlt, FaRulerCombined } from 'react-icons/fa';
 import { BsImages } from 'react-icons/bs';
 
 import completedProjects from '../data/completedProjects';
 import CompletedProjectModal from '../components/CompletedProjectModal';
 
+const getProjectDetails = (description) => ({
+  location: description.find(d => !d.toLowerCase().includes('площадь') && !d.toLowerCase().includes('завершено')),
+  area: description.find(d => d.toLowerCase().includes('площадь'))
+});
 
-const getStructuredData = () => {
-  const itemListElement = completedProjects.map((project, index) => ({
-    "@type": "ListItem",
-    "position": index + 1,
-    "url": "https://marmolhouse.by/completed",
-    "name": project.title,
-    "image": `https://marmolhouse.by${project.images[0]}`,
-    "description": project.description.join('. ')
-  }));
-  return JSON.stringify({
+const itemListSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
     "name": "Портфолио выполненных работ Marmol House",
     "description": "Галерея завершенных проектов по строительству домов в Беларуси.",
-    "itemListElement": itemListElement
-  });
+    "numberOfItems": completedProjects.length,
+    "itemListElement": completedProjects.map((project, index) => {
+        const { location, area } = getProjectDetails(project.description);
+        return {
+            "@type": "ListItem",
+            "position": index + 1,
+            "item": {
+                "@type": "House",
+                "name": project.title,
+                "description": project.description.join('. '),
+                "image": `https://marmolhouse.by${project.images[0]}`,
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": location || 'Гродненская область, Беларусь'
+                },
+                "floorSize": {
+                    "@type": "QuantitativeValue",
+                    "value": parseFloat(area?.replace(/[^0-9.]/g, '')),
+                    "unitCode": "MTK"
+                }
+            }
+        }
+    })
 };
 
 const breadcrumbSchema = JSON.stringify({
@@ -65,10 +81,15 @@ const CompletedProjects = () => {
     <>
       <title>Наши работы — Готовые дома от Marmol House | Портфолио</title>
       <meta name="description" content="Портфолио завершенных проектов домов от компании Marmol House. Посмотрите реальные фото, цены и описания построенных нами объектов в Гродно и по всей Беларуси."/>
+      <meta name="keywords" content="готовые дома, портфолио, наши работы, построенные дома, marmol house, фото домов" />
       <link rel="canonical" href="https://marmolhouse.by/completed" />
       <meta property="og:title" content="Наши работы | Marmol House" />
-      <script type="application/ld+json">{getStructuredData()}</script>
-      <script type="application/ld+json">{breadcrumbSchema}</script>
+      <meta property="og:description" content="Реальные фото, цены и описания построенных нами объектов в Гродно и по всей Беларуси."/>
+      <meta property="og:url" content="https://marmolhouse.by/completed" />
+      <meta property="og:image" content="https://marmolhouse.by/og-image.png" />
+
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
       <main className="max-w-7xl mx-auto px-4 pt-28 pb-16">
         <div className="text-center mb-12">

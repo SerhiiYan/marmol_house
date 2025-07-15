@@ -3,10 +3,38 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { FaHandshake, FaTools, FaHome, FaUsers, FaCheckCircle, FaAward, FaBuilding } from "react-icons/fa";
+import { FaHandshake, FaTools, FaHome, } from "react-icons/fa";
 import teamImage from "../assets/logo-bg.png";
 
 import AnimatedNumber from "../components/AnimatedNumber"; 
+
+const aboutPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": "О компании Marmol House | Строительство домов в Гродно",
+    "description": "Узнайте о философии, гарантиях и более чем 10-летнем опыте Marmol House в строительстве домов в Беларуси.",
+    "url": "https://marmolhouse.by/about",
+    "mainEntity": {
+        "@type": "LocalBusiness",
+        "name": "Marmol House",
+        "url": "https://marmolhouse.by",
+        "image": `https://marmolhouse.by${teamImage}`,
+        
+        "foundingDate": "2014",
+        "knowsAbout": [ 
+            "Строительство каркасных домов",
+            "Строительство домов из газосиликатных блоков",
+            "Архитектурное проектирование",
+            "Работа по 240 и 95 указам РБ"
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "г. Гродно, ул. Лелевеля, 12, каб. 6",
+          "addressLocality": "Гродно",
+          "addressCountry": "BY",
+        }
+    }
+};
 
 
 const breadcrumbSchema = JSON.stringify({
@@ -43,18 +71,22 @@ const companyStats = [
 
 
 
+
+
 function About() {
   return (
     <>
-  
       <title>О компании Marmol House | Строительство домов в Гродно</title>
-      <meta name="description" content="Узнайте о компании Marmol House: наша философия, гарантии и более чем 10-летний опыт в строительстве каркасных домов в Гродно и по всей Беларуси." />
+      <meta name="description" content="Узнайте о компании Marmol House: наша философия, гарантии и более чем 10-летний опыт в строительстве каркасных и газосиликатных домов в Гродно и по всей Беларуси." />
+      <meta name="keywords" content="о компании marmol house, история компании, наша философия, гарантии, строительство гродно" />
       <meta property="og:title" content="О компании Marmol House | Строим дома мечты" />
       <meta property="og:description" content="Marmol House — ваш надежный партнер в строительстве. Узнайте о наших ценностях и подходе к работе." />
       <meta property="og:url" content="https://marmolhouse.by/about" />
       <meta property="og:image" content={"https://marmolhouse.by" + teamImage} />
       <link rel="canonical" href="https://marmolhouse.by/about" />
-      <script type="application/ld+json">{breadcrumbSchema}</script>
+      
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutPageSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
       <div className="bg-gray-50">
         <section className="max-w-7xl mx-auto px-4 sm:px-6 py-28 sm:py-32 text-gray-800">

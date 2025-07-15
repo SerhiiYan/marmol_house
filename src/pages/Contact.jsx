@@ -5,16 +5,6 @@ import { motion } from 'framer-motion';
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 
 
-const breadcrumbSchema = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://marmolhouse.by/" },
-    { "@type": "ListItem", "position": 2, "name": "Контакты", "item": "https://marmolhouse.by/contact" }
-  ]
-});
-
-
 const contactMethods = [
   {
     icon: <FaPhone />,
@@ -40,16 +30,62 @@ const contactMethods = [
   }
 ];
 
+const breadcrumbSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://marmolhouse.by/" },
+    { "@type": "ListItem", "position": 2, "name": "Контакты", "item": "https://marmolhouse.by/contact" }
+  ]
+});
+
+
+const localBusinessSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    'name': 'Marmol House',
+    'description': 'Строительство каркасных и блочных домов под ключ в Гродно и по всей Беларуси.',
+    'url': 'https://marmolhouse.by',
+    'logo': 'https://marmolhouse.by/assets/logo.png',
+    'telephone': '+375291845481',
+    'email': 'yurmarmol@gmail.com',
+    'address': {
+      '@type': 'PostalAddress',
+      'streetAddress': 'г. Гродно, ул. Лелевеля, 12, каб. 6',
+      'addressLocality': 'Гродно',
+      'addressCountry': 'BY',
+    },
+    'geo': {
+      '@type': 'GeoCoordinates',
+      'latitude': 53.6639519,
+      'longitude': 23.8208599
+    },
+    'openingHoursSpecification': [{
+        '@type': 'OpeningHoursSpecification',
+        'dayOfWeek': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        'opens': '09:00',
+        'closes': '18:00',
+    }],
+    'sameAs': ['https://www.instagram.com/marmol_house/'],
+    'image': 'https://marmolhouse.by/og-image.png'
+};
+
 const Contact = ({ onOrderClick }) => { 
   return (
     <>
-
       <title>Контакты для связи — Marmol House | Гродно, Беларусь</title>
       <meta name="description" content="Свяжитесь с Marmol House: телефон, email, адрес офиса в Гродно. Готовы ответить на все ваши вопросы по строительству домов." />
+      <meta name="keywords" content="контакты marmol house, телефон, адрес, гродно лелевеля, заказать консультацию" />
       <link rel="canonical" href="https://marmolhouse.by/contact" />
       <meta property="og:title" content="Контакты | Marmol House" />
+      <meta property="og:description" content="Наш телефон, email и адрес офиса в Гродно. Готовы ответить на все вопросы!" />
       <meta property="og:url" content="https://marmolhouse.by/contact" />
-      <script type="application/ld+json">{breadcrumbSchema}</script>
+      <meta property="og:image" content="https://marmolhouse.by/og-image.png" />
+      <meta property="og:site_name" content="Marmol House" />
+      <meta property="og:type" content="website" />
+
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
       <motion.section 
         className="max-w-6xl mx-auto px-4 py-28 sm:py-32"

@@ -7,15 +7,27 @@ import { Link } from 'react-router-dom';
 import { FaPencilRuler, FaCheckCircle, FaUserCheck, FaLightbulb, FaDraftingCompass, FaClipboardList, FaHardHat, FaBookOpen } from 'react-icons/fa';
 import Footer from '../components/Footer';
 
+const designBenefits = [
+  { icon: FaPencilRuler, title: "Идеальная планировка", desc: "Создаем пространство под ваш сценарий жизни: от расположения розеток до вида из окна спальни." },
+  { icon: FaCheckCircle, title: "Гарантия надежности", desc: "Рассчитываем все нагрузки, подбираем правильные материалы и гарантируем соответствие строительным нормам РБ." },
+  { icon: FaUserCheck, title: "Экономия на материалах", desc: "Оптимизируем раскрой материалов и конструктивные решения, чтобы избежать ненужных расходов и переделок." },
+];
+const designProcess = [
+  { icon: FaLightbulb, title: "Консультация и ТЗ", description: "Обсуждаем ваши идеи, образ жизни и бюджет, формируя четкое техническое задание для будущего проекта." },
+  { icon: FaDraftingCompass, title: "Эскизы и планировки", description: "Наши архитекторы создают первые эскизы и планировочные решения, которые мы дорабатываем вместе с вами." },
+  { icon: FaClipboardList, title: "Рабочий проект", description: "Готовим полный комплект чертежей (АР и КР), необходимых для получения разрешения и начала строительства." },
+  { icon: FaHardHat, title: "Авторский надзор", description: "Наш архитектор контролирует ход строительства, чтобы результат на 100% соответствовал проекту (по желанию)." }
+];
+
 // SEO: Микроразметка
-const serviceSchema = JSON.stringify({
+const serviceSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
   "name": "Проектирование домов в Гродно и Беларуси",
   "serviceType": "Архитектурное проектирование",
   "description": "Закажите индивидуальное проектирование дома или выберите готовый проект от Marmol House. Создаем детальные архитектурные и конструктивные решения, соответствующие строительным нормам РБ.",
   "provider": {
-    "@type": "Organization",
+    "@type": "LocalBusiness", 
     "name": "Marmol House",
     "url": "https://marmolhouse.by",
     "logo": "https://marmolhouse.by/assets/logo.png"
@@ -30,29 +42,24 @@ const serviceSchema = JSON.stringify({
     "itemListElement": [
       {
         "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Индивидуальное проектирование"
-        }
+        "itemOffered": { "@type": "Service", "name": "Индивидуальное проектирование" }
       },
       {
         "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Готовые проекты"
-        }
+        "itemOffered": { "@type": "Service", "name": "Готовые проекты", "description": "Проект в подарок при заказе строительства" }
       }
     ]
   }
-});
-const breadcrumbSchema = JSON.stringify({
+};
+
+const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [{
     "@type": "ListItem",
     "position": 1,
     "name": "Главная",
-    "item": "https://marmolhouse.by"
+    "item": "https://marmolhouse.by/"
   },{
     "@type": "ListItem",
     "position": 2,
@@ -61,21 +68,25 @@ const breadcrumbSchema = JSON.stringify({
   },{
     "@type": "ListItem",
     "position": 3,
-    "name": "Проектирование домов"
+    "name": "Проектирование домов",
+    "item": "https://marmolhouse.by/services/design"
   }]
-});
+};
 
-const designBenefits = [
-  { icon: FaPencilRuler, title: "Идеальная планировка", desc: "Создаем пространство под ваш сценарий жизни: от расположения розеток до вида из окна спальни." },
-  { icon: FaCheckCircle, title: "Гарантия надежности", desc: "Рассчитываем все нагрузки, подбираем правильные материалы и гарантируем соответствие строительным нормам РБ." },
-  { icon: FaUserCheck, title: "Экономия на материалах", desc: "Оптимизируем раскрой материалов и конструктивные решения, чтобы избежать ненужных расходов и переделок." },
-];
-const designProcess = [
-  { icon: FaLightbulb, title: "Консультация и ТЗ", description: "Обсуждаем ваши идеи, образ жизни и бюджет, формируя четкое техническое задание для будущего проекта." },
-  { icon: FaDraftingCompass, title: "Эскизы и планировки", description: "Наши архитекторы создают первые эскизы и планировочные решения, которые мы дорабатываем вместе с вами." },
-  { icon: FaClipboardList, title: "Рабочий проект", description: "Готовим полный комплект чертежей (АР и КР), необходимых для получения разрешения и начала строительства." },
-  { icon: FaHardHat, title: "Авторский надзор", description: "Наш архитектор контролирует ход строительства, чтобы результат на 100% соответствовал проекту (по желанию)." }
-];
+// 3. НОВАЯ СХЕМА: HowTo для процесса проектирования
+const howToSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    'name': 'Как создается проект дома в Marmol House',
+    'description': '4 простых шага от идеи до готового комплекта чертежей для строительства.',
+    'step': designProcess.map((step, index) => ({
+        '@type': 'HowToStep',
+        'name': step.title,
+        'text': step.description,
+        'url': `https://marmolhouse.by/services/design#step-${index + 1}`
+    }))
+};
+
 
 
 const DesignService = ({ onOrderClick }) => {
@@ -87,9 +98,16 @@ const DesignService = ({ onOrderClick }) => {
     <>
       <title>Проектирование домов в Гродно и Беларуси | Marmol House</title>
       <meta name="description" content="Закажите индивидуальное проектирование дома или выберите готовый проект от Marmol House. Создаем детальные архитектурные и конструктивные решения." />
+      <meta name="keywords" content="проектирование домов, индивидуальный проект дома, готовые проекты домов, архитектор гродно, заказать проект дома, marmol house" />
       <link rel="canonical" href="https://marmolhouse.by/services/design" />
-      <script type="application/ld+json">{serviceSchema}</script>
-      <script type="application/ld+json">{breadcrumbSchema}</script>
+      <meta property="og:title" content="Проектирование домов | Marmol House" />
+      <meta property="og:description" content="От идеи до детальных чертежей — создаем проекты, в которых хочется жить." />
+      <meta property="og:url" content="https://marmolhouse.by/services/design" />
+      <meta property="og:image" content="https://marmolhouse.by/assets/service/invidual.webp" />
+      
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
 
       <section 
         className="relative h-[70vh] bg-cover bg-center flex items-center justify-center text-white" 

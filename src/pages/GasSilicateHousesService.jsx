@@ -1,7 +1,6 @@
 // src/pages/GasSilicateHousesService.jsx
 
 import React, { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -73,6 +72,77 @@ const ourBenefits = [
   { name: 'Фиксированная цена', description: 'Стоимость, указанная в договоре, остается неизменной до конца строительства. Никаких скрытых платежей.', icon: DocumentTextIcon },
 ];
 
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Главная', item: 'https://marmolhouse.by/' },
+    { '@type': 'ListItem', position: 2, name: 'Дома из газосиликатных блоков', item: 'https://marmolhouse.by/services/gas-silicate-houses' }, // Предполагаемый URL
+  ],
+};
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  'serviceType': 'Строительство домов из газосиликатных блоков под ключ',
+  'provider': {
+    '@type': 'LocalBusiness',
+    'name': 'Marmol House',
+    'image': 'https://marmolhouse.by/og-image.png',
+    'telephone': '+375291845481',
+    'address': {
+      '@type': 'PostalAddress',
+      'streetAddress': 'г. Гродно, ул. Лелевеля, 12A, к 6',
+      'addressLocality': 'Гродно',
+      'addressCountry': 'BY',
+    }
+  },
+  'areaServed': [
+      { '@type': 'City', 'name': 'Гродно' },
+      { '@type': 'Country', 'name': 'Беларусь' }
+  ],
+  'description': 'Профессиональное строительство теплых и долговечных каменных домов из газосиликатных блоков в Гродно и по всей Беларуси. Гарантия 5 лет, фиксированная цена.',
+  'hasOfferCatalog': {
+      '@type': 'OfferCatalog',
+      'name': 'Комплектации домов из газосиликата'
+  }
+};
+
+const offerCatalogSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'OfferCatalog',
+  'name': 'Комплектации домов из газосиликатных блоков',
+  'itemListElement': Object.entries(allPackages).map(([name, data], index) => ({
+    '@type': 'Offer',
+    'itemOffered': {
+      '@type': 'Service',
+      'name': `Строительство дома, комплектация "${name}"`
+    },
+    'priceSpecification': {
+      '@type': 'PriceSpecification',
+      'price': data.price,
+      'priceCurrency': 'BYN',
+      'unitText': 'за м²'
+    }
+  }))
+};
+
+const howToSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    'name': 'Как мы строим дом из газосиликатных блоков',
+    'description': 'Пошаговый процесс строительства вашего будущего каменного дома от фундамента до отделки фасада.',
+    'step': constructionSteps.map((step, index) => ({
+        '@type': 'HowToStep',
+        'name': step.name,
+        'text': step.description,
+        'url': `https://marmolhouse.by/services/gas-silicate-houses#step-${index + 1}`, 
+        'image': `https://marmolhouse.by${step.image}`
+    }))
+  };
+
+
+
 const GasSilicateHousesService = ({ onOrderClick }) => {
   useEffect(() => {
     AOS.init({ duration: 800, once: true, offset: 100 });
@@ -91,11 +161,20 @@ const GasSilicateHousesService = ({ onOrderClick }) => {
 
   return (
     <>
-      <Helmet>
-        <title>Строительство домов из газосиликатных блоков | Marmol House</title>
-        <meta name="description" content="Строим надежные и теплые дома из газосиликатных блоков под ключ в Гродно и по всей Беларуси. Официальная гарантия, фиксированная цена." />
-      </Helmet>
-      
+        <title>Строительство домов из газосиликатных блоков под ключ | Marmol House</title>
+        <meta name="description" content="Строим надежные и теплые дома из газосиликатных блоков под ключ в Гродно и по всей Беларуси. Официальная гарантия 5 лет, фиксированная цена в договоре." />
+        <meta name="keywords" content="дом из газосиликатных блоков, строительство из газосиликата, построить дом гродно, цена дома из блоков, marmol house" />
+        <link rel="canonical" href="https://marmolhouse.by/services/gas-silicate-houses" />
+        <meta property="og:title" content="Дома из газосиликатных блоков под ключ | Marmol House" />
+        <meta property="og:description" content="Надежные каменные дома для комфортной жизни. Строим под ключ с соблюдением всех технологий." />
+        <meta property="og:url" content="https://marmolhouse.by/services/gas-silicate-houses" />
+        <meta property="og:image" content="https://marmolhouse.by/assets/service/blockhouse-hero.webp" /> 
+
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(offerCatalogSchema) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
+
         <section className="relative h-[70vh] bg-cover bg-center flex items-center justify-center text-white" style={{ backgroundImage: "url('/assets/service/blockhouse-hero.webp')" }}>
           <div className="absolute inset-0 bg-black/60"></div>
           <div className="relative z-10 text-center px-4" data-aos="fade-up">

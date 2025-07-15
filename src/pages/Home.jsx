@@ -1,6 +1,5 @@
 // src/pages/Home.jsx
 
-import { Helmet } from 'react-helmet';
 import { FaInfoCircle } from 'react-icons/fa';
 
 import herovideo from '../assets/herovideo.webm';
@@ -122,31 +121,25 @@ function Home({ onOrderClick }) {
 
   return (
     <>
+     <title>Каркасные и блочные дома под ключ в Беларуси и Гродно — Marmol House</title>
+     <meta name="description" content="Строительство каркасных домов под ключ в Беларуси и Гродно. Проект в подарок, работа по 240 указу для многодетных семей, фиксированная цена. Marmol House." />
+     <meta name="author" content="Marmol House" />
+     <meta property="og:title" content="Каркасные дома под ключ в Беларуси — Marmol House" />
+     <meta property="og:description" content="Строительство каркасных домов в Гродно и Беларуси по 240 указу. Проект в подарок!" />
+     <meta property="og:type" content="website" />
+     <meta property="og:url" content="https://marmolhouse.by" />
+     <meta property="og:image" content="https://marmolhouse.by/og-image.png" />
+     <meta property="og:locale" content="ru_RU" />
+     <meta name="twitter:card" content="summary_large_image" />
+     <meta name="twitter:title" content="Каркасные дома под ключ | Marmol House" />
+     <meta name="twitter:description" content="Строительство каркасных домов в Гродно и Беларуси по 240 указу." />
+     <link rel="canonical" href="https://marmolhouse.by/" />
+
+     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
+     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema) }} />
+
+
       <main className="w-full overflow-x-hidden">
-
-        <Helmet>
-          <html lang="ru" />
-          <title>Каркасные и блочные дома под ключ в Беларуси и Гродно — Marmol House</title>
-          <meta name="description" content="Строительство каркасных домов под ключ в Беларуси и Гродно. Проект в подарок, работа по 240 указу для многодетных семей, фиксированная цена. Marmol House." />
-          <meta name="author" content="Marmol House" />
-          <meta property="og:title" content="Каркасные дома под ключ в Беларуси — Marmol House" />
-          <meta property="og:description" content="Строительство каркасных домов в Гродно и Беларуси по 240 указу. Проект в подарок!" />
-          <meta property="og:type" content="website" />
-          <meta property="og:url" content="https://marmolhouse.by" />
-          <meta property="og:image" content="https://marmolhouse.by/og-image.png" />
-          <meta property="og:locale" content="ru_RU" />
-          <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:title" content="Каркасные дома под ключ | Marmol House" />
-          <meta name="twitter:description" content="Строительство каркасных домов в Гродно и Беларуси по 240 указу." />
-          <link rel="canonical" href="https://marmolhouse.by/" />
-          <meta name="twitter:image" content="https://marmolhouse.by/og-image.png" />
-          <meta name="twitter:site" content="@MarmolHouse" />
-
-
-          <script type="application/ld+json">{JSON.stringify(localBusinessSchema)}</script>
-          <script type="application/ld+json">{JSON.stringify(videoSchema)}</script>
-        </Helmet>
-
         <section className="relative w-full min-h-screen" aria-labelledby="hero-heading">
           <video
             className="absolute top-0 left-0 w-full h-full object-cover"

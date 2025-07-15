@@ -1,60 +1,62 @@
 import { Helmet } from 'react-helmet';
 
+const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Главная',
+        item: 'https://marmolhouse.by/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Политика конфиденциальности',
+        item: 'https://marmolhouse.by/privacy',
+      },
+    ],
+  };
+
+
 const Privacy = () => {
   return (
     <>
-      <Helmet>
-        <html lang="ru" />
-        <title>Политика конфиденциальности | Marmol House</title>
-        <meta
-          name="description"
-          content="Узнайте, как Marmol House защищает ваши персональные данные. Политика конфиденциальности описывает сбор, использование и защиту информации."
-        />
-        <meta
-          name="keywords"
-          content="политика конфиденциальности, защита данных, Marmol House, Гродно, Беларусь"
-        />
-        <meta name="robots" content="index, follow" />
-        <meta name="author" content="Marmol House" />
-        <link rel="canonical" href="https://marmolhouse.by/privacy" />
-        <meta property="og:title" content="Политика конфиденциальности | Marmol House" />
-        <meta
-          property="og:description"
-          content="Как Marmol House обрабатывает ваши данные: сбор, хранение и защита персональной информации."
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://marmolhouse.by/privacy" />
-        <meta property="og:image" content="https://marmolhouse.by/og-image.png" />
-        <meta property="og:locale" content="ru_RU" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Политика конфиденциальности | Marmol House" />
-        <meta
-          name="twitter:description"
-          content="Узнайте о защите ваших данных на сайте Marmol House."
-        />
-        <meta name="twitter:image" content="https://marmolhouse.by/og-image.png" />
-        <meta name="twitter:site" content="@MarmolHouse" />
-        <script type="application/ld+json">
-          {JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'BreadcrumbList',
-            itemListElement: [
-              {
-                '@type': 'ListItem',
-                position: 1,
-                name: 'Главная',
-                item: 'https://marmolhouse.by/',
-              },
-              {
-                '@type': 'ListItem',
-                position: 2,
-                name: 'Политика конфиденциальности',
-                item: 'https://marmolhouse.by/privacy',
-              },
-            ],
-          })}
-        </script>
-      </Helmet>
+      <title>Политика конфиденциальности | Marmol House</title>
+      <meta
+        name="description"
+        content="Узнайте, как Marmol House защищает ваши персональные данные. Политика конфиденциальности описывает сбор, использование и защиту информации."
+      />
+      <meta
+        name="keywords"
+        content="политика конфиденциальности, защита данных, Marmol House, Гродно, Беларусь"
+      />
+      <meta name="robots" content="index, follow" />
+      <meta name="author" content="Marmol House" />
+      <link rel="canonical" href="https://marmolhouse.by/privacy" />
+      <meta property="og:title" content="Политика конфиденциальности | Marmol House" />
+      <meta
+        property="og:description"
+        content="Как Marmol House обрабатывает ваши данные: сбор, хранение и защита персональной информации."
+      />
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content="https://marmolhouse.by/privacy" />
+      <meta property="og:image" content="https://marmolhouse.by/og-image.png" />
+      <meta property="og:locale" content="ru_RU" />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content="Политика конфиденциальности | Marmol House" />
+      <meta
+        name="twitter:description"
+        content="Узнайте о защите ваших данных на сайте Marmol House."
+      />
+      <meta name="twitter:image" content="https://marmolhouse.by/og-image.png" />
+      <meta name="twitter:site" content="@MarmolHouse" />
+      <script 
+        type="application/ld+json" 
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} 
+      />
+      
       <section className="max-w-4xl mx-auto pt-28 sm:pt-32 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8">
           <h1 className="text-3xl sm:text-4xl font-bold text-[#17253c] mb-6">
