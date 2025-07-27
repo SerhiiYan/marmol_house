@@ -1,5 +1,3 @@
-import { Helmet } from 'react-helmet';
-
 const breadcrumbSchema = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',

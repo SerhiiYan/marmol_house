@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 body {
   overflow-y: scroll;
 }
@@ -15,5 +16,44 @@ body::-webkit-scrollbar-track {
 body::-webkit-scrollbar-thumb {
   background: #17253c;
   border-radius: 4px;
+}
+
+.h-full-slider .slick-list,
+.h-full-slider .slick-track,
+.h-full-slider .slick-slide > div {
+  height: 100%;
+}
+
+.slick-prev::before,
+.slick-next::before {
+  content: '' !important; 
+}
+
+.slick-dots li button::before {
+  font-size: 10px; 
+  color: #17253c;
+  opacity: 0.4;
+}
+
+.slick-dots li.slick-active button::before {
+  color: #f9c615;
+  opacity: 1;
+}
+
+.prose .custom-table {
+  @apply w-full my-6 border-collapse;
+}
+
+.prose .custom-table th,
+.prose .custom-table td {
+  @apply border border-gray-300 p-3 text-left;
+}
+
+.prose .custom-table th {
+  @apply bg-gray-100 font-bold text-[#17253c];
+}
+
+.prose .custom-table td strong {
+  @apply font-semibold text-gray-800;
 }
 

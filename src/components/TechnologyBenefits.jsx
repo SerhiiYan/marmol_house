@@ -45,20 +45,20 @@ const TechnologyBenefits = ({ title, imageSrc, benefits, imageAlt, bgColor = 'bg
           
           return (
              <div
-                    key={benefit.title}
-                    className={`absolute transform w-80 bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg border hover:shadow-2xl transition-all duration-300 z-20 hover:-translate-y-2 ${positions[index % 4]}`}
-                    data-aos="fade-up"
-                    data-aos-delay={100 + index * 150}
-                    >
-                    <div className="flex items-center mb-3">
-                        <span className="text-[#17253c] w-8 h-8 flex items-center justify-center mr-3">{benefit.icon}</span>
-                        <h3 className="text-lg font-semibold text-[#17253c]">{benefit.title}</h3>
-                    </div>
-                    <p className="text-base text-gray-700">{benefit.text}</p>
-                    </div>
-                );
-                })}
+              key={benefit.title}
+              className={`absolute transform w-80 bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg border hover:shadow-2xl transition-all duration-300 z-20 hover:-translate-y-2 ${positions[index % 4]}`}
+              data-aos="fade-up"
+              data-aos-delay={100 + index * 150}
+              >
+              <div className="flex items-center mb-3">
+                  <span className="text-[#17253c] w-8 h-8 flex items-center justify-center mr-3">{benefit.icon}</span>
+                  <h3 className="text-lg font-semibold text-[#17253c]">{benefit.title}</h3>
+              </div>
+              <p className="text-base text-gray-700">{benefit.text}</p>
             </div>
+          );
+        })}
+      </div>
 
       <div className="block lg:hidden max-w-xl mx-auto">
         <div className="w-full flex justify-center mb-10" data-aos="zoom-in">

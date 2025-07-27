@@ -4,7 +4,6 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
-// Внутренние компоненты стрелок, теперь они живут здесь
 const ModalPrevArrow = ({ onClick }) => (
   <button onClick={onClick} className="absolute top-1/2 -translate-y-1/2 left-2 sm:left-4 z-[100] bg-black/60 hover:bg-black/80 text-white rounded-full p-2 shadow-md transition-colors">
     <FaChevronLeft className="text-xl" />
@@ -23,7 +22,6 @@ const CompletedProjectModal = ({ project, onClose }) => {
   const touchEndX = useRef(null);
 
   useEffect(() => {
-    // Блокируем скролл фона при открытии модального окна
     document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = 'unset'; };
   }, []);
@@ -56,7 +54,7 @@ const CompletedProjectModal = ({ project, onClose }) => {
           initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
           className="relative max-w-5xl w-full max-h-[90vh] flex flex-col items-center justify-center bg-[#17253c] p-4 rounded-xl shadow-2xl"
-          onClick={e => e.stopPropagation()} // Предотвращаем закрытие по клику на контент
+          onClick={e => e.stopPropagation()} 
           onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}
         >
           <div className="relative w-full h-full flex items-center justify-center">

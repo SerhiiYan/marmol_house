@@ -3,10 +3,10 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { FaHandshake, FaTools, FaHome, } from "react-icons/fa";
 import teamImage from "../assets/logo-bg.png";
-
+import { ourPhilosophy, companyStats } from "../data/siteData";
 import AnimatedNumber from "../components/AnimatedNumber"; 
+
 
 const aboutPageSchema = {
     "@context": "https://schema.org",
@@ -19,13 +19,27 @@ const aboutPageSchema = {
         "name": "Marmol House",
         "url": "https://marmolhouse.by",
         "image": `https://marmolhouse.by${teamImage}`,
-        
+        "telephone": "+375291845481",
+        "email": "yurmarmol@gmail.com", 
         "foundingDate": "2014",
+        
         "knowsAbout": [ 
-            "Строительство каркасных домов",
-            "Строительство домов из газосиликатных блоков",
-            "Архитектурное проектирование",
-            "Работа по 240 и 95 указам РБ"
+            {
+                "@type": "Service",
+                "name": "Строительство каркасных домов",
+                "url": "https://marmolhouse.by/services/frame-houses"
+            },
+            {
+                "@type": "Service",
+                "name": "Строительство домов из газосиликатных блоков",
+                "url": "https://marmolhouse.by/services/gas-silicate-houses"
+            },
+            {
+                "@type": "Service",
+                "name": "Архитектурное проектирование",
+                "url": "https://marmolhouse.by/services/design"
+            },
+            "Работа по 240 указу для многодетных семей"
         ],
         "address": {
           "@type": "PostalAddress",
@@ -57,28 +71,11 @@ const staggerContainer = {
 };
 
 
-const ourPhilosophy = [
-  { icon: <FaHandshake />, title: "Честность и прозрачность", description: "Мы строим доверительные отношения. Все цены и этапы работ фиксируются в договоре и остаются неизменными." },
-  { icon: <FaTools />, title: "Качество без компромиссов", description: "Используем только проверенные материалы и современные технологии, чтобы ваш дом служил десятилетиями." },
-  { icon: <FaHome />, title: "Индивидуальный подход", description: "Ваш дом – это отражение вашей личности. Мы внимательно слушаем ваши пожелания и реализуем их в проекте." }
-];
-const companyStats = [
-  { value: 10, label: "Лет на рынке", suffix: "+" },
-  { value: 100, label: "Сданных объектов", suffix: "+" },
-  { value: 100, label: "Довольных клиентов", suffix: "%" },
-  { value: 5, label: "Гарантия на работы", suffix: " лет" }
-];
-
-
-
-
-
 function About() {
   return (
     <>
       <title>О компании Marmol House | Строительство домов в Гродно</title>
-      <meta name="description" content="Узнайте о компании Marmol House: наша философия, гарантии и более чем 10-летний опыт в строительстве каркасных и газосиликатных домов в Гродно и по всей Беларуси." />
-      <meta name="keywords" content="о компании marmol house, история компании, наша философия, гарантии, строительство гродно" />
+      <meta name="description" content="Marmol House: строим дома в Гродно и Беларуси более 10 лет. ✅ Узнайте о нашей философии, гарантиях и почему нам доверяют. Ваш надежный партнер в строительстве." />
       <meta property="og:title" content="О компании Marmol House | Строим дома мечты" />
       <meta property="og:description" content="Marmol House — ваш надежный партнер в строительстве. Узнайте о наших ценностях и подходе к работе." />
       <meta property="og:url" content="https://marmolhouse.by/about" />
@@ -112,7 +109,7 @@ function About() {
                 Более 10 лет назад мы начали свой путь с простой идеи: строительство качественных и доступных домов не должно быть сложным и стрессовым процессом для заказчика. Сегодня <span className="font-semibold text-[#17253c]">Marmol House</span> — это команда опытных архитекторов, инженеров и строителей, объединенных общей целью.
               </p>
               <p>
-                Наша миссия — воплощать ваши мечты о собственном доме в реальность, предлагая лучшие решения в сфере каркасного и газосиликатного домостроения в Гродно и по всей Беларуси. Мы особенно гордимся тем, что помогаем <span className="font-semibold">многодетным семьям</span> строить жилье по <span className="font-semibold">240 указу</span> и <span className="font-semibold">95 указу</span>.
+                  Наша миссия — воплощать ваши мечты о собственном доме в реальность, предлагая лучшие решения в сфере <Link to="/services/frame-houses" className="text-yellow-600 hover:underline font-semibold">каркасного</Link> и <Link to="/services/gas-silicate-houses" className="text-yellow-600 hover:underline font-semibold">газосиликатного</Link> домостроения в Гродно и по всей Беларуси. Мы особенно гордимся тем, что помогаем <Link to="/" className="text-yellow-600 hover:underline font-semibold">многодетным семьям</Link> строить жилье по <Link to="/" className="text-yellow-600 hover:underline font-semibold">240 и 95 указам</Link>.
               </p>
             </motion.div>
           </motion.div>
@@ -174,7 +171,6 @@ function About() {
               Связаться с нами
             </Link>
           </motion.div>
-
         </section>
       </div>
     </>

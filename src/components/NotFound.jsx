@@ -1,18 +1,16 @@
 import { motion } from 'framer-motion';
-import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 const NotFound = () => {
   return (
     <>
-      <Helmet>
         <title>404 — Страница не найдена | Marmol House</title>
         <meta
           name="description"
           content="Страница не найдена. Но мы точно знаем, как построить вам уютный дом :)"
         />
         <meta name="robots" content="noindex, follow" />
-      </Helmet>
+
       <div className="min-h-screen flex flex-col items-center justify-center text-[#17253c] p-4 text-center">
         <motion.img
           src="/logo.png"

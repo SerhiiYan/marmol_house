@@ -4,73 +4,8 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
 import { generateFaqSchema } from '../utils/seo-helpers';
+import { categories } from '../data/siteData';
 
-const categories = [
-    {
-      title: "Фундамент",
-      items: [
-        "Свайно-ростверковый: сваи Ø300 мм, ростверк 250×400 мм, арматура Ø10 мм.",
-        "Свайно-ростверковый усиленный: ростверк 300 мм, до 700 мм, арматура Ø12 мм.",
-        "Монолитный ленточный, арматура Ø12 мм.",
-      ],
-    },
-    {
-      title: "Стены",
-      items: [
-        "Каркас 50×150 мм, утепление 150 мм, обшивка имитацией бруса.",
-        "Каркас 50×150 мм + утепление 50 мм, ветрозащита, обшивка брус/штукатурка.",
-        "<strong>Газосиликат 400 мм</strong> + утепление 50 мм, дерево/штукатурка.",
-      ],
-    },
-    {
-      title: "Перегородки",
-      items: [
-        "Брус 50×150 мм, звукоизоляция 100 мм.",
-        "Брус 50×150 мм, звукоизоляция 150 мм.",
-        "Газоблоки 100/200 мм, кирпич в санузлах.",
-      ],
-    },
-    {
-      title: "Потолок",
-      items: [
-        "Высота 2.6 м, утепление 150 мм, гипсокартон.",
-        "Высота 2.7 м, утепление 150 мм, гипсокартон 2 слоя.",
-        "Высота 2.7 м, утепление 150 мм, гипсокартон 2 слоя.",
-      ],
-    },
-    {
-      title: "Пол",
-      items: [
-        "Стяжка по песчаной подушке, бетон М250.",
-        "Утепление пенополистирол 50 мм + стяжка М250.",
-        "Утепление экструдированный пенополистирол + стяжка.",
-      ],
-    },
-    {
-      title: "Окна",
-      items: [
-        "Однокамерные стеклопакеты, трехкамерный профиль.",
-        "Двухкамерные стеклопакеты, пятикамерный профиль.",
-        "Двухкамерные стеклопакеты, пятикамерный профиль.",
-      ],
-    },
-    {
-      title: "Кровля",
-      items: [
-        'Металлочерепица "Монтеррей Norman".',
-        "Металлочерепица + водосточная система.",
-        "Металлочерепица + водосточная система.",
-      ],
-    },
-    {
-      title: "Инженерия",
-      items: [
-        "Без электрики и сантехники.",
-        "Электрика, сантехника, вентиляция.",
-        "Полный комплект: электрика, сантехника, вентиляция.",
-      ],
-    },
-];
 
 const useIsMobile = (breakpoint = 768) => {
   const [isMobile, setIsMobile] = useState(false);
@@ -90,16 +25,14 @@ const useIsMobile = (breakpoint = 768) => {
 };
 
 const ProjectEquipment = ({ packages }) => {
-  const [activeItem, setActiveItem] = useState(packages?.[0] || null); 
-  const equipmentRef = useRef(null);
-  const isEquipmentInView = useInView(equipmentRef, { once: true, margin: '-50px' });
-  const isMobile = useIsMobile();
-  const activeIndex = packages.findIndex(p => p === activeItem);
+const [activeItem, setActiveItem] = useState(packages?.[0] || null); 
+const equipmentRef = useRef(null);
+const isEquipmentInView = useInView(equipmentRef, { once: true, margin: '-50px' });
+const isMobile = useIsMobile();
+const activeIndex = packages.findIndex(p => p === activeItem);
 
-  // ИЗМЕНЕНИЕ ЗДЕСЬ: Убрана проверка !activeItem
-  if (!packages?.length || !categories?.length) return null;
-
-  const faqSchemaJson = generateFaqSchema(packages, categories);
+if (!packages?.length || !categories?.length) return null;
+const faqSchemaJson = generateFaqSchema(packages, categories);
 
   return (
     <>
@@ -191,7 +124,6 @@ const ProjectEquipment = ({ packages }) => {
               ))}
             </div>
             <AnimatePresence mode="wait">
-              {/* Проверяем, что activeItem не null, чтобы избежать ошибок при анимации и рендере */}
               {activeItem && activeIndex !== -1 && (
                 <motion.div 
                   key={activeItem} 

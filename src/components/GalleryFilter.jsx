@@ -1,8 +1,7 @@
 // src/components/GalleryFilter.jsx
 
 import { motion } from 'framer-motion';
-
-const categories = ['Все', 'Бани', 'Дачи', 'Дом до 100м²', 'Дом от 100м²', 'Гаражи', 'Барнхаусы'];
+import { filterCategories } from '../data/siteData';
 
 const GalleryFilter = ({ selected, onSelect }) => {
   return (
@@ -10,7 +9,7 @@ const GalleryFilter = ({ selected, onSelect }) => {
     <nav className="flex justify-center my-8 md:my-12" aria-label="Фильтр категорий проектов">
 
       <ul className="flex w-full md:w-auto overflow-x-auto space-x-2 p-2 bg-gray-100 rounded-full scrollbar-hide">
-        {categories.map((cat) => (
+        {filterCategories.map((cat) => (
 
           <li key={cat}>
             <button

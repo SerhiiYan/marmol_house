@@ -3,50 +3,7 @@
 import React, { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-
-import { 
-  PencilSquareIcon, 
-  ClipboardDocumentCheckIcon, 
-  BuildingOffice2Icon, 
-  KeyIcon, 
-  WrenchScrewdriverIcon,
-  ChatBubbleLeftRightIcon
-} from '@heroicons/react/24/outline';
-
-
-
-const steps = [
-  {
-    icon: <ChatBubbleLeftRightIcon />,
-    title: 'Заявка и консультация',
-    description: 'Обсуждаем ваши пожелания, цели и бюджет. Отвечаем на все вопросы и помогаем определиться с направлением.',
-  },
-  {
-    icon: <PencilSquareIcon />,
-    title: 'Подбор проекта и сметы',
-    description: 'Выбираем готовый проект или разрабатываем индивидуальный. Составляем подробную и прозрачную смету.',
-  },
-  {
-    icon: <ClipboardDocumentCheckIcon />,
-    title: 'Подписание договора',
-    description: 'Заключаем официальный договор, в котором четко прописаны все условия, фиксированная стоимость и сроки.',
-  },
-  {
-    icon: <BuildingOffice2Icon />,
-    title: 'Строительство дома',
-    description: 'Завозим материалы и поэтапно возводим ваш дом, строго соблюдая все строительные нормы и технологии.',
-  },
-  {
-    icon: <KeyIcon />,
-    title: 'Приемка и сдача объекта',
-    description: 'Мы завершаем все работы, проводим финальную проверку и торжественно вручаем вам ключи от вашего нового дома.',
-  },
-  {
-    icon: <WrenchScrewdriverIcon />,
-    title: 'Гарантийное обслуживание',
-    description: 'Наша работа не заканчивается после сдачи. Мы предоставляем 5 лет гарантии и всегда остаёмся на связи.',
-  },
-];
+import { steps } from '../data/siteData';
 
 
 const HowWeWork = () => {

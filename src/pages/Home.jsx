@@ -5,112 +5,76 @@ import { FaInfoCircle } from 'react-icons/fa';
 import herovideo from '../assets/herovideo.webm';
 import HowWeWork from '../components/HowWeWork';
 import HousePackages from '../components/HousePackages';
-import Footer from '../components/Footer';
 import WhyChooseUs from '../components/WhyChooseUs';
 import TestimonialsSlider from '../components/TestimonialsSlider'; 
+import { testimonials, homeBenefits, } from '../data/siteData';
 
 
-const testimonials = [
-  {
-    name: 'Александр К.',
-    text: 'Очень доволен строительством! Дом из газобетона получился теплый и аккуратный. Команда Marmol House работала быстро и профессионально.',
-    img: 'https://randomuser.me/api/portraits/men/32.jpg',
-    rating: 5,
-  },
-  {
-    name: 'Ирина М.',
-    text: 'Заказывали баню — всё сделали в срок и даже раньше. Качество материалов отличное, всё аккуратно. Спасибо!',
-    img: 'https://randomuser.me/api/portraits/women/44.jpg',
-    rating: 5,
-  },
-  {
-    name: 'Дмитрий С.',
-    text: 'Строили барнхаус под ключ. Остались только приятные впечатления. Честная смета, никаких сюрпризов, всё прозрачно.',
-    img: 'https://randomuser.me/api/portraits/men/10.jpg',
-    rating: 5,
-  },
-  {
-    name: 'Светлана Н.',
-    text: 'Обратились по рекомендации. Всё прошло отлично: хорошие сроки, коммуникация и результат. Будем рекомендовать!',
-    img: 'https://randomuser.me/api/portraits/women/66.jpg',
-    rating: 5,
-  },
-];
-
-const localBusinessSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    'name': 'Marmol House',
-    'description': 'Строительство каркасных домов под ключ в Гродно и по всей Беларуси. Работаем по 240 указу для многодетных семей.',
-    'url': 'https://marmolhouse.by',
-    'logo': 'https://marmolhouse.by/assets/logo.png',
-    'telephone': '+375291845481',
-    'address': {
-      '@type': 'PostalAddress',
-      'streetAddress': 'г. Гродно, ул. Лелевеля, 12A, к 6',
-      'addressLocality': 'Гродно',
-      'addressCountry': 'BY',
-    },
-    'geo': {
-      '@type': 'GeoCoordinates',
-      'latitude': 53.6784,
-      'longitude': 23.8295,
-    },
-    'openingHoursSpecification': [{
+const combinedSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'LocalBusiness',
+      'name': 'Marmol House',
+      'image': 'https://marmolhouse.by/og-image.png',
+      'description': 'Строительство каркасных и блочных домов под ключ в Гродно и по всей Беларуси. Работаем по 240 указу для многодетных семей.',
+      'url': 'https://marmolhouse.by',
+      'logo': 'https://marmolhouse.by/assets/logo.png',
+      'telephone': '+375291845481',
+      'priceRange': '$$ - $$$',
+      'address': {
+        '@type': 'PostalAddress',
+        'streetAddress': 'г. Гродно, ул. Лелевеля, 12A, к 6',
+        'addressLocality': 'Гродно',
+        'addressCountry': 'BY',
+      },
+      'geo': {
+        '@type': 'GeoCoordinates',
+        'latitude': 53.6784,
+        'longitude': 23.8295,
+      },
+      'openingHoursSpecification': [{
         '@type': 'OpeningHoursSpecification',
         'dayOfWeek': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
         'opens': '09:00',
         'closes': '18:00',
-    }],
-    'sameAs': ['https://www.instagram.com/marmol_house/'],
-    'image': 'https://marmolhouse.by/og-image.png',
-
-    'aggregateRating': {
-      '@type': 'AggregateRating',
-      'ratingValue': '5.0', 
-      'reviewCount': testimonials.length.toString(), 
+      }],
+      'sameAs': ['https://www.instagram.com/marmol_house/'],
+      'aggregateRating': {
+        '@type': 'AggregateRating',
+        'ratingValue': '5.0', 
+        'reviewCount': testimonials.length.toString(), 
+      },
+      'review': testimonials.map(t => ({
+        '@type': 'Review',
+        'author': { '@type': 'Person', 'name': t.name },
+        'reviewRating': { '@type': 'Rating', 'ratingValue': t.rating.toString(), 'bestRating': '5' },
+        'reviewBody': t.text,
+      })),
     },
-
-    'review': testimonials.map(t => ({
-      '@type': 'Review',
-      'author': {
-        '@type': 'Person',
-        'name': t.name,
+    {
+      '@type': 'VideoObject',
+      'name': 'Строительство каркасных домов — Marmol House',
+      'description': 'Видео-презентация о строительстве современных каркасных домов в Гродно и по всей Беларуси.',
+      'thumbnailUrl': 'https://marmolhouse.by/og-image.png',
+      'uploadDate': '2024-05-10',
+      'contentUrl': 'https://marmolhouse.by' + herovideo,
+      'embedUrl': 'https://marmolhouse.by' + herovideo,
+    },
+    {
+      '@type': 'WebSite',
+      'url': 'https://marmolhouse.by/',
+      'potentialAction': {
+        '@type': 'SearchAction',
+        'target': {
+          '@type': 'EntryPoint',
+          'urlTemplate': 'https://marmolhouse.by/gallery?q={search_term_string}'
+        },
+        'query-input': 'required name=search_term_string',
       },
-      'reviewRating': {
-        '@type': 'Rating',
-        'ratingValue': t.rating.toString(), 
-        'bestRating': '5',
-      },
-      'reviewBody': t.text,
-    })),
+    }
+  ]
 };
-
-const videoSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'VideoObject',
-    'name': 'Строительство каркасных домов — Marmol House',
-    'description': 'Видео-презентация о строительстве современных каркасных домов в Гродно и по всей Беларуси.',
-    'thumbnailUrl': 'https://marmolhouse.by/og-image.png',
-    'uploadDate': '2024-05-10',
-    'contentUrl': 'https://marmolhouse.by' + herovideo,
-    'embedUrl': 'https://marmolhouse.by' + herovideo,
-};
-
-const homeBenefits = [
-  {
-    title: 'Работаем по 240 указу',
-    description: 'Многодетные семьи получают участок бесплатно и частичную оплату строительства за счёт бюджета.',
-  },
-  {
-    title: 'Проект в подарок',
-    description: 'Бесплатный проект дома с учётом ваших пожеланий и особенностей участка при заказе строительства.',
-  },
-  {
-    title: 'Фиксированная цена',
-    description: 'Цена прописывается в договоре и остаётся неизменной на всех этапах строительства.',
-  },
-];
 
 
 function Home({ onOrderClick }) {
@@ -122,7 +86,7 @@ function Home({ onOrderClick }) {
   return (
     <>
      <title>Каркасные и блочные дома под ключ в Беларуси и Гродно — Marmol House</title>
-     <meta name="description" content="Строительство каркасных домов под ключ в Беларуси и Гродно. Проект в подарок, работа по 240 указу для многодетных семей, фиксированная цена. Marmol House." />
+     <meta name="description" content="Строим каркасные и блочные дома под ключ в Беларуси. Проект в подарок! Работа по 240 и 95 указу. Фиксированная цена. Гарантия 5 лет. Закажите расчет на сайте Marmol House." />
      <meta name="author" content="Marmol House" />
      <meta property="og:title" content="Каркасные дома под ключ в Беларуси — Marmol House" />
      <meta property="og:description" content="Строительство каркасных домов в Гродно и Беларуси по 240 указу. Проект в подарок!" />
@@ -135,8 +99,7 @@ function Home({ onOrderClick }) {
      <meta name="twitter:description" content="Строительство каркасных домов в Гродно и Беларуси по 240 указу." />
      <link rel="canonical" href="https://marmolhouse.by/" />
 
-     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
-     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema) }} />
+     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(combinedSchema) }} />
 
 
       <main className="w-full overflow-x-hidden">
@@ -150,12 +113,13 @@ function Home({ onOrderClick }) {
           </video>
           <div className="absolute top-0 left-0 w-full h-full bg-black/60" aria-hidden="true" />
           <div className="relative z-10 flex flex-col items-center text-center px-2 sm:px-4 lg:px-6 pt-36 sm:pt-60">
-            <h1 id="hero-heading" className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4">
-              Строительство<br /> каркасных и блочных домов под ключ<br />
-              <span className="text-[#f9c615] text-3xl sm:text-4xl md:text-5xl lg:text-6xl">в Гродно и Беларуси</span>
+            <h1 id="hero-heading" className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4">
+              Строим каркасные и блочные дома
+              <br />
+              <span className="text-[#f9c615]">под ключ в Гродно и Беларуси</span>
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-white mb-6">
-              Работаем по 240 указу для многодетных семей
+              Работаем по 240 и 95 указу для многодетных семей
             </p>
             <button
               onClick={() => onOrderClick()}
@@ -185,7 +149,6 @@ function Home({ onOrderClick }) {
         <HousePackages onOrderClick={handlePackageOrderClick} />
         <HowWeWork />
         <TestimonialsSlider testimonials={testimonials} />
-        <Footer />
       </main>
     </>
   );

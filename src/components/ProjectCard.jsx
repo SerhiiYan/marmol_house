@@ -11,11 +11,10 @@ const ProjectCard = ({ project, onQuickViewClick }) => {
   const imageAltText = `Проект ${project.type.toLowerCase()} "${project.title}" для строительства в Гродно и Беларуси.`;
   const keyFeature = project.description.find(line => line.toLowerCase().includes('площадь')) || project.description[0];
 
-  // ИЗМЕНЕНИЕ 2: Генерируем SEO-дружественный URL (слаг)
   const projectUrl = `/projects/${slugify(project.title)}`;
 
   return (
-    // ИЗМЕНЕНИЕ 3: Используем новый URL в компоненте Link
+
     <Link to={projectUrl} aria-label={`Узнать больше о проекте ${project.title}`}>
 
       <motion.article
@@ -65,14 +64,13 @@ const ProjectCard = ({ project, onQuickViewClick }) => {
               </span>
             </div>
 
-
             {keyFeature && (
               <p className="text-sm text-gray-600 mt-1 truncate" title={keyFeature}>
                 {keyFeature}
               </p>
             )}
           </div>
-
+          
           <div className="mt-4">
             <div className="hidden sm:flex items-center justify-end -mt-8">
               <ArrowTopRightOnSquareIcon className="w-5 h-5 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

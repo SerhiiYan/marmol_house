@@ -1,4 +1,4 @@
-// src/components/ImageGalleryModal.jsx
+// src/components/ImageGalleryModal.jsx (Исправлена анимация)
 
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -10,7 +10,7 @@ const ModalPrevArrow = ({ onClick, isMobile, hasAnimated }) => (
     className="absolute top-1/2 -translate-y-1/2 left-4 z-[100] bg-black/50 hover:bg-black/70 text-white rounded-full p-2 shadow-md"
     initial={isMobile && !hasAnimated ? { x: 0 } : { opacity: 1 }}
     animate={
-      isMobile && !hasAnimated ? { x: [0, 30, -10, 0], transition: { x: { times: [0, 0.4, 0.7, 1], duration: 1.2, ease: 'easeOut', repeat: 1 } } } : { opacity: 1 }
+      isMobile && !hasAnimated ? { x: [0, 30, -10, 0], transition: { x: { times: [0, 0.4, 0.7, 1], duration: 1.2, ease: 'easeOut' } } } : { opacity: 1 }
     }
   >
     <FaChevronLeft className="text-xl" />
@@ -23,7 +23,7 @@ const ModalNextArrow = ({ onClick, isMobile, hasAnimated }) => (
     className="absolute top-1/2 -translate-y-1/2 right-4 z-[100] bg-black/50 hover:bg-black/70 text-white rounded-full p-2 shadow-md"
     initial={isMobile && !hasAnimated ? { x: 0 } : { opacity: 1 }}
     animate={
-      isMobile && !hasAnimated ? { x: [0, 30, -10, 0], transition: { x: { times: [0, 0.4, 0.7, 1], duration: 1.2, ease: 'easeOut', repeat: 1 } } } : { opacity: 1 }
+      isMobile && !hasAnimated ? { x: [0, -30, 10, 0], transition: { x: { times: [0, 0.4, 0.7, 1], duration: 1.2, ease: 'easeOut' } } } : { opacity: 1 }
     }
   >
     <FaChevronRight className="text-xl" />
@@ -37,19 +37,15 @@ const ImageGalleryModal = ({ images, initialIndex, onClose }) => {
   const touchEndX = useRef(null);
 
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-
-  useEffect(() => {
-    setHasAnimated(false);
-  }, [currentIndex]);
   
   const handlePrevImage = () => {
     setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-    setHasAnimated(true);
+    if (!hasAnimated) setHasAnimated(true); 
   };
 
   const handleNextImage = () => {
     setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-    setHasAnimated(true);
+    if (!hasAnimated) setHasAnimated(true); 
   };
   
   const handleOverlayClick = (e) => {

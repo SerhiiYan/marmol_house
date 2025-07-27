@@ -47,12 +47,9 @@ function Footer() {
 
   return (
     <footer className="bg-gradient-to-b from-gray-900 to-[#17253c] text-white py-8 sm:py-10">
-      
       <script type="application/ld+json">{organizationSchema}</script>
-
       <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
         
-
         <div>
           <img
             src={logo}
@@ -65,7 +62,6 @@ function Footer() {
             Строительство каркасных домов под ключ в Гродно и по всей Беларуси.
           </p>
         </div>
-
 
         <address className="not-italic">
           <h4 className="text-base sm:text-lg font-semibold mb-4 text-white">
@@ -86,11 +82,10 @@ function Footer() {
             </li>
             <li className="flex items-center gap-2">
               <FaMapMarkerAlt className="text-yellow-500 w-4 h-4 flex-shrink-0" />
-              <span>г. Гродно, ул. Лелевеля, 12A, к 6</span>
+              <span>г. Гродно, ул. Лелевеля, 12A, к.6</span>
             </li>
           </ul>
         </address>
-
 
         <nav aria-label="Дополнительная навигация по сайту">
           <h4 className="text-base sm:text-lg font-semibold mb-4 text-white">

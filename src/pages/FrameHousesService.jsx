@@ -4,70 +4,15 @@ import React, { useEffect, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircleIcon, ShieldCheckIcon, ClockIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
-import { FaRulerCombined, FaHammer, FaTree, FaHome, FaBolt, FaClock, FaWeightHanging, } from 'react-icons/fa';
-import Footer from '../components/Footer';
+import { CheckCircleIcon, } from '@heroicons/react/24/outline';
 import TechnologyBenefits from '../components/TechnologyBenefits';
 import FrameHouseImage from '../assets/blueprint6.png';
+import { allPackages } from '../data/packagesData'; 
+import { frameHouseBenefits, frameHouseSteps } from '../data/servicesData';
+import { generalBenefits } from '../data/siteData';
+import OurBenefits from '../components/OurBenefits';
+import ProcessSteps from '../components/ProcessSteps';
 
-
-const frameHouseBenefitsData = [
-  { title: 'Энергоэффективность', text: 'Стены отлично сохраняют тепло, снижая расходы на отопление.', icon: <FaBolt size={24}/> },
-  { title: 'Скорость строительства', text: 'Полный цикл — от фундамента до отделки — занимает от 2 до 4 месяцев.', icon: <FaClock size={24}/> },
-  { title: 'Легкий вес', text: 'Конструкция позволяет экономить на фундаменте и строить на сложных грунтах.', icon: <FaWeightHanging size={24}/> },
-  { title: 'Гибкость планировок', text: 'Легко менять внутреннюю планировку без сложных и дорогих перепланировок.', icon: <FaHome size={24}/> },
-];
-
-const framePackages = {
-  'Эконом': {
-    technology: 'Классический каркасный дом. Идеальный баланс цены и качества для сезонного или круглогодичного проживания.',
-    tabSubtitle: 'Каркасная технология',
-    price: 1200,
-    details: [
-      { category: 'Фундамент', items: ['Монолитный железобетонный свайно-ростверковый', 'Сваи Ø300 мм, ростверк 250×400 мм', 'Арматура Ø10 мм, бетон С16/20'] },
-      { category: 'Стены и перегородки', items: ['Несущий каркас из бруса 50×150 мм', 'Утепление минеральной ватой 150 мм', 'Снаружи — имитация бруса с покраской', 'Внутри — ОСБ плита 9 мм или ГКЛ 12 мм'] },
-      { category: 'Пол и потолок', items: ['Черновая стяжка пола 70 мм', 'Высота потолков 2.6 м', 'Утепление потолка 150 мм (Технониколь)', 'Обшивка потолка гипсокартоном'] },
-      { category: 'Кровля и проемы', items: ['Металлочерепица "Монтеррей Norman"', 'Стропильная система 50х175 мм', 'Однокамерные стеклопакеты', 'Надежная входная дверь'] },
-    ]
-  },
-  'Премиум': {
-    technology: 'Улучшенный каркасный дом с дополнительным утеплением и повышенным комфортом для самых требовательных.',
-    tabSubtitle: 'Каркасная технология',
-    price: 1500,
-    details: [
-      { category: 'Фундамент', items: ['Усиленный свайно-ростверковый (ростверк 300мм, арматура Ø12мм)', 'Класс бетона С16/20'] },
-      { category: 'Стены и перегородки', items: ['Каркас 50×150мм с двойным утеплением (150+50мм)', 'Отделка: имитация бруса, короед, евровагонка или 2 слоя ГКЛ', 'Ветрозащитная плёнка'] },
-      { category: 'Пол и потолок', items: ['Утепленный черновой пол 50мм + чистовая стяжка 70мм', 'Высота потолков 2.7 м', 'Двойная обшивка потолка гипсокартоном'] },
-      { category: 'Кровля и проемы', items: ['Металлочерепица "Монтеррей Norman" с водосточной системой', 'Двухкамерные стеклопакеты (пятикамерный профиль)', 'Подшивка свесов софитом'] },
-      { category: 'Инженерия', items: ['Электрика, ТВ кабели, заземление', 'Водоснабжение, канализация, радиаторы', 'Вентиляционная шахта из кирпича'] }
-    ]
-  },
-  'Премиум+': {
-    technology: 'Максимально надежный каменный дом из газосиликатных блоков. Премиальные материалы и бескомпромиссное качество.',
-    tabSubtitle: 'Газосиликатная технология',
-    price: 1700,
-    details: [
-      { category: 'Фундамент', items: ['Монолитный железобетонный ленточный', 'Армирование каркасами Ø12 мм', 'Устройство крылец и террас по проекту'] },
-      { category: 'Стены и перегородки', items: ['Газосиликатные блоки 400мм + утепление 50мм', 'Внутренняя отделка: гипсовая/цементная штукатурка', 'Перегородки из блоков 100/200мм и кирпича'] },
-      { category: 'Пол и потолок', items: ['Утепленный экструдированным пенополистиролам пол + чистовая стяжка 70мм', 'Высота потолков 2.7 м, утепление 150мм', 'Двойная обшивка потолка гипсокартоном'] },
-      { category: 'Кровля и проемы', items: ['Металлочерепица "Монтеррей Norman" с водосточной системой', 'Двухкамерные стеклопакеты (пятикамерный профиль)', 'Подшивка свесов софитом'] },
-      { category: 'Инженерия', items: ['Полный комплект электрики и сантехники', 'Вентиляционная шахта из клинкерного кирпича', 'Разводка всех сетей по дому'] }
-    ]
-  }
-};
-
-const constructionSteps = [
-  { name: 'Проект и фундамент', description: 'Разрабатываем архитектурный проект и возводим надежный свайно-ростверковый фундамент.', icon: FaRulerCombined, image: '/assets/service/fundament.webp' },
-  { name: 'Сборка каркаса', description: 'Возводим несущие стены и перегородки из сухого бруса. Формируем прочный "скелет" вашего будущего дома.', icon: FaHammer, image: '/assets/service/frame.webp' },
-  { name: 'Кровля и окна', description: 'Монтируем стропильную систему, укладываем металлочерепицу и устанавливаем качественные стеклопакеты.', icon: FaHome, image: '/assets/service/roof.webp' },
-  { name: 'Отделка и утепление', description: 'Утепляем стены минеральной ватой, обшиваем фасад имитацией бруса и подготавливаем дом к сдаче.', icon: FaTree, image: '/assets/service/mineral.webp' },
-];
-
-const ourBenefits = [
-  { name: 'Гарантия 5 лет', description: 'Мы уверены в качестве наших домов и даем официальную гарантию на все конструктивные элементы.', icon: ShieldCheckIcon },
-  { name: 'Строим от 3 месяцев', description: 'Благодаря отлаженной технологии, вы сможете отпраздновать новоселье уже в следующем сезоне.', icon: ClockIcon },
-  { name: 'Фиксированная цена', description: 'Стоимость, указанная в договоре, остается неизменной до конца строительства. Никаких скрытых платежей.', icon: DocumentTextIcon },
-];
 
 const breadcrumbSchema = {
   '@context': 'https://schema.org',
@@ -81,6 +26,7 @@ const breadcrumbSchema = {
 const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
+  '@id': 'https://marmolhouse.by/services/frame-houses#service',
   'serviceType': 'Строительство каркасных домов под ключ',
   'provider': {
     '@type': 'LocalBusiness',
@@ -109,7 +55,11 @@ const offerCatalogSchema = {
   '@context': 'https://schema.org',
   '@type': 'OfferCatalog',
   'name': 'Комплектации каркасных домов',
-  'itemListElement': Object.entries(framePackages).map(([name, data]) => ({
+  'itemOffered': {
+    '@type': 'Service',
+    '@id': 'https://marmolhouse.by/services/frame-houses#service'
+  },
+  'itemListElement': Object.entries(allPackages).map(([name, data]) => ({
     '@type': 'Offer',
     'itemOffered': {
       '@type': 'Service',
@@ -129,8 +79,8 @@ const howToSchema = {
     '@type': 'HowTo',
     'name': 'Как мы строим каркасный дом',
     'description': 'Пошаговый процесс строительства вашего каркасного дома от проекта и фундамента до наружной отделки.',
-    'totalTime': 'P3M', // Примерная длительность 3 месяца (ISO 8601 duration format)
-    'step': constructionSteps.map((step, index) => ({
+    'totalTime': 'P3M',
+    'step': frameHouseSteps.map((step, index) => ({
         '@type': 'HowToStep',
         'name': step.name,
         'text': step.description,
@@ -158,16 +108,14 @@ const FrameHousesService = ({ onOrderClick }) => {
 
   return (
     <>
-      <title>Строительство каркасных домов под ключ в Гродно и Беларуси | Marmol House</title>
+      <title>Каркасные дома под ключ в Гродно и Беларуси | Marmol House</title>
       <meta name="description" content="Закажите строительство современного и теплого каркасного дома под ключ от Marmol House. Гарантия 5 лет, фиксированная цена в договоре, сроки от 3 месяцев." />
-      <meta name="keywords" content="каркасный дом, строительство каркасных домов, построить каркасный дом гродно, цена каркасного дома, каркасник под ключ, marmol house" />
       <link rel="canonical" href="https://marmolhouse.by/services/frame-houses" />
       <meta property="og:title" content="Каркасные дома под ключ | Marmol House" />
       <meta property="og:description" content="Строим современные и энергоэффективные дома с гарантией и по фиксированной цене." />
       <meta property="og:url" content="https://marmolhouse.by/services/frame-houses" />
       <meta property="og:image" content="https://marmolhouse.by/assets/service/framehouse.webp" />
-      {/* ... остальные og и twitter теги ... */}
-      
+
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(offerCatalogSchema) }} />
@@ -189,51 +137,25 @@ const FrameHousesService = ({ onOrderClick }) => {
         <TechnologyBenefits 
           title="Почему выбирают каркасные дома"
           imageSrc={FrameHouseImage}
-          benefits={frameHouseBenefitsData}
+          benefits={frameHouseBenefits}
           imageAlt="Чертеж современного каркасного дома"
           bgColor="bg-white" 
         />
-
+        <div className="bg-gray-50 py-20">
         <div className="max-w-6xl mx-auto px-4">
-          <section className="py-20">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
-              {ourBenefits.map((benefit, index) => (
-                <div key={benefit.name} className="flex flex-col items-center" data-aos="fade-up" data-aos-delay={index * 100}>
-                  <benefit.icon className="w-12 h-12 text-[#f9c615] mb-4" />
-                  <h3 className="text-xl font-semibold text-[#17253c]">{benefit.name}</h3>
-                  <p className="mt-2 text-gray-600">{benefit.description}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section className="py-20 -mx-4 px-4 sm:-mx-2 md:-mx-8">
-             <h2 className="text-3xl font-bold text-center text-[#17253c] mb-12 max-w-6xl mx-auto" data-aos="fade-up">Технология строительства: просто, надежно и наглядно</h2>
-             <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                {constructionSteps.map((step, index) => (
-                  <div key={step.name} className="bg-white rounded-xl shadow-lg overflow-hidden group transition-transform duration-300 hover:-translate-y-2" data-aos="zoom-in" data-aos-delay={index * 100}>
-                    <div className="overflow-hidden h-48">
-                      <img src={step.image} alt={step.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                    </div>
-                    <div className="p-6">
-                      <div className="flex items-center mb-3">
-                        <step.icon className="w-6 h-6 text-[#17253c] mr-3"/>
-                        <h3 className="text-lg font-semibold text-[#17253c]">{step.name}</h3>
-                      </div>
-                      <p className="text-gray-600 text-sm">{step.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-          </section>
-
+          <OurBenefits benefits={generalBenefits} />
+           <ProcessSteps
+            title="Технология строительства: просто, надежно и наглядно"
+            steps={frameHouseSteps}
+          />
+          </div>
           <section className="py-20">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl font-bold text-center text-[#17253c] mb-4" data-aos="fade-up">Что входит в стоимость?</h2>
               <p className="text-center text-gray-600 mb-8" data-aos="fade-up" data-aos-delay="100">Выберите комплектацию, чтобы увидеть детальный состав работ и материалов.</p>
               
                <div className="flex justify-center mb-8 bg-gray-100 p-1.5 rounded-full" data-aos="fade-up" data-aos-delay="150">
-            {Object.keys(framePackages).map(tabName => (
+            {Object.keys(allPackages).map(tabName => (
               <button
                 key={tabName}
                 onClick={() => setActiveTab(tabName)}
@@ -248,7 +170,7 @@ const FrameHousesService = ({ onOrderClick }) => {
                     {tabName}
                   </span>
                   <span className={`text-xs mt-1 transition-colors ${activeTab === tabName ? 'text-gray-500' : 'text-gray-400'}`}>
-                    {framePackages[tabName].tabSubtitle}
+                    {allPackages[tabName].tabSubtitle}
                   </span>
                 </div>
               </button>
@@ -264,14 +186,14 @@ const FrameHousesService = ({ onOrderClick }) => {
               transition={{ duration: 0.3 }}
               className="text-center"
             >
-              <h3 className="text-2xl font-semibold text-[#17253c] mb-2">Комплектация "<span className="text-[#f9c615]">{activeTab}</span>" от {framePackages[activeTab].price} BYN/м²</h3>
+              <h3 className="text-2xl font-semibold text-[#17253c] mb-2">Комплектация "<span className="text-[#f9c615]">{activeTab}</span>" от {allPackages[activeTab].price} BYN/м²</h3>
               
               <p className="text-gray-500 mb-8 max-w-2xl mx-auto">
-                {framePackages[activeTab].technology}
+                {allPackages[activeTab].technology}
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left"> 
-                {framePackages[activeTab].details.map((category) => (
+                {allPackages[activeTab].details.map((category) => (
                   <div key={category.category} className="bg-gray-50 p-6 rounded-xl border">
                     <h4 className="text-xl font-semibold text-[#17253c] mb-4">{category.category}</h4>
                     <ul className="space-y-3">
@@ -290,7 +212,6 @@ const FrameHousesService = ({ onOrderClick }) => {
             </div>
           </section>
         </div>
-        <Footer />
     </>
   );
 };

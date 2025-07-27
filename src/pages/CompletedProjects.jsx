@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaMapMarkerAlt, FaRulerCombined } from 'react-icons/fa';
 import { BsImages } from 'react-icons/bs';
-
 import completedProjects from '../data/completedProjects';
 import CompletedProjectModal from '../components/CompletedProjectModal';
+
 
 const getProjectDetails = (description) => ({
   location: description.find(d => !d.toLowerCase().includes('площадь') && !d.toLowerCase().includes('завершено')),
@@ -14,6 +14,7 @@ const getProjectDetails = (description) => ({
 });
 
 const itemListSchema = {
+  
     "@context": "https://schema.org",
     "@type": "ItemList",
     "name": "Портфолио выполненных работ Marmol House",
@@ -21,23 +22,34 @@ const itemListSchema = {
     "numberOfItems": completedProjects.length,
     "itemListElement": completedProjects.map((project, index) => {
         const { location, area } = getProjectDetails(project.description);
+        const areaValue = area ? parseFloat(area.replace(/[^0-9.]/g, '')) : null;
+
         return {
             "@type": "ListItem",
             "position": index + 1,
             "item": {
-                "@type": "House",
+                "@type": ["House", "Product"], 
                 "name": project.title,
                 "description": project.description.join('. '),
                 "image": `https://marmolhouse.by${project.images[0]}`,
                 "address": {
                     "@type": "PostalAddress",
-                    "addressLocality": location || 'Гродненская область, Беларусь'
+                    "addressRegion": location || 'Гродненская область', 
+                    "addressCountry": "BY"
                 },
-                "floorSize": {
-                    "@type": "QuantitativeValue",
-                    "value": parseFloat(area?.replace(/[^0-9.]/g, '')),
-                    "unitCode": "MTK"
-                }
+                "offers": {
+                    "@type": "Offer",
+                    "priceCurrency": "BYN",
+                    "price": project.price.replace(/[^0-9.]/g, ''),
+                    "availability": "https://schema.org/InStock"
+                },
+                ...(areaValue && {
+                    "floorSize": {
+                        "@type": "QuantitativeValue",
+                        "value": areaValue,
+                        "unitCode": "MTK" 
+                    }
+                })
             }
         }
     })
@@ -47,18 +59,8 @@ const breadcrumbSchema = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Главная",
-      "item": "https://marmolhouse.by/" 
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "Наши работы", 
-      "item": "https://marmolhouse.by/completed" 
-    }
+    { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://marmolhouse.by/" },
+    { "@type": "ListItem", "position": 2, "name": "Наши работы", "item": "https://marmolhouse.by/completed" }
   ]
 });
 
@@ -80,8 +82,7 @@ const CompletedProjects = () => {
   return (
     <>
       <title>Наши работы — Готовые дома от Marmol House | Портфолио</title>
-      <meta name="description" content="Портфолио завершенных проектов домов от компании Marmol House. Посмотрите реальные фото, цены и описания построенных нами объектов в Гродно и по всей Беларуси."/>
-      <meta name="keywords" content="готовые дома, портфолио, наши работы, построенные дома, marmol house, фото домов" />
+      <meta name="description" content="✅ Реальные фото и цены готовых домов от Marmol House! Посмотрите наше портфолио построенных каркасных и блочных домов в Гродно и по всей Беларуси. Убедитесь в качестве нашей работы и закажите свой проект."/>
       <link rel="canonical" href="https://marmolhouse.by/completed" />
       <meta property="og:title" content="Наши работы | Marmol House" />
       <meta property="og:description" content="Реальные фото, цены и описания построенных нами объектов в Гродно и по всей Беларуси."/>
@@ -142,7 +143,6 @@ const CompletedProjects = () => {
           })}
         </motion.div>
       </main>
-
       {selectedProject && (
         <CompletedProjectModal
           project={selectedProject}

@@ -2,44 +2,8 @@ import React from 'react';
 import { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { Helmet } from 'react-helmet';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
-
-const packages = [
-  {
-    title: 'Эконом',
-    description: 'Идеально для дачи выходного дня или небольшого загородного дома.',
-    highlights: [ 'Свайно-ростверковый фундамент', 'Каркас из бруса 50×150 мм, утепление 150 мм', 'Имитация бруса снаружи', 'Потолок 2.6 м, утепление 150 мм', 'Однокамерные стеклопакеты', 'Без электрики и сантехники', ],
-    image: '/assets/service/package-econom.webp',
-    price: 'от 1 200',
-    priceValue: 1200,
-    priceCurrency: 'BYN',
-    priceValidUntil: '2025-12-31',
-    sku: 'MH-ECONOM',
-  },
-  {
-    title: 'Премиум',
-    description: 'Для тех, кто ценит комфорт и долговечность.',
-    highlights: [ 'Усиленный свайно-ростверковый фундамент', 'Дополнительное утепление + ветрозащита', 'Потолок 2.7 м, гипсокартон в 2 слоя', 'Двухкамерные стеклопакеты', 'Металлочерепица + водосточка', 'Инженерия включена', ],
-    image: '/assets/service/package-premium.webp',
-    price: 'от 1 500',
-    priceValue: 1500,
-    priceCurrency: 'BYN',
-    priceValidUntil: '2025-12-31',
-    sku: 'MH-PREMIUM',
-  },
-  {
-    title: 'Премиум+',
-    description: 'Для максимального комфорта и надежности на долгие годы.',
-    highlights: [ 'Монолитный ленточный фундамент', 'Газосиликатные блоки + утепление', 'Перегородки из газоблоков и кирпича', 'Потолок 2.7 м, утепление 150 мм', 'Пятикамерные окна', 'Полная инженерия', ],
-    image: '/assets/service/package-premium-plus.webp',
-    price: 'от 1 700',
-    priceValue: 1700,
-    priceCurrency: 'BYN',
-    priceValidUntil: '2025-12-31',
-    sku: 'MH-PREMIUM-PLUS',
-  },
-];
+import { housePackages } from '../data/packagesData';
 
 const packageGradients = {
   Эконом: 'from-green-400 via-cyan-400 to-blue-500',
@@ -65,7 +29,7 @@ function HousePackages({ onOrderClick }) {
       <div className="max-w-6xl mx-auto">
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 justify-center">
-          {packages.map((pack, idx) => {
+          {housePackages.map((pack, idx) => {
     
             const productSchema = {
               '@context': 'https://schema.org',
@@ -96,7 +60,7 @@ function HousePackages({ onOrderClick }) {
                 data-aos="fade-up"
                 data-aos-delay={idx * 100}
               >
-                <Helmet><script type="application/ld+json">{JSON.stringify(productSchema)}</script></Helmet>
+                <script type="application/ld+json">{JSON.stringify(productSchema)}</script>
                 <img 
                   src={pack.image} 
                   alt={`Пример дома в комплектации '${pack.title}'`} 

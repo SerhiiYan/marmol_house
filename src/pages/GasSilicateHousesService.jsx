@@ -4,73 +4,15 @@ import React, { useEffect, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircleIcon, ShieldCheckIcon, ClockIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
-import { FaLayerGroup, FaRulerCombined, FaHome, FaShieldAlt, FaVolumeDown, FaFire, FaTools } from 'react-icons/fa';
-import { GiStairs } from 'react-icons/gi';
-import Footer from '../components/Footer';
+import { CheckCircleIcon } from '@heroicons/react/24/outline';
 import CustomPackageBlock from '../components/CustomPackageBlock';
 import TechnologyBenefits from '../components/TechnologyBenefits';
 import BlockHouseImage from '../assets/blueprint2.png';
-
-
-const allPackages = {
-  'Эконом': {
-    price: 1200,
-    technology: 'Классический каркасный дом. Идеальный баланс цены и качества для сезонного или круглогодичного проживания.',
-    tabSubtitle: 'Каркасная технология',
-    details: [
-      { category: 'Фундамент', items: ['Монолитный железобетонный свайно-ростверковый', 'Сваи Ø300 мм, ростверк 250×400 мм', 'Арматура Ø10 мм, бетон С16/20'] },
-      { category: 'Стены и перегородки', items: ['Несущий каркас из бруса 50×150 мм', 'Утепление минеральной ватой 150 мм', 'Снаружи — имитация бруса с покраской', 'Внутри — ОСБ плита 9 мм или ГКЛ 12 мм'] },
-      { category: 'Пол и потолок', items: ['Черновая стяжка пола 70 мм', 'Высота потолков 2.6 м', 'Утепление потолка 150 мм (Технониколь)', 'Обшивка потолка гипсокартоном'] },
-      { category: 'Кровля и проемы', items: ['Металлочерепица "Монтеррей Norman"', 'Стропильная система 50х175 мм', 'Однокамерные стеклопакеты', 'Надежная входная дверь'] },
-    ]
-  },
-  'Премиум': {
-    price: 1500,
-    technology: 'Улучшенный каркасный дом с дополнительным утеплением и повышенным комфортом для самых требовательных.',
-    tabSubtitle: 'Каркасная технология',
-    details: [
-      { category: 'Фундамент', items: ['Усиленный свайно-ростверковый (ростверк 300мм, арматура Ø12мм)', 'Класс бетона С16/20'] },
-      { category: 'Стены и перегородки', items: ['Каркас 50×150мм с двойным утеплением (150+50мм)', 'Отделка: имитация бруса, короед, евровагонка или 2 слоя ГКЛ', 'Ветрозащитная плёнка'] },
-      { category: 'Пол и потолок', items: ['Утепленный черновой пол 50мм + чистовая стяжка 70мм', 'Высота потолков 2.7 м', 'Двойная обшивка потолка гипсокартоном'] },
-      { category: 'Кровля и проемы', items: ['Металлочерепица "Монтеррей Norman" с водосточной системой', 'Двухкамерные стеклопакеты (пятикамерный профиль)', 'Подшивка свесов софитом'] },
-      { category: 'Инженерия', items: ['Электрика, ТВ кабели, заземление', 'Водоснабжение, канализация, радиаторы', 'Вентиляционная шахта из кирпича'] }
-    ]
-  },
-  'Премиум+': {
-    price: 1700,
-    technology: 'Максимально надежный каменный дом из газосиликатных блоков. Премиальные материалы и бескомпромиссное качество.',
-    tabSubtitle: 'Газосиликатная технология',
-    details: [
-      { category: 'Фундамент', items: ['Монолитный железобетонный ленточный', 'Армирование каркасами Ø12 мм', 'Устройство крылец и террас по проекту'] },
-      { category: 'Стены и перегородки', items: ['Газосиликатные блоки 400мм + утепление 50мм', 'Внутренняя отделка: гипсовая/цементная штукатурка', 'Перегородки из блоков 100/200мм и кирпича'] },
-      { category: 'Пол и потолок', items: ['Утепленный экструдированным пенополистиролом пол + чистовая стяжка 70мм', 'Высота потолков 2.7 м, утепление 150мм', 'Двойная обшивка потолка гипсокартоном'] },
-      { category: 'Кровля и проемы', items: ['Металлочерепица "Монтеррей Norman" с водосточной системой', 'Двухкамерные стеклопакеты (пятикамерный профиль)', 'Подшивка свесов софитом'] },
-      { category: 'Инженерия', items: ['Полный комплект электрики и сантехники', 'Вентиляционная шахта из клинкерного кирпича', 'Разводка всех сетей по дому'] }
-    ]
-  }
-};
-
-
-const constructionSteps = [
-  { name: 'Фундамент и плита', description: 'Возводим надежный ленточный или плитный фундамент, готовим основание для вашего каменного дома.', icon: FaRulerCombined, image: '/assets/service/monolit.webp' },
-  { name: 'Возведение стен', description: 'Производим кладку газосиликатных блоков на специальный клей, с обязательным армированием каждого ряда.', icon: FaLayerGroup, image: '/assets/service/gasoblock.webp' },
-  { name: 'Перекрытия и кровля', description: 'Монтируем межэтажные перекрытия и возводим стропильную систему под выбранный тип кровли.', icon: GiStairs, image: '/assets/service/roof.webp' },
-  { name: 'Фасад и отделка', description: 'Утепляем и отделываем фасад (штукатурка, кирпич, планкен), подготавливая дом к чистовым работам.', icon: FaHome, image: '/assets/service/exterdesign.webp' },
-];
-
-const gasSilicateBenefitsData = [
-  { title: 'Долговечность', text: 'Каменные дома служат до 100–150 лет, не требуя сложного ухода.', icon: <FaShieldAlt size={24}/> },
-  { title: 'Тишина и комфорт', text: 'Газосиликат отлично сохраняет тепло и защищает от уличного шума.', icon: <FaVolumeDown size={24}/> },
-  { title: 'Пожаробезопасность', text: 'Материал не горит и не поддерживает горение, обеспечивая высший класс безопасности.', icon: <FaFire size={24}/> },
-  { title: 'Идеальные стены', text: 'Ровная поверхность блоков упрощает и удешевляет внутреннюю отделку.', icon: <FaTools size={24}/> },
-];
-
-const ourBenefits = [
-  { name: 'Гарантия 5 лет', description: 'Мы уверены в качестве наших домов и даем официальную гарантию на все конструктивные элементы.', icon: ShieldCheckIcon },
-  { name: 'Строим от 3 месяцев', description: 'Благодаря отлаженной технологии, вы сможете отпраздновать новоселье уже в следующем сезоне.', icon: ClockIcon },
-  { name: 'Фиксированная цена', description: 'Стоимость, указанная в договоре, остается неизменной до конца строительства. Никаких скрытых платежей.', icon: DocumentTextIcon },
-];
+import { allPackages } from '../data/packagesData'; 
+import { gasSilicateBenefits, gasSilicateSteps } from '../data/servicesData';
+import { generalBenefits } from '../data/siteData';
+import OurBenefits from '../components/OurBenefits';
+import ProcessSteps from '../components/ProcessSteps';
 
 const breadcrumbSchema = {
   '@context': 'https://schema.org',
@@ -84,6 +26,7 @@ const breadcrumbSchema = {
 const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
+  '@id': 'https://marmolhouse.by/services/gas-silicate-houses#service',
   'serviceType': 'Строительство домов из газосиликатных блоков под ключ',
   'provider': {
     '@type': 'LocalBusiness',
@@ -112,6 +55,10 @@ const offerCatalogSchema = {
   '@context': 'https://schema.org',
   '@type': 'OfferCatalog',
   'name': 'Комплектации домов из газосиликатных блоков',
+  'itemOffered': {
+    '@type': 'Service',
+    '@id': 'https://marmolhouse.by/services/gas-silicate-houses#service'
+  },
   'itemListElement': Object.entries(allPackages).map(([name, data], index) => ({
     '@type': 'Offer',
     'itemOffered': {
@@ -132,7 +79,7 @@ const howToSchema = {
     '@type': 'HowTo',
     'name': 'Как мы строим дом из газосиликатных блоков',
     'description': 'Пошаговый процесс строительства вашего будущего каменного дома от фундамента до отделки фасада.',
-    'step': constructionSteps.map((step, index) => ({
+    'step': gasSilicateSteps.map((step, index) => ({
         '@type': 'HowToStep',
         'name': step.name,
         'text': step.description,
@@ -161,9 +108,8 @@ const GasSilicateHousesService = ({ onOrderClick }) => {
 
   return (
     <>
-        <title>Строительство домов из газосиликатных блоков под ключ | Marmol House</title>
+        <title>Дома из газосиликатных блоков под ключ в Гродно и Беларуси | Marmol House</title>
         <meta name="description" content="Строим надежные и теплые дома из газосиликатных блоков под ключ в Гродно и по всей Беларуси. Официальная гарантия 5 лет, фиксированная цена в договоре." />
-        <meta name="keywords" content="дом из газосиликатных блоков, строительство из газосиликата, построить дом гродно, цена дома из блоков, marmol house" />
         <link rel="canonical" href="https://marmolhouse.by/services/gas-silicate-houses" />
         <meta property="og:title" content="Дома из газосиликатных блоков под ключ | Marmol House" />
         <meta property="og:description" content="Надежные каменные дома для комфортной жизни. Строим под ключ с соблюдением всех технологий." />
@@ -191,47 +137,23 @@ const GasSilicateHousesService = ({ onOrderClick }) => {
         <TechnologyBenefits
             title="Преимущества домов из газосиликатных блоков"
             imageSrc={BlockHouseImage}
-            benefits={gasSilicateBenefitsData}
+            benefits={gasSilicateBenefits}
             imageAlt="Чертеж современного дома из газосиликатных блоков"
             bgColor="bg-white"
         />
-
+      <div className="bg-gray-50 py-20">
         <div className="max-w-6xl mx-auto px-4">
-          <section className="py-20">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
-              {ourBenefits.map((benefit, index) => (
-                <div key={benefit.name} className="flex flex-col items-center" data-aos="fade-up" data-aos-delay={index * 100}>
-                  <benefit.icon className="w-12 h-12 text-[#f9c615] mb-4" />
-                  <h3 className="text-xl font-semibold text-[#17253c]">{benefit.name}</h3>
-                  <p className="mt-2 text-gray-600">{benefit.description}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section className="py-20 -mx-4 px-4 sm:-mx-2 md:-mx-8">
-             <div className="max-w-6xl mx-auto">
-               <h2 className="text-3xl font-bold text-center text-[#17253c] mb-12" data-aos="fade-up">Этапы строительства вашего каменного дома</h2>
-               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                  {constructionSteps.map((step, index) => (
-                    <div key={step.name} className="bg-white rounded-xl shadow-lg overflow-hidden group transition-transform duration-300 hover:-translate-y-2" data-aos="zoom-in" data-aos-delay={index * 100}>
-                      <div className="overflow-hidden h-48"><img src={step.image} alt={step.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
-                      <div className="p-6">
-                        <div className="flex items-center mb-3"><step.icon className="w-6 h-6 text-[#17253c] mr-3"/><h3 className="text-lg font-semibold text-[#17253c]">{step.name}</h3></div>
-                        <p className="text-gray-600 text-sm">{step.description}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-             </div>
-          </section>
-
+          <OurBenefits benefits={generalBenefits} />
+          <ProcessSteps
+            title="Этапы строительства вашего каменного дома"
+            steps={gasSilicateSteps}
+          />
+      </div>
           <section className="py-20">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl font-bold text-center text-[#17253c] mb-4" data-aos="fade-up">Что входит в стоимость?</h2>
             <p className="text-center text-gray-600 mb-8" data-aos="fade-up" data-aos-delay="100">Мы предлагаем как готовые комплектации "под ключ", так и базовые решения, которые можно адаптировать под ваш бюджет.</p>
             
-
             <CustomPackageBlock onOrderClick={handleOrder} />
 
             <h3 className="text-2xl font-semibold text-center text-[#17253c] mt-16 mb-8" data-aos="fade-up">
@@ -292,9 +214,7 @@ const GasSilicateHousesService = ({ onOrderClick }) => {
               </AnimatePresence>
             </div>
           </section>
-
         </div>
-        <Footer />
     </>
   );
 };

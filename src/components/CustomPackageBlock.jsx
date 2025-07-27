@@ -2,15 +2,7 @@
 
 import { BsFillBoxSeamFill } from 'react-icons/bs';
 import { CheckCircleIcon } from '@heroicons/react/24/outline';
-
-const features = [
-  'Монолитный ленточный фундамент',
-  'Стены из газосиликатных блоков',
-  'Перегородки из газоблоков и кирпича',
-  'Потолок высотой 2.7 м',
-  'Крыша из металлочерепицы',
-  'Материал, работа и работа техники включены',
-];
+import { features } from '../data/siteData'; 
 
 const CustomPackageBlock = ({ onOrderClick }) => {
   const handleOrder = () => {

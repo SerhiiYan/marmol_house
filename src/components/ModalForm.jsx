@@ -32,7 +32,6 @@ export default function ModalForm({ show, onClose, defaultComment = '' }) {
       return;
     }
     
-    // Ручная проверка (остается как дополнительный слой защиты)
     if (!formData.name.trim() || !formData.phone || formData.phone.length < 9 || !isPolicyAccepted) {
         setError('Пожалуйста, заполните все обязательные поля.');
         return;
@@ -111,7 +110,7 @@ export default function ModalForm({ show, onClose, defaultComment = '' }) {
                   autoComplete="name" value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full border px-4 py-2 rounded focus:ring-2 focus:ring-[#f9c615] focus:border-[#f9c615]"
-                  required // <-- ВОЗВРАЩАЕМ НАЗАД
+                  required 
                 />
               </div>
 
@@ -122,7 +121,7 @@ export default function ModalForm({ show, onClose, defaultComment = '' }) {
                   value={formData.phone} onAccept={(unmaskedValue) => setFormData({ ...formData, phone: unmaskedValue })}
                   placeholder="+375 (29) 123-45-67" name="phone" autoComplete="tel"
                   className="w-full border px-4 py-2 rounded focus:ring-2 focus:ring-[#f9c615] focus:border-[#f9c615]"
-                  required // <-- ВОЗВРАЩАЕМ НАЗАД
+                  required 
                 />
               </div>
               
@@ -142,7 +141,7 @@ export default function ModalForm({ show, onClose, defaultComment = '' }) {
                   id="acceptPolicy" type="checkbox" checked={isPolicyAccepted}
                   onChange={(e) => setIsPolicyAccepted(e.target.checked)}
                   className="mt-1 h-4 w-4 rounded border-gray-300 text-[#f9c615] focus:ring-[#f9c615]"
-                  required // <-- ВОЗВРАЩАЕМ НАЗАД
+                  required 
                 />
                 <label htmlFor="acceptPolicy" className="ml-2 text-sm text-gray-600">
                   Я согласен на обработку персональных данных и принимаю условия <Link to="/privacy" target='_blank' className="text-[#f9c615] underline hover:text-[#e5b512]">политики конфиденциальности</Link>.
