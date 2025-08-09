@@ -1,4 +1,4 @@
-// prerender.js (Улучшенная версия)
+// prerender.js
 
 import handler from 'serve-handler';
 import http from 'http';
@@ -6,9 +6,10 @@ import puppeteer from 'puppeteer';
 import fs from 'fs-extra';
 import path from 'path';
 
-// УЛУЧШЕНИЕ 1: Автоматически собираем все роуты
-import projects from './src/data/projects.js'; // Убедитесь, что путь к вашим проектам правильный
-import { slugify } from './src/utils/slugify.js'; // Импортируем вашу же функцию slugify
+// Импортируем все наши данные
+import projects from './src/data/projects.js';
+import { blogPosts } from './src/data/blogData.js';
+import { slugify } from './src/utils/slugify.js';
 
 // Статические страницы, которые есть всегда
 const staticRoutes = [
@@ -19,16 +20,20 @@ const staticRoutes = [
   '/completed',
   '/services/frame-houses',
   '/services/gas-silicate-houses',
-  '/services/landscape-design',
   '/services/design',
+  '/blog', // Главная страница блога
   '/privacy'
+  // Страница /lumo удалена из этого списка
 ];
 
 // Динамически создаем роуты для каждого проекта
 const projectRoutes = projects.map(p => `/projects/${slugify(p.title)}`);
 
-// Финальный массив всех роутов для пререндеринга
-const allRoutes = [...staticRoutes, ...projectRoutes];
+// Динамически создаем роуты для каждой статьи блога
+const blogPostRoutes = blogPosts.map(p => `/blog/${p.slug}`);
+
+// Финальный массив теперь включает ВСЕ роуты
+const allRoutes = [...staticRoutes, ...projectRoutes, ...blogPostRoutes];
 
 const distPath = 'dist';
 const PORT = 3000;
@@ -50,16 +55,13 @@ const startServer = () => {
   });
 };
 
+// Функция prerender остается без изменений
 const prerender = async () => {
   const server = await startServer();
   const browser = await puppeteer.launch({ headless: true });
 
   console.log(`Начинаем пререндеринг ${allRoutes.length} страниц...`);
-
-  // УЛУЧШЕНИЕ 2: Распараллеливаем обработку страниц
-  const CONCURRENT_PAGES = 4; // Количество одновременно обрабатываемых страниц. Подберите под мощность вашего ПК.
   
-  // Создаем "пул" обещаний (promises)
   const promises = allRoutes.map(async (route) => {
     const page = await browser.newPage();
     const url = `http://localhost:${PORT}${route}`;
@@ -80,11 +82,10 @@ const prerender = async () => {
     } catch (err) {
       console.error(`  ! Ошибка при обработке ${url}:`, err.message);
     } finally {
-      await page.close(); // Важно закрыть каждую страницу после использования
+      await page.close();
     }
   });
 
-  // Запускаем все обещания на выполнение
   await Promise.all(promises);
 
   console.log('Пререндеринг успешно завершен.');
@@ -92,11 +93,11 @@ const prerender = async () => {
   
   server.close(() => {
     console.log('Сервер остановлен.');
-    process.exit(0); // Успешное завершение процесса
+    process.exit(0);
   });
 };
 
 prerender().catch(err => {
   console.error("КРИТИЧЕСКАЯ ОШИБКА В ПРОЦЕССЕ ПРЕРЕНДЕРИНГА:", err);
-  process.exit(1); // Завершение процесса с ошибкой
+  process.exit(1);
 });

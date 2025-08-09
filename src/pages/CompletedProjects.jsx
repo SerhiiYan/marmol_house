@@ -7,34 +7,25 @@ import { BsImages } from 'react-icons/bs';
 import completedProjects from '../data/completedProjects';
 import CompletedProjectModal from '../components/CompletedProjectModal';
 
-
-const getProjectDetails = (description) => ({
-  location: description.find(d => !d.toLowerCase().includes('площадь') && !d.toLowerCase().includes('завершено')),
-  area: description.find(d => d.toLowerCase().includes('площадь'))
-});
-
 const itemListSchema = {
-  
     "@context": "https://schema.org",
     "@type": "ItemList",
     "name": "Портфолио выполненных работ Marmol House",
     "description": "Галерея завершенных проектов по строительству домов в Беларуси.",
     "numberOfItems": completedProjects.length,
     "itemListElement": completedProjects.map((project, index) => {
-        const { location, area } = getProjectDetails(project.description);
-        const areaValue = area ? parseFloat(area.replace(/[^0-9.]/g, '')) : null;
-
+        const areaValue = project.params.area ? parseFloat(project.params.area.replace(/[^0-9.]/g, '')) : null;
         return {
             "@type": "ListItem",
             "position": index + 1,
             "item": {
                 "@type": ["House", "Product"], 
                 "name": project.title,
-                "description": project.description.join('. '),
+                "description": project.shortStory || project.title,
                 "image": `https://marmolhouse.by${project.images[0]}`,
                 "address": {
                     "@type": "PostalAddress",
-                    "addressRegion": location || 'Гродненская область', 
+                    "addressRegion": project.params.location || 'Гродненская область', 
                     "addressCountry": "BY"
                 },
                 "offers": {
@@ -44,11 +35,7 @@ const itemListSchema = {
                     "availability": "https://schema.org/InStock"
                 },
                 ...(areaValue && {
-                    "floorSize": {
-                        "@type": "QuantitativeValue",
-                        "value": areaValue,
-                        "unitCode": "MTK" 
-                    }
+                    "floorSize": { "@type": "QuantitativeValue", "value": areaValue, "unitCode": "MTK" }
                 })
             }
         }
@@ -72,12 +59,8 @@ const cardVariants = {
   }),
 };
 
-const CompletedProjects = () => {
+const CompletedProjects = ({ onOrderClick }) => {
   const [selectedProject, setSelectedProject] = useState(null);
-  const getProjectDetails = (description) => ({
-    location: description.find(d => !d.toLowerCase().includes('площадь') && !d.toLowerCase().includes('завершено')),
-    area: description.find(d => d.toLowerCase().includes('площадь'))
-  });
   
   return (
     <>
@@ -90,7 +73,7 @@ const CompletedProjects = () => {
       <meta property="og:image" content="https://marmolhouse.by/og-image.png" />
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: breadcrumbSchema }} />
 
       <main className="max-w-7xl mx-auto px-4 pt-28 pb-16">
         <div className="text-center mb-12">
@@ -103,9 +86,7 @@ const CompletedProjects = () => {
         </div>
 
         <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {completedProjects.map((project, index) => {
-            const { location, area } = getProjectDetails(project.description);
-            return (
+          {completedProjects.map((project, index) => (
               <motion.article
                 key={project.id}
                 custom={index}
@@ -118,35 +99,36 @@ const CompletedProjects = () => {
                 <div className="relative overflow-hidden">
                   <motion.img
                     src={project.images[0]} loading="lazy"
-                    alt={`Готовый дом: ${project.title} в ${location}`}
+                    alt={`Готовый дом: ${project.title} в ${project.params.location}`}
                     className="w-full h-64 object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="flex items-center gap-2 bg-white/90 text-[#17253c] px-4 py-2 rounded-lg font-semibold">
-                      <BsImages /> Смотреть фото
+                      <BsImages /> Смотреть детали
                     </div>
                   </div>
                 </div>
                 <div className="p-5 flex-grow flex flex-col">
                   <h3 className="text-xl font-bold text-[#17253c] mb-3">{project.title}</h3>
                   <div className="flex-grow space-y-2 text-gray-600 text-sm mb-4">
-                    {location && <p className="flex items-center gap-2"><FaMapMarkerAlt className="text-yellow-500" /> {location}</p>}
-                    {area && <p className="flex items-center gap-2"><FaRulerCombined className="text-yellow-500" /> {area}</p>}
+                    <p className="flex items-center gap-2"><FaMapMarkerAlt className="text-yellow-500" /> {project.params.location}</p>
+                    <p className="flex items-center gap-2"><FaRulerCombined className="text-yellow-500" /> {project.params.area}</p>
                   </div>
                   <p className="text-xl font-semibold text-rose-600 mt-2">
                     {project.price}
                   </p>
                 </div>
               </motion.article>
-            );
-          })}
+          ))}
         </motion.div>
       </main>
+      
       {selectedProject && (
         <CompletedProjectModal
           project={selectedProject}
           onClose={() => setSelectedProject(null)}
+          onOrderClick={onOrderClick}
         />
       )}
     </>

@@ -51,14 +51,14 @@ const aboutPageSchema = {
 };
 
 
-const breadcrumbSchema = JSON.stringify({
+const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://marmolhouse.by/" },
     { "@type": "ListItem", "position": 2, "name": "О нас", "item": "https://marmolhouse.by/about" }
   ]
-});
+};
 
 
 const fadeInUp = {

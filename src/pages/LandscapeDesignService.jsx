@@ -136,9 +136,6 @@ const LandscapeDesignService = ({ onOrderClick }) => {
               </div>
           </section>
 
-             {/* =================================================== */}
-            {/*           НОВЫЙ БЛОК С ПАКЕТАМИ И ЦЕНАМИ            */}
-            {/* =================================================== */}
             <section className="py-20 bg-white">
                 <div className="max-w-6xl mx-auto px-4">
                     <div className="text-center mb-12">

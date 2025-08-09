@@ -1,6 +1,6 @@
 // src/data/siteData.js
 import { ShieldCheckIcon, ClockIcon, DocumentTextIcon, UserGroupIcon, CameraIcon } from '@heroicons/react/24/outline';
-import { FaHandshake, FaTools, FaHome, FaPhone, FaEnvelope, FaMapMarkerAlt, FaInfoCircle, FaBroadcastTower, FaSpa, FaRoad, FaRulerCombined, FaSeedling, FaStar } from 'react-icons/fa';
+import { FaHandshake, FaTools, FaHome, FaPhone, FaEnvelope, FaMapMarkerAlt, FaInfoCircle, FaBroadcastTower, FaSpa, FaRoad, FaRulerCombined, FaSeedling, FaStar, FaBed, FaCouch, FaHotTub } from 'react-icons/fa';
 
 import { 
   PencilSquareIcon, 
@@ -169,7 +169,7 @@ export const navItems = [
       submenu: [
         { name: 'Строительство каркасных домов', path: '/services/frame-houses' },
         { name: 'Дома из газосиликатных блоков', path: '/services/gas-silicate-houses' },
-        { name: 'Ландшафтный дизайн участка', path: '/services/landscape-design' },
+        // { name: 'Ландшафтный дизайн участка', path: '/services/landscape-design' },
         { name: 'Проектирование', path: '/services/design' },
       ]
     },
@@ -251,3 +251,37 @@ export const servicePackagesLandscape = [
     { name: "Под ключ", icon: FaStar, price: "от 15 000 BYN", description: "Полное преображение вашего участка.", features: ["Все из 'Базового'", "Система автополива", "Ландшафтное освещение", "Посадка всех растений"] }
 ];
 
+export const LumoTechSpecs = [
+    {
+        title: "Конструктив здания",
+        content: `<ul>
+            <li><strong>Каркас:</strong> Балки из фанеры ФСФ (150x54мм), фрезерованные на ЧПУ и соединенные стальными коннекторами.</li>
+            <li><strong>Остекление:</strong> Панорамное 360°, однокамерные закалённые стеклопакеты с энергосберегающим стеклом и УФ-напылением.</li>
+            <li><strong>Утепление:</strong> Пол утеплен панелями ППУ 150мм. Конструкция рассчитана на эксплуатацию до -40°C.</li>
+        </ul>`
+    },
+    {
+        title: "Инженерные системы",
+        content: `<ul>
+            <li><strong>Электрика:</strong> Скрытая проводка (кабель ВВГнг-LS ГОСТ), электроустановочные изделия Schneider Electric, щит на базе оборудования ABB.</li>
+            <li><strong>Освещение:</strong> Диммируемые светодиодные светильники (Arlight) для интерьера и всепогодный неон (Arlight IP68) для уличной подсветки.</li>
+            <li><strong>Отопление и вентиляция:</strong> Эффективная приточно-вытяжная система с подогревом воздуха, внутрипольные жидкостные радиаторы и теплый пол в санузle.</li>
+            <li><strong>Сантехника:</strong> Внутренняя разводка водопровода и канализации с высокой степенью предсборки.</li>
+        </ul>`
+    },
+    {
+        title: "Монтаж и логистика",
+        content: `<ul>
+            <li><strong>Сборка:</strong> Не требует крупной техники. Все элементы могут быть доставлены на участок вручную, сохраняя природу нетронутой.</li>
+            <li><strong>Сроки:</strong> Монтаж на готовый фундамент занимает всего 10 рабочих дней.</li>
+            <li><strong>Команда:</strong> 4 монтажника + 4 специалиста для установки стеклопакетов.</li>
+            <li><strong>Вес конструкции:</strong> Около 8 тонн.</li>
+        </ul>`
+    }
+];
+
+export const LumoModules = [
+    { icon: FaCouch, title: "Lumo Гостиная", description: "Пространство для отдыха с печью-камином, раскладным диваном, мини-кухней и барной зоной." },
+    { icon: FaBed, title: "Lumo Номер", description: "Полностью готовый гостиничный модуль для двоих с уникальной мебелью, кроватью и эффектным санузлом." },
+    { icon: FaHotTub, title: "Lumo Баня/СПА", description: "Ваш личный оазис с инфракрасной сауной, душевой зоной и даже возможностью установки мини-бассейна." }
+];

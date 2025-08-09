@@ -58,7 +58,7 @@ function App() {
             
             <Route path="/" element={<Home onOrderClick={handleOpenModal} />} />
             <Route path="/gallery" element={<Gallery onOrderClick={handleOpenModal} />} />
-            <Route path="/completed" element={<CompletedProjects />} />
+            <Route path="/completed" element={<CompletedProjects onOrderClick={handleOpenModal} />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<About />} />
             <Route path="/privacy" element={<Privacy />} />
@@ -66,8 +66,7 @@ function App() {
             <Route path="/services/frame-houses" element={<FrameHousesService onOrderClick={handleOpenModal} />} />
             <Route path="/services/gas-silicate-houses" element={<GasSilicateHousesService onOrderClick={handleOpenModal} />} />
             <Route path="/services/design" element={<DesignService onOrderClick={handleOpenModal} />} />
-            <Route path="/services/landscape-design" element={<LandscapeDesignService onOrderClick={handleOpenModal} />} />
-
+            
             <Route path="/blog/:slug" element={<BlogPostPage />} />
             <Route path="/blog" element={<BlogListingPage />} />
             <Route path="/projects/:slug" element={<ProjectDetail onOrderClick={handleOpenModal} />} /> 
