@@ -121,6 +121,7 @@ const ProjectDetail = ({ onOrderClick }) => {
         "url": pageUrl,
         "priceCurrency": "BYN",
         "price": project.price.replace(/[^0-9.]/g, ''),
+        "priceValidUntil": `${new Date().getFullYear()}-12-31`,
         "availability": "https://schema.org/InStock",
         "seller": { "@type": "Organization", "name": COMPANY_NAME }
       }

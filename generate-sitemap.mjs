@@ -22,15 +22,14 @@ function slugify(text) {
     .replace(/-+/g, '-');
 }
 
-
 const staticPages = [
-  // Ваш список статических страниц
   { loc: '', priority: '1.0', lastmod: '2025-07-20', changefreq: 'monthly' },
   { loc: '/gallery', priority: '0.9', lastmod: '2025-07-20', changefreq: 'weekly' },
   { loc: '/completed', priority: '0.8', lastmod: '2025-07-20', changefreq: 'monthly' },
   
   { loc: '/services/frame-houses', priority: '0.9', lastmod: '2025-07-10', changefreq: 'monthly' },
   { loc: '/services/gas-silicate-houses', priority: '0.9', lastmod: '2025-07-10', changefreq: 'monthly' },
+  { loc: '/services/business', priority: '0.9', lastmod: '2025-07-10', changefreq: 'monthly' },
   { loc: '/services/design', priority: '0.9', lastmod: '2025-07-10', changefreq: 'monthly' },
   
   { loc: '/blog', priority: '0.8', lastmod: '2025-07-20', changefreq: 'weekly' },

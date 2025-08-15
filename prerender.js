@@ -20,10 +20,10 @@ const staticRoutes = [
   '/completed',
   '/services/frame-houses',
   '/services/gas-silicate-houses',
+  '/services/business',
   '/services/design',
-  '/blog', // Главная страница блога
+  '/blog',
   '/privacy'
-  // Страница /lumo удалена из этого списка
 ];
 
 // Динамически создаем роуты для каждого проекта

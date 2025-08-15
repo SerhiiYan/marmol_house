@@ -25,6 +25,7 @@ import Footer from './components/Footer';
 import BlogListingPage from './pages/BlogListingPage.jsx'
 import BlogPostPage from './pages/BlogPostPage.jsx';
 import LandscapeDesignService from './pages/LandscapeDesignService.jsx';
+import BusinessPage from './pages/BusinessPage.jsx';
 
 
 function App() {
@@ -66,6 +67,7 @@ function App() {
             <Route path="/services/frame-houses" element={<FrameHousesService onOrderClick={handleOpenModal} />} />
             <Route path="/services/gas-silicate-houses" element={<GasSilicateHousesService onOrderClick={handleOpenModal} />} />
             <Route path="/services/design" element={<DesignService onOrderClick={handleOpenModal} />} />
+            <Route path='/services/business' element={<BusinessPage />} />
             
             <Route path="/blog/:slug" element={<BlogPostPage />} />
             <Route path="/blog" element={<BlogListingPage />} />
