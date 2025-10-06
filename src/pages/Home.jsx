@@ -125,7 +125,7 @@ function Home({ onOrderClick }) {
               onClick={() => onOrderClick()}
               className="bg-[#f9c615] text-[#17253c] font-semibold py-3 px-8 rounded-lg shadow-lg text-lg transition-all duration-300 ease-in-out hover:bg-[#e5b512] hover:shadow-xl hover:-translate-y-1 active:scale-95"
             >
-              Заказать консультацию
+              Получить консультацию
             </button>
             <div
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-xs sm:max-w-2xl lg:max-w-5xl text-white mt-10 sm:mt-16"

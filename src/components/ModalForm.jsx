@@ -3,14 +3,15 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { IMaskInput } from 'react-imask';
+import { FaLock } from 'react-icons/fa'; // 1. Импортируем иконку замка
 
 export default function ModalForm({ show, onClose, defaultComment = '' }) {
+  // ... (весь ваш код с useState и handleSubmit остается без изменений) ...
   const [formData, setFormData] = useState({ name: '', phone: '', comment: '' });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null);
   const [honeypot, setHoneypot] = useState('');
-
   const [isPolicyAccepted, setIsPolicyAccepted] = useState(true);
 
   useEffect(() => {
@@ -25,41 +26,38 @@ export default function ModalForm({ show, onClose, defaultComment = '' }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('--- Начинается отправка формы ---');
-
     if (honeypot) {
       onClose(); 
       return;
     }
-    
     if (!formData.name.trim() || !formData.phone || formData.phone.length < 9 || !isPolicyAccepted) {
         setError('Пожалуйста, заполните все обязательные поля.');
         return;
     }
-
     setLoading(true);
     setError(null);
-
     const requestBody = {
         name: formData.name,
         phone: `+375${formData.phone}`,
         message: formData.comment || 'Клиент запросил консультацию',
         honeypot: honeypot,
     };
-
     try {
         const response = await fetch('https://marmolhouse.by/api/form_handler.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(requestBody),
         });
-        
         const result = await response.json();
-        
         if (!response.ok) throw new Error(result.message || `Ошибка сервера: ${response.status}`);
-        if (result.success) setSuccess(true);
-        else throw new Error(result.message || 'Произошла ошибка.');
-        
+        if (result.success) {
+            setSuccess(true);
+            if (window.ym) {
+                window.ym(104396711, 'reachGoal', 'form_submit');
+            }
+        } else {
+             throw new Error(result.message || 'Произошла ошибка.');
+        }
     } catch (err) {
         console.error('Ошибка при отправке формы:', err);
         setError(err.message);
@@ -75,7 +73,8 @@ export default function ModalForm({ show, onClose, defaultComment = '' }) {
       <div className="bg-white rounded-xl shadow-2xl p-6 sm:p-8 w-full max-w-md relative" onClick={(e) => e.stopPropagation()}>
         
         {success ? (
-          <div className="text-center py-10">
+          // ... (ваш код для успешной отправки остается без изменений) ...
+           <div className="text-center py-10">
             <h2 className="text-2xl font-bold text-green-600 mb-2">Спасибо!</h2>
             <p className="text-gray-700">Ваша заявка успешно отправлена. Мы свяжемся с вами в ближайшее время.</p>
             <button onClick={onClose} className="mt-6 bg-[#f9c615] text-[#17253c] font-semibold py-2 px-6 rounded hover:bg-[#e5b512] transition-colors">
@@ -92,6 +91,7 @@ export default function ModalForm({ show, onClose, defaultComment = '' }) {
             <p className="text-gray-600 mb-6">Мы перезвоним вам, чтобы ответить на все вопросы.</p>
 
             <form onSubmit={handleSubmit} className="space-y-4" aria-labelledby="form-title">
+              {/* ... (поле honeypot без изменений) ... */}
               <div className="absolute left-[-5000px]" aria-hidden="true">
                 <input 
                   type="text" 
@@ -123,19 +123,24 @@ export default function ModalForm({ show, onClose, defaultComment = '' }) {
                   className="w-full border px-4 py-2 rounded focus:ring-2 focus:ring-[#f9c615] focus:border-[#f9c615]"
                   required 
                 />
+                {/* 2. Наш новый блок с текстом под полем телефона */}
+                <p className="text-xs text-gray-500 mt-1.5 flex items-center">
+                  <FaLock className="inline mr-1.5 text-gray-400"/>
+                  <span>Ваш номер нужен только для консультации по проекту.</span>
+                </p>
               </div>
               
               <div>
                 <label htmlFor="form-comment" className="sr-only">Комментарий</label>
                 <textarea
-                  id="form-comment" name="comment" placeholder="Комментарий (необязательно)"
+                  id="form-comment" name="comment" placeholder='Что вас интересует? Например: "проект Z72"'
                   value={formData.comment}
                   onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
                   className="w-full border px-4 py-2 rounded focus:ring-2 focus:ring-[#f9c615] focus:border-[#f9c615]"
                   rows="3"
                 />
               </div>
-
+              {/* ... (чекбокс с политикой без изменений) ... */}
               <div className="flex items-start">
                 <input
                   id="acceptPolicy" type="checkbox" checked={isPolicyAccepted}
@@ -153,6 +158,9 @@ export default function ModalForm({ show, onClose, defaultComment = '' }) {
               <button type="submit" disabled={loading} className="w-full bg-[#f9c615] text-[#17253c] font-bold py-3 px-4 rounded-lg hover:bg-[#e5b512] disabled:opacity-50 disabled:cursor-not-allowed transition-all">
                 {loading ? 'Отправка...' : 'Получить консультацию'}
               </button>
+              
+              {/* 3. Финальное заверение под кнопкой */}
+              <p className="text-xs text-gray-500 text-center">Это ни к чему не обязывает и не является покупкой.</p>
             </form>
           </>
         )}
