@@ -55,20 +55,30 @@ const startServer = () => {
   });
 };
 
-// Функция prerender остается без изменений
+// =================================================================
+//      ИСПРАВЛЕННАЯ ФУНКЦИЯ ПРЕРЕНДЕРИНГА (ПОСЛЕДОВАТЕЛЬНАЯ)
+// =================================================================
 const prerender = async () => {
   const server = await startServer();
   const browser = await puppeteer.launch({ headless: true });
+  // Создаем ОДНУ вкладку, которую будем переиспользовать. Это эффективнее.
+  const page = await browser.newPage(); 
 
   console.log(`Начинаем пререндеринг ${allRoutes.length} страниц...`);
   
-  const promises = allRoutes.map(async (route) => {
-    const page = await browser.newPage();
+  // ИСПОЛЬЗУЕМ ЦИКЛ FOR...OF ДЛЯ ПОСЛЕДОВАТЕЛЬНОЙ ОБРАБОТКИ
+  for (const route of allRoutes) {
     const url = `http://localhost:${PORT}${route}`;
     
     try {
       console.log(`- Обрабатываем: ${url}`);
-      await page.goto(url, { waitUntil: 'networkidle0' });
+      
+      // Переходим на новый URL в той же вкладке
+      await page.goto(url, { 
+        waitUntil: 'networkidle2', // Более мягкое и надежное условие
+        timeout: 60000             // Увеличенный таймаут до 60 секунд
+      });
+      
       await page.waitForSelector('#root > *', { timeout: 10000 });
       
       const content = await page.content();
@@ -80,22 +90,22 @@ const prerender = async () => {
       await fs.writeFile(filePath, content);
       console.log(`  > Сохранено: ${filePath}`);
     } catch (err) {
+      // Если одна страница упала, мы не останавливаем весь процесс
       console.error(`  ! Ошибка при обработке ${url}:`, err.message);
-    } finally {
-      await page.close();
     }
-  });
-
-  await Promise.all(promises);
+    // Вкладку не закрываем, она нам нужна для следующей итерации
+  }
 
   console.log('Пререндеринг успешно завершен.');
-  await browser.close();
   
+  // Закрываем всё в самом конце
+  await browser.close();
   server.close(() => {
     console.log('Сервер остановлен.');
     process.exit(0);
   });
 };
+
 
 prerender().catch(err => {
   console.error("КРИТИЧЕСКАЯ ОШИБКА В ПРОЦЕССЕ ПРЕРЕНДЕРИНГА:", err);
