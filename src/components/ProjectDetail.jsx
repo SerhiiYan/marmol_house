@@ -1,4 +1,4 @@
-// src/pages/ProjectDetail.jsx (Исправленная версия)
+// src/components/ProjectDetail.jsx
 
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -14,6 +14,7 @@ import ProjectQuickViewModal from './ProjectQuickViewModal';
 import ImageGalleryModal from '../components/ImageGalleryModal';
 import NotFound from './NotFound'; 
 import ProjectCard from '../components/ProjectCard';
+import { aFrameCategories } from '../data/packagesData';
 
 const VASH_DOMAIN = 'https://marmolhouse.by';
 const COMPANY_NAME = 'Marmol House';
@@ -204,7 +205,10 @@ const ProjectDetail = ({ onOrderClick }) => {
           </div>
         </div>
         
-        <ProjectEquipment packages={project.packages} />
+        <ProjectEquipment 
+          packages={project.packages} 
+          customCategories={project.type === 'A-frame' ? aFrameCategories : null}
+        />
 
         {similarProjects.length > 0 && (
           <section className="mt-20">

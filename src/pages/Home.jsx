@@ -6,7 +6,8 @@ import herovideo from '../assets/herovideo.webm';
 import HowWeWork from '../components/HowWeWork';
 import HousePackages from '../components/HousePackages';
 import WhyChooseUs from '../components/WhyChooseUs';
-import TestimonialsSlider from '../components/TestimonialsSlider'; 
+import TestimonialsSlider from '../components/TestimonialsSlider';
+import PremiumFacadeSection from '../components/PremiumFacadeSection'; 
 import { testimonials, homeBenefits, } from '../data/siteData';
 
 
@@ -144,10 +145,11 @@ function Home({ onOrderClick }) {
             </div>
           </div>
         </section>
-
         <WhyChooseUs />
         <HousePackages onOrderClick={handlePackageOrderClick} />
+        <PremiumFacadeSection />      
         <HowWeWork />
+        
         <TestimonialsSlider testimonials={testimonials} />
       </main>
     </>

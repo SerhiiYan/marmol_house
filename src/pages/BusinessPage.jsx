@@ -1,336 +1,328 @@
 // src/pages/BusinessPage.jsx
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { FaChartLine, FaMoneyBillWave, FaCameraRetro, FaChevronLeft, FaChevronRight, FaComments, FaFileSignature, FaHammer, FaKey  } from 'react-icons/fa';
+import React, { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaArrowRight, FaHammer, FaKey, FaRegClock, FaChartLine, FaGem, FaMoneyBillWave, FaCheckCircle } from 'react-icons/fa';
+import { ChevronDownIcon } from '@heroicons/react/24/solid';
 
-// 1. ИМПОРТИРУЕМ SLIDER
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import allProjects from '../data/projects';
+import BusinessProjectCard from '../components/BusinessProjectCard';
+import ModalForm from '../components/ModalForm';
 
-const workSteps = [
-    {
-        icon: FaComments,
-        title: "Консультация и бизнес-план",
-        description: "Анализируем ваш участок, подбираем проект и готовим предварительный расчет доходности, чтобы вы видели все цифры."
-    },
-    {
-        icon: FaFileSignature,
-        title: "Проект и договор",
-        description: "Разрабатываем полный комплект чертежей и заключаем договор с фиксированной стоимостью и сроками."
-    },
-    {
-        icon: FaHammer,
-        title: "Производство и монтаж",
-        description: "Изготавливаем домокомплект в цеху, пока готовится фундамент. Это сокращает монтаж на объекте до 10-14 дней."
-    },
-    {
-        icon: FaKey,
-        title: "Сдача готового бизнеса",
-        description: "Передаем вам ключи от полностью готового для заселения модуля. Вам остается только принимать гостей!"
-    }
-];
+const categories = ['Все', 'A-frame', 'Барнхаусы', "Проекты 'Гео'"];
 
-const investmentProducts = [
-    {
-        name: 'A-Frame "Scandi"',
-        images: [
-            '/assets/business/aframe/frame.webp',
-            '/assets/business/aframe/frame1.webp',
-            '/assets/business/aframe/frame3.webp',
-        ],
-        description: 'Идеальный формат для романтического отдыха пар. Уютная антресоль, панорамное окно и максимальное единение с природой.',
-        price: 'от 90 000 BYN',
-    },
-    {
-        name: 'Барнхаус "Loft"',
-        images: [
-            '/assets/business/barnhouse/barn.webp',
-            '/assets/business/barnhouse/barn1.webp',
-            '/assets/business/barnhouse/barn2.webp',
-            '/assets/business/barnhouse/barn3.webp',
-        ], 
-        description: 'Универсальное решение для семьи или компании. Просторная терраса, открытая планировка и стильный минималистичный дизайн.',
-        price: 'от 105 000 BYN',
-    },
-    {
-        name: 'Проекты "Geo"',
-        images: [
-            '/assets/business/geo/geo.webp',
-            '/assets/business/geo/geo1.webp',
-            '/assets/business/geo/geo2.webp',
-            '/assets/business/geo/geo3.webp',
-        ], 
-        description: 'Эксклюзивные архитектурные решения для тех, кто ищет нечто большее. Футуристичные формы, купола и уникальные планировки.',
-        price: 'от 110 000 BYN',
-    }
-];
-// SEO-схема для новой страницы (базовая, потом дополним)
-const serviceSchema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Строительство домов для арендного бизнеса под ключ",
-    "serviceType": "Строительство модульных домов для глэмпинга",
-    "provider": { "@type": "LocalBusiness", "name": "Marmol House" },
-    "areaServed": { "@type": "Country", "name": "Беларусь" },
-    "description": "Строим готовые A-frame и барнхаус-модули для запуска арендного бизнеса в сфере глэмпинга и загородного отдыха.",
-    "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "Модели домов для арендного бизнеса",
-        "itemListElement": investmentProducts.map(p => ({
-            "@type": "Offer",
-            "itemOffered": {
-                "@type": "Product",
-                "name": p.name,
-                "description": p.description
-            },
-            "priceSpecification": {
-                "@type": "PriceSpecification",
-                "priceCurrency": "BYN",
-                "price": p.price.replace(/[^0-9.]/g, '')
-            }
-        }))
-    }
-};
-
-const howToSchema = {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    "name": "Как запустить арендный бизнес с Marmol House",
-    "totalTime": "P90D", 
-    "step": workSteps.map((step, index) => ({
-        "@type": "HowToStep",
-        "position": index + 1,
-        "name": step.title,
-        "text": step.description
-    }))
-};
-
-const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://marmolhouse.by/" },
-        { "@type": "ListItem", "position": 2, "name": "Для инвесторов" }
-    ]
-};
-
-const PrevArrow = ({ onClick }) => (
-  <button onClick={onClick} className="absolute top-1/2 -translate-y-1/2 left-4 z-10 bg-black/40 text-white p-2 rounded-full hover:bg-black/60 transition-colors opacity-0 group-hover:opacity-100">
-    <FaChevronLeft className="w-4 h-4" />
-  </button>
-);
-const NextArrow = ({ onClick }) => (
-  <button onClick={onClick} className="absolute top-1/2 -translate-y-1/2 right-4 z-10 bg-black/40 text-white p-2 rounded-full hover:bg-black/60 transition-colors opacity-0 group-hover:opacity-100">
-    <FaChevronRight className="w-4 h-4" />
-  </button>
+const ComingSoonCard = ({ category }) => (
+  <div className="h-[550px] bg-gray-100 rounded-2xl border-2 border-dashed border-gray-300 flex flex-col items-center justify-center text-center p-8 group hover:border-yellow-400 transition-colors">
+    <div className="text-6xl mb-4 opacity-20 group-hover:opacity-40 transition-opacity">🏗️</div>
+    <h3 className="text-2xl font-bold text-gray-400 group-hover:text-gray-600">Скоро в каталоге</h3>
+    <p className="text-gray-500 mt-2">Линейка {category}</p>
+    <p className="text-sm text-gray-400 mt-4 max-w-xs">
+      Мы разрабатываем новые высокодоходные проекты.
+    </p>
+  </div>
 );
 
 const BusinessPage = () => {
-    const sectionAnimation = {
-        initial: { opacity: 0, y: 50 },
-        whileInView: { opacity: 1, y: 0 },
-        viewport: { once: true, amount: 0.2 },
-        transition: { duration: 0.8, ease: 'easeOut' }
-    };
-    const sliderSettings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        arrows: true,
-        prevArrow: <PrevArrow />,
-        nextArrow: <NextArrow />,
-        appendDots: dots => (
-            <div style={{ position: 'absolute', bottom: '15px' }}>
-                <ul style={{ margin: "0px" }}> {dots} </ul>
-            </div>
-        ),
-        customPaging: i => (
-            <div className="w-2.5 h-2.5 bg-white/50 rounded-full transition-colors"></div>
-        )
-    };
+  const [selectedCategory, setSelectedCategory] = useState('Все');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(3); 
 
-    return (
-        <>
-            <title>Дома для арендного бизнеса под ключ за 60 дней | Marmol House</title>
-            <meta name="description" content="Инвестируйте в глэмпинг! Строим стильные A-frame и барнхаус-модули для сдачи в аренду с высокой доходностью. Готовый бизнес за 2-3 месяца." />
-            <link rel="canonical" href="https://marmolhouse.by/business" />
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+  const handleOpenModal = (msg) => {
+    setModalMessage(msg);
+    setIsModalOpen(true);
+  };
 
+  const handleCategoryChange = (cat) => {
+      setSelectedCategory(cat);
+      setVisibleCount(3);
+      setIsDropdownOpen(false);
+  };
 
-           <section className="min-h-screen relative flex flex-col justify-center items-center text-center text-white overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-full z-0">
-                <img 
-                    src="/assets/service/business.webp" 
-                    alt="Современные дома A-frame и барнхаус для арендного бизнеса" 
-                    className="w-full h-full object-cover" 
-                />
-            </div>
-    <div className="absolute inset-0 bg-black/60 z-10"></div>
-                <div className="relative z-20 px-4">
-                    <motion.h1 
-                        className="text-4xl md:text-7xl font-extrabold leading-tight"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1, delay: 0.3 }}
-                    >
-                        Ваш арендный бизнес
-                        <br/>
-                        <span className="text-[#f9c615]">За 60 дней</span>
-                    </motion.h1>
+  const businessProjects = useMemo(() => {
+    const projects = allProjects.filter(p => p.isForBusiness);
+    if (selectedCategory === 'Все') return projects;
+    return projects.filter(p => p.type === selectedCategory);
+  }, [selectedCategory]);
 
-                    <motion.p 
-                        className="mt-6 text-lg md:text-2xl max-w-3xl mx-auto text-gray-200"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1, delay: 0.6 }}
-                    >
-                        Строим готовые A-frame и барнхаус-модули для глэмпинга.
-                    </motion.p>
-                </div>
+  const renderCatalog = () => {
+    const items = [];
+    const projectsToShow = businessProjects.slice(0, visibleCount);
 
-                <motion.div
-                    className="absolute bottom-10 z-20"
-                    initial={{ opacity: 0, y: 0 }}
-                    animate={{ opacity: 1, y: 10 }}
-                    transition={{
-                        delay: 1.5,
-                        duration: 1.5,
-                        repeat: Infinity,
-                        repeatType: 'reverse',
-                        ease: 'easeInOut'
-                    }}
-                >
-                    <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                    </svg>
-                </motion.div>
-            </section>
-             <motion.section 
-                className="py-20 md:py-32 bg-white text-gray-800"
-                {...sectionAnimation}
+    projectsToShow.forEach(project => {
+      items.push(
+        <BusinessProjectCard key={project.id} project={project} onOrderClick={handleOpenModal} />
+      );
+    });
+
+    if (businessProjects.length < 3) {
+        const categoryName = selectedCategory === 'Все' ? 'Новые форматы' : selectedCategory;
+        const placeholdersNeeded = 3 - businessProjects.length;
+        for (let i = 0; i < placeholdersNeeded; i++) {
+            items.push(<ComingSoonCard key={`placeholder-${i}`} category={categoryName} />);
+        }
+    }
+    return items;
+  };
+
+  const sectionAnimation = {
+      initial: { opacity: 0, y: 50 },
+      whileInView: { opacity: 1, y: 0 },
+      viewport: { once: true, amount: 0.2 },
+      transition: { duration: 0.8, ease: 'easeOut' }
+  };
+
+  return (
+    <>
+      <title>Дома для бизнеса | Инвестиционные проекты Marmol House</title>
+      <meta name="description" content="Готовые решения для арендного бизнеса: A-frame и Барнхаусы с окупаемостью от 2 лет." />
+      <link rel="canonical" href="https://marmolhouse.by/business" />
+      
+      <ModalForm show={isModalOpen} onClose={() => setIsModalOpen(false)} defaultComment={modalMessage} />
+
+      {/* --- БЛОК 1: HERO (SPLIT SCREEN) --- */}
+      <section className="min-h-[85vh] bg-[#17253c] text-white grid lg:grid-cols-2">
+        {/* Левая часть: Контент (Виден всегда) */}
+        <div className="flex flex-col justify-center px-6 lg:px-20 py-24 lg:py-0 relative z-10">
+            <motion.div 
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
             >
-                <div className="max-w-7xl mx-auto px-4">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl font-bold text-[#17253c]">
-                            Выберите формат вашего бизнеса
-                        </h2>
-                        <p className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
-                            Мы предлагаем проверенные и самые востребованные форматы, которые гарантированно привлекут гостей.
-                        </p>
+                <span className="text-yellow-400 font-bold tracking-wider uppercase text-sm mb-4 block">
+                    Marmol Business
+                </span>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+                    Инвестируйте <br />
+                    в квадратные метры, <br />
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200">
+                        которые работают
+                    </span>
+                </h1>
+                <p className="text-lg text-gray-300 max-w-md mb-10 border-l-2 border-yellow-500 pl-6">
+                    Ликвидные проекты для глэмпингов и посуточной аренды. Запуск бизнеса за 60 дней.
+                </p>
+                
+                <div className="flex flex-col sm:flex-row gap-4">
+                    <button 
+                        onClick={() => handleOpenModal('Консультация по бизнес-проектам')}
+                        className="bg-yellow-500 text-[#17253c] px-8 py-4 font-bold hover:bg-yellow-400 transition-all flex items-center justify-center group shadow-lg hover:shadow-yellow-500/20"
+                    >
+                        Получить консультацию
+                        <FaArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                    </button>
+                    <button 
+                        onClick={() => document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' })}
+                        className="border border-gray-600 text-gray-300 px-8 py-4 hover:border-white hover:text-white transition-all"
+                    >
+                        К проектам
+                    </button>
+                </div>
+            </motion.div>
+        </div>
+
+        {/* Правая часть: Визуал (СКРЫТ НА МОБИЛЬНЫХ hidden, ВИДЕН НА DESKTOP lg:block) */}
+        <div className="hidden lg:block relative h-auto overflow-hidden">
+            <motion.img 
+                src="/assets/service/business.webp" 
+                alt="A-frame дом"
+                className="absolute inset-0 w-full h-full object-cover"
+                initial={{ scale: 1.1 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 10, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#17253c] via-[#17253c]/20 to-transparent"></div>
+        </div>
+      </section>
+
+      {/* --- БЛОК 3: КАТАЛОГ --- */}
+      {/* --- БЛОК 2: КАТАЛОГ ПРОЕКТОВ --- */}
+      <section id="catalog" className="py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4">
+            
+            {/* ↓↓↓ ИСПРАВЛЕННЫЙ БЛОК ЗАГОЛОВКА ↓↓↓ */}
+            <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-12">
+                <div className="text-center md:text-left mb-6 md:mb-0 w-full md:w-auto">
+                    <h2 className="text-3xl md:text-4xl font-bold text-[#17253c]">Каталог решений</h2>
+                    <p className="text-gray-500 mt-2 text-lg">Оптимизированные планировки и дизайн</p>
+                </div>
+                
+                {/* --- БЛОК ФИЛЬТРОВ --- */}
+                <div className="relative z-30 w-full md:w-auto">
+                    {/* 1. МОБИЛЬНАЯ ВЕРСИЯ */}
+                    <div className="md:hidden relative">
+                        <button
+                            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                            className="w-full flex justify-between items-center bg-white border-2 border-gray-200 text-[#17253c] font-bold py-3 px-5 rounded-xl shadow-sm"
+                        >
+                            <span>{selectedCategory}</span>
+                            <ChevronDownIcon 
+                                className={`w-5 h-5 text-gray-500 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`}
+                            />
+                        </button>
+
+                        <AnimatePresence>
+                            {isDropdownOpen && (
+                                <motion.ul
+                                    initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
+                                    className="absolute top-full mt-2 w-full bg-white border border-gray-100 rounded-xl shadow-xl overflow-hidden"
+                                >
+                                    {categories.map(cat => (
+                                        <li key={cat} className="border-b border-gray-100 last:border-0">
+                                            <button 
+                                                onClick={() => handleCategoryChange(cat)} 
+                                                className="w-full text-left py-4 px-5 font-medium text-gray-700 active:bg-gray-50"
+                                            >
+                                                {cat}
+                                            </button>
+                                        </li>
+                                    ))}
+                                </motion.ul>
+                            )}
+                        </AnimatePresence>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-                        {investmentProducts.map(product => (
-                            <div key={product.name} className={`flex flex-col rounded-2xl shadow-2xl overflow-hidden`}>
-                                <div className="relative group slick-container-business">
-                                    <Slider {...sliderSettings}>
-                                        {product.images.map((img, index) => (
-                                            <div key={index}>
-                                                <img src={img} alt={`${product.name} - фото ${index + 1}`} className="w-full h-96 object-cover"/>
-                                            </div>
-                                        ))}
-                                    </Slider>
-                                </div>
-                                
-                                <div className="flex-grow flex flex-col p-6 bg-gray-50">
-                                    <h3 className="text-3xl font-bold text-[#17253c]">{product.name}</h3>
-                                    <p className="text-gray-600 flex-grow mb-1 mt-3">{product.description}</p>
-                                    <p className="text-3xl font-bold text-[#17253c] mt-2 mb-4">{product.price}</p>
-                                </div>
-                            </div>
+                    {/* 2. ДЕСКТОПНАЯ ВЕРСИЯ */}
+                    <div className="hidden md:flex gap-2">
+                        {categories.map(cat => (
+                            <button
+                                key={cat}
+                                onClick={() => handleCategoryChange(cat)}
+                                className={`px-6 py-3 rounded-full text-sm font-bold transition-all ${
+                                    selectedCategory === cat 
+                                    ? 'bg-[#17253c] text-white shadow-lg' 
+                                    : 'bg-white text-gray-600 hover:bg-gray-200'
+                                }`}
+                            >
+                                {cat}
+                            </button>
                         ))}
                     </div>
                 </div>
-            </motion.section>
-            <motion.section 
-                className="py-20 md:py-32 bg-gray-100 text-gray-800"
-                {...sectionAnimation}
-            >
-                <div className="max-w-7xl mx-auto px-4">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl font-bold text-[#17253c]">
-                            Почему это выгодная инвестиция в 2025 году
-                        </h2>
-                        <p className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
-                            Рынок загородного отдыха меняется. Успейте занять нишу, которая будет приносить прибыль долгие годы.
-                        </p>
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
-                        <div className="text-center">
-                            <div className="mx-auto w-16 h-16 rounded-full flex items-center justify-center text-3xl text-yellow-600 mb-4">
-                                <FaChartLine />
-                            </div>
-                            <h3 className="text-2xl font-bold text-[#17253c]">Растущий рынок</h3>
-                            <p className="mt-2 text-gray-600">
-                                Внутренний туризм в Беларуси показывает стабильный рост. По <a 
-                                    href="https://president.gov.by/ru/belarus/economics/osnovnye-otrasli/sfera-uslug/otdyh-i-turizm" 
-                                    target="_blank" 
-                                    rel="noopener noreferrer"
-                                    className="text-yellow-600 hover:underline font-semibold"
-                                >официальным данным</a>, популярность глэмпингов и уединенных домиков для отдыха увеличивается, а предложение все еще не покрывает спрос.
-                            </p>
-                        </div>
-                        <div className="text-center">
-                            <div className="mx-auto w-16 h-16 rounded-full flex items-center justify-center text-3xl text-yellow-600 mb-4">
-                                <FaMoneyBillWave />
-                            </div>
-                            <h3 className="text-2xl font-bold text-[#17253c]">Высокий средний чек</h3>
-                            <p className="mt-2 text-gray-600">
-                                Средняя стоимость аренды уникального домика — <strong>250–450 BYN за ночь</strong>, также вы можете предлагать и другие услуги за отдельную плату. Вы инвестируете в премиум-сегмент с высокой маржинальностью.
-                            </p>
-                        </div>
-                        <div className="text-center">
-                            <div className="mx-auto w-16 h-16 rounded-full flex items-center justify-center text-3xl text-yellow-600 mb-4">
-                                <FaCameraRetro />
-                            </div>
-                            <h3 className="text-2xl font-bold text-[#17253c]">Магнит для гостей</h3>
-                            <p className="mt-2 text-gray-600">
-                                Уникальный дизайн, панорамные окна и "инстаграмные" виды превращают ваш объект в достопримечательность. Гости сами будут его рекламировать, создавая вам бесплатный поток бронирований.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </motion.section>
-            <motion.section 
-                className="py-20 md:py-32 bg-gray-100 text-gray-800"
-                {...sectionAnimation}
-            >
-                <div className="max-w-7xl mx-auto px-4">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl font-bold text-[#17253c]">
-                            От идеи до первых гостей — 4 простых шага
-                        </h2>
-                        <p className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
-                            Мы сделали процесс запуска арендного бизнеса максимально прозрачным и предсказуемым.
-                        </p>
-                    </div>
+            </div>
 
-                    <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12">
-                        {workSteps.map((step, index) => (
-                            <div key={step.title} className="flex gap-6">
-                                <div className="flex-shrink-0 text-5xl text-yellow-500">
-                                    <step.icon />
-                                </div>
-                                <div>
-                                    <h3 className="text-2xl font-bold text-[#17253c]">
-                                        {step.title}
-                                    </h3>
-                                    <p className="mt-2 text-gray-600">{step.description}</p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {renderCatalog()}
+            </div>
+
+            {businessProjects.length > visibleCount && (
+                <div className="mt-12 flex justify-center">
+                    <button 
+                        onClick={() => setVisibleCount(prev => prev + 3)}
+                        className="flex items-center gap-2 px-8 py-3 bg-white border-2 border-[#17253c] text-[#17253c] font-bold rounded-full hover:bg-[#17253c] hover:text-white transition-all"
+                    >
+                        Показать еще
+                        <span className="text-xl">↓</span>
+                    </button>
                 </div>
-            </motion.section>
-        </>
-    );
+            )}
+        </div>
+      </section>
+
+      <motion.section className="py-20 bg-white" {...sectionAnimation}>
+        <div className="max-w-6xl mx-auto px-4">
+            <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
+                <div className="p-2">
+                    <div className="w-14 h-14 bg-yellow-100 rounded-2xl flex items-center justify-center mb-6 text-yellow-600 text-2xl shadow-sm">
+                        <FaMoneyBillWave />
+                    </div>
+                    <h3 className="text-xl font-bold text-[#17253c] mb-3">Быстрая окупаемость</h3>
+                    <p className="text-gray-600 leading-relaxed">
+                        Каркасная технология позволяет построить объект за 3 месяца. Вы не замораживаете деньги в долгом строительстве, а начинаете принимать гостей уже в этом сезоне.
+                    </p>
+                </div>
+
+                <div className="p-2">
+                    <div className="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mb-6 text-blue-600 text-2xl shadow-sm">
+                        <FaGem />
+                    </div>
+                    <h3 className="text-xl font-bold text-[#17253c] mb-3">Высокий средний чек</h3>
+                    <p className="text-gray-600 leading-relaxed">
+                        Стиль A-frame и панорамное остекление создают «вау-эффект». Гости готовы платить за атмосферу и фотогеничность больше, чем за обычный номер в отеле.
+                    </p>
+                </div>
+
+                <div className="p-2">
+                    <div className="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center mb-6 text-green-600 text-2xl shadow-sm">
+                        <FaChartLine />
+                    </div>
+                    <h3 className="text-xl font-bold text-[#17253c] mb-3">Ликвидный актив</h3>
+                    <p className="text-gray-600 leading-relaxed">
+                        Мы используем материалы, рассчитанные на коммерческий поток. Дом не требует ежегодного ремонта фасада — это актив, который растет в цене вместе с рынком.
+                    </p>
+                </div>
+            </div>
+        </div>
+      </motion.section>
+
+      <section className="py-24 bg-[#17253c] text-white">
+          <div className="max-w-4xl mx-auto px-4">
+              <div className="text-center mb-12">
+                  <h2 className="text-3xl font-bold mb-4">Бизнес-стандарт Marmol House</h2>
+                  <p className="text-gray-400 text-lg">
+                      Мы разработали оптимальную комплектацию для коммерческого использования. 
+                      <br className="hidden md:block"/> Это база, которая обеспечивает долговечность и комфорт гостей.
+                  </p>
+              </div>
+
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-8 md:p-12">
+                  <div className="grid md:grid-cols-2 gap-x-12 gap-y-6">
+                      <div className="flex gap-4">
+                          <FaCheckCircle className="text-yellow-500 text-xl flex-shrink-0 mt-1" />
+                          <div>
+                              <h4 className="font-bold text-lg">Зимний пакет</h4>
+                              <p className="text-sm text-gray-400 mt-1">Утепление 200мм (пол/крыша), перекрестное утепление стен. Дом работает круглый год.</p>
+                          </div>
+                      </div>
+                      <div className="flex gap-4">
+                          <FaCheckCircle className="text-yellow-500 text-xl flex-shrink-0 mt-1" />
+                          <div>
+                              <h4 className="font-bold text-lg">Панорамное остекление</h4>
+                              <p className="text-sm text-gray-400 mt-1">Энергоэффективные двухкамерные стеклопакеты.</p>
+                          </div>
+                      </div>
+                      <div className="flex gap-4">
+                          <FaCheckCircle className="text-yellow-500 text-xl flex-shrink-0 mt-1" />
+                          <div>
+                              <h4 className="font-bold text-lg">Внешний контур "под ключ"</h4>
+                              <p className="text-sm text-gray-400 mt-1">Кровля (кликфальц/металл), отделка фасада деревом с заводской покраской.</p>
+                          </div>
+                      </div>
+                      <div className="flex gap-4">
+                          <FaCheckCircle className="text-yellow-500 text-xl flex-shrink-0 mt-1" />
+                          <div>
+                              <h4 className="font-bold text-lg">Инженерия</h4>
+                              <p className="text-sm text-gray-400 mt-1">Скрытая разводка электрики, водоснабжения и канализации внутри дома.</p>
+                          </div>
+                      </div>
+                      <div className="flex gap-4">
+                          <FaCheckCircle className="text-yellow-500 text-xl flex-shrink-0 mt-1" />
+                          <div>
+                              <h4 className="font-bold text-lg">Терраса в комплекте</h4>
+                              <p className="text-sm text-gray-400 mt-1">Просторная терраса из лиственницы или импрегнированной доски.</p>
+                          </div>
+                      </div>
+                      <div className="flex gap-4">
+                          <FaCheckCircle className="text-yellow-500 text-xl flex-shrink-0 mt-1" />
+                          <div>
+                              <h4 className="font-bold text-lg">Внутренняя отделка</h4>
+                              <p className="text-sm text-gray-400 mt-1">Чистовая стяжка, отделка имитацией бруса.</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              
+              <div className="text-center mt-10">
+                  <p className="text-sm text-gray-500 mb-6">
+                      * Возможна сдача в формате "Теплый контур" (без внутренней отделки и сетей) — стоимость ниже на ~25%.
+                  </p>
+              </div>
+          </div>
+      </section>
+    </>
+  );
 };
 
 export default BusinessPage;

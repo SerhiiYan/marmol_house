@@ -1,6 +1,9 @@
 // src/pages/GasSilicateHousesService.jsx
 
 import React, { useEffect, useState } from 'react';
+import Slider from 'react-slick'; 
+import 'slick-carousel/slick/slick.css'; 
+import 'slick-carousel/slick/slick-theme.css'; 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -13,6 +16,7 @@ import { gasSilicateBenefits, gasSilicateSteps } from '../data/servicesData';
 import { generalBenefits } from '../data/siteData';
 import OurBenefits from '../components/OurBenefits';
 import ProcessSteps from '../components/ProcessSteps';
+import PremiumFacadeSection from '../components/PremiumFacadeSection';
 
 const breadcrumbSchema = {
   '@context': 'https://schema.org',
@@ -141,6 +145,7 @@ const GasSilicateHousesService = ({ onOrderClick }) => {
             imageAlt="Чертеж современного дома из газосиликатных блоков"
             bgColor="bg-white"
         />
+      <PremiumFacadeSection />
       <div className="bg-gray-50 py-20">
         <div className="max-w-6xl mx-auto px-4">
           <OurBenefits benefits={generalBenefits} />

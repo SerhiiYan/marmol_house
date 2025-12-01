@@ -3,8 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
-
-const categories = ['Все', 'Бани', 'Дачи', 'Дом до 100м²', 'Дом от 100м²', 'Гаражи', 'Барнхаусы'];
+import { filterCategories as categories } from '../data/siteData';
 
 const GalleryFilter = ({ selected, onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);

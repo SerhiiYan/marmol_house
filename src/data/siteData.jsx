@@ -158,7 +158,7 @@ export const categories = [
     },
 ];
 
-export const filterCategories = ['Все', 'Бани', 'Дачи', 'Дом до 100м²', 'Дом от 100м²', 'Гаражи', 'Барнхаусы'];
+export const filterCategories = ['Все', 'Бани', 'Дачи', 'Дом до 100м²', 'Дом от 100м²', 'A-frame', 'Барнхаусы'];
 
 export const navItems = [
   { name: 'Главная', path: '/' },
@@ -169,7 +169,7 @@ export const navItems = [
       submenu: [
         { name: 'Строительство каркасных домов', path: '/services/frame-houses' },
         { name: 'Дома из газосиликатных блоков', path: '/services/gas-silicate-houses' },
-        { name: 'Глэмпинг', path: '/services/business' },
+        { name: 'Дома для бизнеса', path: '/services/business' },
         // { name: 'Ландшафтный дизайн участка', path: '/services/landscape-design' },
         { name: 'Проектирование', path: '/services/design' },
       ]

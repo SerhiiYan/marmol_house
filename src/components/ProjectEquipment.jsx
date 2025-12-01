@@ -4,15 +4,19 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
 import { generateFaqSchema } from '../utils/seo-helpers';
-import { categories } from '../data/siteData';
+// Импортируем стандартные категории под псевдонимом defaultCategories
+import { categories as defaultCategories } from '../data/siteData'; 
 
-
+// Хук для определения мобильной версии
 const useIsMobile = (breakpoint = 768) => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < breakpoint);
+      // Проверка на наличие window для SSR (хотя у вас SPA, но для надежности)
+      if (typeof window !== 'undefined') {
+        setIsMobile(window.innerWidth < breakpoint);
+      }
     };
     
     checkScreenSize();
@@ -24,15 +28,28 @@ const useIsMobile = (breakpoint = 768) => {
   return isMobile;
 };
 
-const ProjectEquipment = ({ packages }) => {
-const [activeItem, setActiveItem] = useState(packages?.[0] || null); 
-const equipmentRef = useRef(null);
-const isEquipmentInView = useInView(equipmentRef, { once: true, margin: '-50px' });
-const isMobile = useIsMobile();
-const activeIndex = packages.findIndex(p => p === activeItem);
+// Компонент теперь принимает customCategories
+const ProjectEquipment = ({ packages, customCategories }) => {
+  // Активный пакет по умолчанию - первый в списке
+  const [activeItem, setActiveItem] = useState(packages?.[0] || null); 
+  
+  const equipmentRef = useRef(null);
+  const isEquipmentInView = useInView(equipmentRef, { once: true, margin: '-50px' });
+  const isMobile = useIsMobile();
 
-if (!packages?.length || !categories?.length) return null;
-const faqSchemaJson = generateFaqSchema(packages, categories);
+  // Если комплектаций нет, ничего не рендерим
+  if (!packages?.length) return null;
+
+  // Определяем, какие категории использовать: переданные или стандартные
+  const categoriesToUse = customCategories || defaultCategories;
+
+  if (!categoriesToUse?.length) return null;
+
+  // Находим индекс активного пакета (0, 1 или 2), чтобы взять нужный текст из массива items
+  const activeIndex = packages.findIndex(p => p === activeItem);
+
+  // Генерируем SEO-схему для FAQ
+  const faqSchemaJson = generateFaqSchema(packages, categoriesToUse);
 
   return (
     <>
@@ -51,17 +68,15 @@ const faqSchemaJson = generateFaqSchema(packages, categories);
             Варианты комплектации
           </h2>
           <p className="mt-4 text-semi text-gray-600 max-w-3xl mx-auto">
-            Мы предлагаем несколько вариантов комплектации для каждого проекта: от базового "короба" до дома "под ключ" с полной инженерной подготовкой. Выберите подходящий вариант, чтобы увидеть детальный состав работ и материалов.
+            Мы предлагаем несколько вариантов комплектации: от базового "короба" до дома "под ключ". Выберите подходящий вариант, чтобы увидеть детальный состав работ и материалов.
           </p>
         </div>
 
+        {/* --- МОБИЛЬНАЯ ВЕРСИЯ (АККОРДЕОН) --- */}
         {isMobile ? (
           <div className="space-y-3">
-            {packages.map((pkgName) => {
+            {packages.map((pkgName, index) => {
               const isOpen = activeItem === pkgName;
-              const pkgIndex = packages.findIndex(p => p === pkgName);
-              // Если вдруг индекс не нашелся, пропускаем рендер (защита)
-              if (pkgIndex === -1) return null;
               
               return (
                 <div key={pkgName} className="bg-white rounded-xl shadow-sm border overflow-hidden">
@@ -85,13 +100,14 @@ const faqSchemaJson = generateFaqSchema(packages, categories);
                       className="overflow-hidden"
                       role="region"
                     >
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 p-4 border-t">
-                        {categories.map((cat) => (
+                      <div className="grid grid-cols-1 gap-y-4 p-4 border-t">
+                        {categoriesToUse.map((cat) => (
                           <div key={cat.title}>
                             <h4 className="font-semibold text-gray-800">{cat.title}</h4>
                             <p 
                               className="text-gray-600 text-sm mt-1"
-                              dangerouslySetInnerHTML={{ __html: cat.items[pkgIndex] }}
+                              // Берем описание по индексу пакета (например, для "Эконом" это индекс 0)
+                              dangerouslySetInnerHTML={{ __html: cat.items[index] || 'Информация уточняется' }}
                             />
                           </div>
                         ))}
@@ -104,6 +120,7 @@ const faqSchemaJson = generateFaqSchema(packages, categories);
             })}
           </div>
         ) : (
+          /* --- ДЕСКТОПНАЯ ВЕРСИЯ (ТАБЫ) --- */
           <div>
             <div className="flex justify-center mb-8 bg-gray-100 p-1.5 rounded-full">
               {packages.map(pkgName => (
@@ -123,6 +140,7 @@ const faqSchemaJson = generateFaqSchema(packages, categories);
                 </button>
               ))}
             </div>
+            
             <AnimatePresence mode="wait">
               {activeItem && activeIndex !== -1 && (
                 <motion.div 
@@ -133,12 +151,13 @@ const faqSchemaJson = generateFaqSchema(packages, categories);
                   transition={{ duration: 0.3 }}
                 >
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6 bg-white p-8 rounded-2xl shadow-sm border">
-                    {categories.map((cat) => (
+                    {categoriesToUse.map((cat) => (
                       <div key={cat.title}>
                         <h4 className="font-semibold text-gray-800">{cat.title}</h4>
                         <p 
                           className="text-gray-600 text-semi mt-1"
-                          dangerouslySetInnerHTML={{ __html: cat.items[activeIndex] }}
+                          // Здесь активный индекс берется из состояния
+                          dangerouslySetInnerHTML={{ __html: cat.items[activeIndex] || 'Информация уточняется' }}
                         />
                       </div>
                     ))}
