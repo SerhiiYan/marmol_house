@@ -9,7 +9,7 @@ import ProjectCard from '../components/ProjectCard';
 import ProjectQuickViewModal from '../components/ProjectQuickViewModal';
 import { slugify } from '../utils/slugify';
 
-// SEO Схемы
+// SEO 
 const itemListSchema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
@@ -54,7 +54,6 @@ const sectionAnimation = {
    transition: { duration: 0.6, ease: 'easeOut' }
 };
 
-// КОНСТАНТЫ
 const INITIAL_ITEMS_TO_SHOW = 8;
 const ITEMS_TO_LOAD_MORE = 8;
 
@@ -78,7 +77,7 @@ const Gallery = ({ onOrderClick }) => {
 
   const handleSelectCategory = (category) => {
     setSelectedCategory(category);
-    setVisibleCount(INITIAL_ITEMS_TO_SHOW); // Сбрасываем при смене категории
+    setVisibleCount(INITIAL_ITEMS_TO_SHOW); 
   };
   
   const handleLoadMore = () => {
